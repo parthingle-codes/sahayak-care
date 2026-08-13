@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FileBarChart } from "lucide-react";
 
+import { AdminOnly } from "@/components/common/AdminOnly";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
 
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/_shell/reports")({
 
 function ReportsPage() {
   return (
-    <>
+    <AdminOnly>
       <PageHeader
         eyebrow="Insights"
         title="Reports"
@@ -36,6 +37,6 @@ function ReportsPage() {
         title="Reports need data first"
         description="Once residents, medicines and observations are recorded, reports summarise occupancy and daily care activity for a chosen period."
       />
-    </>
+    </AdminOnly>
   );
 }

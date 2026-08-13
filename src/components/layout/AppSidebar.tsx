@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useRole } from "@/hooks/use-role";
+import { useRole } from "@/hooks/use-auth";
 import { navGroupsForRole } from "@/lib/navigation";
 
 export function AppSidebar() {

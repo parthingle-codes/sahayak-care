@@ -3,7 +3,7 @@ import { Settings as SettingsIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
-import { useRole } from "@/hooks/use-role";
+import { useRole } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_shell/settings")({
   head: () => ({
@@ -39,7 +39,7 @@ function SettingsPage() {
         title="Accounts arrive with sign-in"
         description={
           isAdmin
-            ? "Administrators will invite caregivers here and assign roles once authentication is enabled."
+            ? "The first staff account becomes the administrator; caregivers created later can be promoted from here in a later milestone."
             : "You will be able to update your name, phone number and password here once sign-in is enabled."
         }
       />
