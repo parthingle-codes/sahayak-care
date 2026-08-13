@@ -1,24 +1,130 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { HeartHandshake, ShieldCheck, Pill, Users, ArrowRight } from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { Button } from "@/components/ui/button";
+import heroImage from "@/assets/care-hero.jpg";
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "SAHAAYAK — Smart Elderly Care & Health Management" },
+      {
+        name: "description",
+        content:
+          "A calm, simple platform for small old age homes: resident records, medicine rounds, health observations, appointments and bed management in one place.",
+      },
+      { property: "og:title", content: "SAHAAYAK — Smart Elderly Care & Health Management" },
+      {
+        property: "og:description",
+        content:
+          "Building technology with compassion. Less paperwork, organised resident information, faster daily care.",
+      },
+    ],
+  }),
+  component: LandingPage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const highlights = [
+  {
+    icon: Users,
+    title: "Every resident in one profile",
+    body: "Room and bed, admission details, emergency contacts, medical conditions and care notes, all on one screen.",
+  },
+  {
+    icon: Pill,
+    title: "Medicine rounds without paperwork",
+    body: "Today's doses are listed by round, so a caregiver can see what is pending and mark it given in one tap.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Right access for each staff role",
+    body: "Administrators manage the facility; caregivers focus on the residents in their care. Records stay protected.",
+  },
+];
+
+function LandingPage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 md:px-8">
+        <div className="flex items-center gap-3">
+          <span className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+            <HeartHandshake className="size-5" />
+          </span>
+          <div>
+            <p className="font-display text-lg font-semibold leading-tight">SAHAAYAK</p>
+            <p className="text-xs text-muted-foreground">Building technology with compassion</p>
+          </div>
+        </div>
+        <Button asChild>
+          <Link to="/dashboard">
+            Open the platform
+            <ArrowRight />
+          </Link>
+        </Button>
+      </header>
+
+      <main>
+        <section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pb-16 pt-8 md:px-8 lg:grid-cols-2 lg:pt-14">
+          <div>
+            <p className="text-eyebrow">Elderly care management</p>
+            <h1 className="mt-3 text-4xl font-semibold leading-[1.1] md:text-5xl">
+              Care records that keep up with the people giving the care.
+            </h1>
+            <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+              SAHAAYAK gives a small old age home one calm place for residents, medicines, health
+              observations, appointments and beds — replacing scattered registers and files.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild size="lg">
+                <Link to="/dashboard">
+                  Open the platform
+                  <ArrowRight />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link to="/residents">View residents</Link>
+              </Button>
+            </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              A care-management and record-keeping system. It does not diagnose, prescribe or replace
+              healthcare professionals.
+            </p>
+          </div>
+          <div className="surface-card overflow-hidden p-0">
+            <img
+              src={heroImage}
+              alt="A caregiver sitting beside an elderly resident in a wheelchair in a bright care home common room"
+              width={1600}
+              height={1104}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </section>
+
+        <section className="border-t border-border bg-secondary/60 py-16">
+          <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
+            <h2 className="text-2xl font-semibold md:text-3xl">Built around the daily routine</h2>
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              {highlights.map((item) => (
+                <article key={item.title} className="surface-card p-6">
+                  <span className="flex size-11 items-center justify-center rounded-lg bg-primary-soft text-primary">
+                    <item.icon className="size-5" aria-hidden />
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-border py-8">
+        <div className="mx-auto w-full max-w-6xl px-4 text-sm text-muted-foreground md:px-8">
+          SAHAAYAK — a Community Engagement Program project by Computer Science Engineering students,
+          Government College of Engineering, Nagpur.
+        </div>
+      </footer>
     </div>
   );
 }
