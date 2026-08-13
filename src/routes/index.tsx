@@ -56,8 +56,8 @@ function LandingPage() {
           </div>
         </div>
         <Button asChild>
-          <Link to="/dashboard">
-            Open the platform
+          <Link to="/auth">
+            Staff sign in
             <ArrowRight />
           </Link>
         </Button>
@@ -76,13 +76,13 @@ function LandingPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link to="/dashboard">
-                  Open the platform
+                <Link to="/auth">
+                  Staff sign in
                   <ArrowRight />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/residents">View residents</Link>
+                <Link to="/dashboard">Go to dashboard</Link>
               </Button>
             </div>
             <p className="mt-6 text-sm text-muted-foreground">
