@@ -21,24 +21,24 @@ export const Route = createFileRoute("/_shell/rooms")({
       },
     ],
   }),
-  c    <AdminOnly>
-  omponent: RoomsPage,
+  component: RoomsPage,
   });
 
   function RoomsPage() {
-    return (
-      <>
-        <PageHeader
-          eyebrow="Facility"
-          title="Rooms & beds"
-          description="Shared rooms and individual beds, with occupancy at a glance and safe bed reassignment."
-        />
-        <EmptyState
-          icon={BedDouble}
-          title="No rooms configured yet"
-          description="Add rooms and their beds so residents can be assigned and bed availability shows on the dashboard."
-        />
-      </>
-    </AdminOnly>
-  );
+  return (
+    <AdminOnly>
+    <>
+      <PageHeader
+        eyebrow="Facility"
+        title="Rooms & beds"
+        description="Shared rooms and individual beds, with occupancy at a glance and safe bed reassignment."
+      />
+      <EmptyState
+        icon={BedDouble}
+        title="No rooms configured yet"
+        description="Add rooms and their beds so residents can be assigned and bed availability shows on the dashboard."
+      />
+    </>
+  </AdminOnly>
+);
 }
