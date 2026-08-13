@@ -10,33 +10,153 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellRouteRouteImport } from './routes/_shell/route'
+import { Route as ShellAppointmentsRouteImport } from './routes/_shell/appointments'
+import { Route as ShellDashboardRouteImport } from './routes/_shell/dashboard'
+import { Route as ShellHealthRecordsRouteImport } from './routes/_shell/health-records'
+import { Route as ShellMedicinesRouteImport } from './routes/_shell/medicines'
+import { Route as ShellReportsRouteImport } from './routes/_shell/reports'
+import { Route as ShellResidentsRouteImport } from './routes/_shell/residents'
+import { Route as ShellRoomsRouteImport } from './routes/_shell/rooms'
+import { Route as ShellSettingsRouteImport } from './routes/_shell/settings'
+import { Route as ShellVisitorsRouteImport } from './routes/_shell/visitors'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRouteRoute = ShellRouteRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellAppointmentsRoute = ShellAppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellDashboardRoute = ShellDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellHealthRecordsRoute = ShellHealthRecordsRouteImport.update({
+  id: '/health-records',
+  path: '/health-records',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellMedicinesRoute = ShellMedicinesRouteImport.update({
+  id: '/medicines',
+  path: '/medicines',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellReportsRoute = ShellReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellResidentsRoute = ShellResidentsRouteImport.update({
+  id: '/residents',
+  path: '/residents',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellRoomsRoute = ShellRoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellVisitorsRoute = ShellVisitorsRouteImport.update({
+  id: '/visitors',
+  path: '/visitors',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/appointments': typeof ShellAppointmentsRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/health-records': typeof ShellHealthRecordsRoute
+  '/medicines': typeof ShellMedicinesRoute
+  '/reports': typeof ShellReportsRoute
+  '/residents': typeof ShellResidentsRoute
+  '/rooms': typeof ShellRoomsRoute
+  '/settings': typeof ShellSettingsRoute
+  '/visitors': typeof ShellVisitorsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/appointments': typeof ShellAppointmentsRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/health-records': typeof ShellHealthRecordsRoute
+  '/medicines': typeof ShellMedicinesRoute
+  '/reports': typeof ShellReportsRoute
+  '/residents': typeof ShellResidentsRoute
+  '/rooms': typeof ShellRoomsRoute
+  '/settings': typeof ShellSettingsRoute
+  '/visitors': typeof ShellVisitorsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteRouteWithChildren
+  '/_shell/appointments': typeof ShellAppointmentsRoute
+  '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/health-records': typeof ShellHealthRecordsRoute
+  '/_shell/medicines': typeof ShellMedicinesRoute
+  '/_shell/reports': typeof ShellReportsRoute
+  '/_shell/residents': typeof ShellResidentsRoute
+  '/_shell/rooms': typeof ShellRoomsRoute
+  '/_shell/settings': typeof ShellSettingsRoute
+  '/_shell/visitors': typeof ShellVisitorsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/appointments'
+    | '/dashboard'
+    | '/health-records'
+    | '/medicines'
+    | '/reports'
+    | '/residents'
+    | '/rooms'
+    | '/settings'
+    | '/visitors'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/appointments'
+    | '/dashboard'
+    | '/health-records'
+    | '/medicines'
+    | '/reports'
+    | '/residents'
+    | '/rooms'
+    | '/settings'
+    | '/visitors'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/appointments'
+    | '/_shell/dashboard'
+    | '/_shell/health-records'
+    | '/_shell/medicines'
+    | '/_shell/reports'
+    | '/_shell/residents'
+    | '/_shell/rooms'
+    | '/_shell/settings'
+    | '/_shell/visitors'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRouteRoute: typeof ShellRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +168,110 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/appointments': {
+      id: '/_shell/appointments'
+      path: '/appointments'
+      fullPath: '/appointments'
+      preLoaderRoute: typeof ShellAppointmentsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/dashboard': {
+      id: '/_shell/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ShellDashboardRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/health-records': {
+      id: '/_shell/health-records'
+      path: '/health-records'
+      fullPath: '/health-records'
+      preLoaderRoute: typeof ShellHealthRecordsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/medicines': {
+      id: '/_shell/medicines'
+      path: '/medicines'
+      fullPath: '/medicines'
+      preLoaderRoute: typeof ShellMedicinesRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/reports': {
+      id: '/_shell/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ShellReportsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/residents': {
+      id: '/_shell/residents'
+      path: '/residents'
+      fullPath: '/residents'
+      preLoaderRoute: typeof ShellResidentsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/rooms': {
+      id: '/_shell/rooms'
+      path: '/rooms'
+      fullPath: '/rooms'
+      preLoaderRoute: typeof ShellRoomsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/visitors': {
+      id: '/_shell/visitors'
+      path: '/visitors'
+      fullPath: '/visitors'
+      preLoaderRoute: typeof ShellVisitorsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
   }
 }
 
+interface ShellRouteRouteChildren {
+  ShellAppointmentsRoute: typeof ShellAppointmentsRoute
+  ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellHealthRecordsRoute: typeof ShellHealthRecordsRoute
+  ShellMedicinesRoute: typeof ShellMedicinesRoute
+  ShellReportsRoute: typeof ShellReportsRoute
+  ShellResidentsRoute: typeof ShellResidentsRoute
+  ShellRoomsRoute: typeof ShellRoomsRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
+  ShellVisitorsRoute: typeof ShellVisitorsRoute
+}
+
+const ShellRouteRouteChildren: ShellRouteRouteChildren = {
+  ShellAppointmentsRoute: ShellAppointmentsRoute,
+  ShellDashboardRoute: ShellDashboardRoute,
+  ShellHealthRecordsRoute: ShellHealthRecordsRoute,
+  ShellMedicinesRoute: ShellMedicinesRoute,
+  ShellReportsRoute: ShellReportsRoute,
+  ShellResidentsRoute: ShellResidentsRoute,
+  ShellRoomsRoute: ShellRoomsRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
+  ShellVisitorsRoute: ShellVisitorsRoute,
+}
+
+const ShellRouteRouteWithChildren = ShellRouteRoute._addFileChildren(
+  ShellRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRouteRoute: ShellRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
