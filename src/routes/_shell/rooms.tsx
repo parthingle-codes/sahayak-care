@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-import { AdminOnly } from "@/components/common/AdminOnly";
 import { BedDouble } from "lucide-react";
 
+import { AdminOnly } from "@/components/common/AdminOnly";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
 
@@ -22,12 +21,11 @@ export const Route = createFileRoute("/_shell/rooms")({
     ],
   }),
   component: RoomsPage,
-  });
+});
 
-  function RoomsPage() {
+function RoomsPage() {
   return (
     <AdminOnly>
-    <>
       <PageHeader
         eyebrow="Facility"
         title="Rooms & beds"
@@ -38,7 +36,6 @@ export const Route = createFileRoute("/_shell/rooms")({
         title="No rooms configured yet"
         description="Add rooms and their beds so residents can be assigned and bed availability shows on the dashboard."
       />
-    </>
-  </AdminOnly>
-);
+    </AdminOnly>
+  );
 }
