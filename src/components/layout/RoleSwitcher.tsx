@@ -25,7 +25,7 @@ export function RoleSwitcher() {
       </label>
       <Select value={role} onValueChange={(v) => setRole(v as Role)}>
         <SelectTrigger id="role-preview" className="h-9 w-[168px]">
-          <SelectValue />
+          <SelectValue>{role === "admin" ? "Administrator" : "Caregiver"}</SelectValue>
         </SelectTrigger>
         <SelectContent align="end">
           <SelectItem value="admin">Administrator</SelectItem>
