@@ -3,7 +3,7 @@ import { Settings as SettingsIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
-import { useRole } from "@/hooks/use-role";
+import { useRole } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_shell/settings")({
   head: () => ({

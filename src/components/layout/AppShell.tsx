@@ -2,15 +2,15 @@ import type { ReactNode } from "react";
 import { Search } from "lucide-react";
 
 import { AppSidebar } from "@/components/layout/AppSidebar";
-import { RoleSwitcher } from "@/components/layout/RoleSwitcher";
+import { AccountMenu } from "@/components/layout/AccountMenu";
 import { Input } from "@/components/ui/input";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { RoleProvider } from "@/hooks/use-role";
+import { AuthProvider } from "@/hooks/use-auth";
 
 /** Shared application chrome: role-aware sidebar, top bar, content canvas. */
 export function AppShell({ children }: { children: ReactNode }) {
   return (
-    <RoleProvider>
+    <AuthProvider>
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset className="bg-background">
@@ -26,7 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               />
             </div>
             <div className="ml-auto">
-              <RoleSwitcher />
+              <AccountMenu />
             </div>
           </header>
           <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
@@ -34,6 +34,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           </main>
         </SidebarInset>
       </SidebarProvider>
-    </RoleProvider>
+    </AuthProvider>
   );
 }
