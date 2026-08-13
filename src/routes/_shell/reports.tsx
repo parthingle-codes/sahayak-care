@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+
+import { AdminOnly } from "@/components/common/AdminOnly";
 import { FileBarChart } from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
@@ -20,22 +22,24 @@ export const Route = createFileRoute("/_shell/reports")({
       },
     ],
   }),
-  component: ReportsPage,
-});
+  compo    <AdminOnly>
+  nent: ReportsPage,
+  });
 
-function ReportsPage() {
-  return (
-    <>
-      <PageHeader
-        eyebrow="Insights"
-        title="Reports"
-        description="Occupancy, medicine adherence and care activity summaries for administrators."
-      />
-      <EmptyState
-        icon={FileBarChart}
-        title="Reports need data first"
-        description="Once residents, medicines and observations are recorded, reports summarise occupancy and daily care activity for a chosen period."
-      />
-    </>
+  function ReportsPage() {
+    return (
+      <>
+        <PageHeader
+          eyebrow="Insights"
+          title="Reports"
+          description="Occupancy, medicine adherence and care activity summaries for administrators."
+        />
+        <EmptyState
+          icon={FileBarChart}
+          title="Reports need data first"
+          description="Once residents, medicines and observations are recorded, reports summarise occupancy and daily care activity for a chosen period."
+        />
+      </>
+    </AdminOnly>
   );
 }
