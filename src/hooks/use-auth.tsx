@@ -45,10 +45,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const loadStaff = useCallback(async (userId: string) => {
+  const loadStaff = useCallback(async (user: User) => {
+    const userId = user.id;
+    const metaName =
+      typeof user.user_metadata?.["full_name"] === "string"
+        ? (user.user_metadata["full_name"] as string)
+        : typeof user.user_metadata?.["name"] === "string"
+          ? (user.user_metadata["name"] as string)
+          : "";
     // Creates the profile/role rows on first sign-in, then returns the role.
     const { data: ensuredRole } = await supabase.rpc("ensure_staff_account", {
-      _full_name: "",
+      _full_name: metaName,
     });
 
     const [{ data: profileRow }, { data: roleRows }] = await Promise.all([
@@ -68,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data } = await supabase.auth.getSession();
     setSession(data.session ?? null);
     if (data.session?.user) {
-      await loadStaff(data.session.user.id);
+      await loadStaff(data.session.user);
     } else {
       setProfile(null);
       setRole("caregiver");
@@ -87,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       setSession(nextSession ?? null);
       if (nextSession?.user) {
-        void loadStaff(nextSession.user.id);
+        void loadStaff(nextSession.user);
       } else {
         setProfile(null);
         setRole("caregiver");
