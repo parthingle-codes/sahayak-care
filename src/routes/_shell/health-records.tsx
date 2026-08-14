@@ -1,8 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HeartPulse } from "lucide-react";
 
+import { ConditionFormDialog } from "@/components/care/ConditionFormDialog";
+import { ObservationFormDialog } from "@/components/care/ObservationFormDialog";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useConditions, useObservations, useResidents } from "@/features/care/queries";
 
 export const Route = createFileRoute("/_shell/health-records")({
   head: () => ({
@@ -23,19 +37,133 @@ export const Route = createFileRoute("/_shell/health-records")({
   component: HealthRecordsPage,
 });
 
+const dash = (v: number | string | null) => (v === null || v === "" ? "—" : String(v));
+
 function HealthRecordsPage() {
+  const { data: residents = [] } = useResidents();
+  const { data: observations = [], isLoading: loadingObs } = useObservations();
+  const { data: conditions = [], isLoading: loadingCond } = useConditions();
+
+  const nameOf = (id: string) => residents.find((r) => r.id === id)?.full_name ?? "Unknown";
+
   return (
     <>
       <PageHeader
         eyebrow="Care & Health"
         title="Health records"
         description="Vitals and care observations recorded by caregivers. This is a record-keeping tool, not a medical decision or diagnostic system."
+        actions={
+          <>
+            <ConditionFormDialog />
+            <ObservationFormDialog />
+          </>
+        }
       />
-      <EmptyState
-        icon={HeartPulse}
-        title="No observations recorded yet"
-        description="Caregivers will be able to log blood pressure, pulse, temperature, weight, blood sugar and care notes for any resident."
-      />
+
+      {residents.length === 0 ? (
+        <EmptyState
+          icon={HeartPulse}
+          title="Add a resident first"
+          description="Health records attach to a resident. Add someone on the Residents page, then come back to record vitals."
+        />
+      ) : (
+        <Tabs defaultValue="vitals">
+          <TabsList>
+            <TabsTrigger value="vitals">Vitals ({observations.length})</TabsTrigger>
+            <TabsTrigger value="conditions">Conditions ({conditions.length})</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="vitals" className="mt-4">
+            {loadingObs ? (
+              <Skeleton className="h-40 w-full" />
+            ) : observations.length === 0 ? (
+              <EmptyState
+                icon={HeartPulse}
+                title="No observations recorded yet"
+                description="Use Record vitals to log blood pressure, pulse, temperature, blood sugar, weight and a care note."
+              />
+            ) : (
+              <div className="surface-card overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Resident</TableHead>
+                      <TableHead>Recorded</TableHead>
+                      <TableHead>BP</TableHead>
+                      <TableHead>Pulse</TableHead>
+                      <TableHead>Temp °C</TableHead>
+                      <TableHead>Sugar</TableHead>
+                      <TableHead>Weight</TableHead>
+                      <TableHead>Note</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {observations.map((o) => (
+                      <TableRow key={o.id}>
+                        <TableCell className="font-medium">{nameOf(o.resident_id)}</TableCell>
+                        <TableCell>{new Date(o.recorded_at).toLocaleString()}</TableCell>
+                        <TableCell>
+                          {o.bp_systolic || o.bp_diastolic
+                            ? `${dash(o.bp_systolic)}/${dash(o.bp_diastolic)}`
+                            : "—"}
+                        </TableCell>
+                        <TableCell>{dash(o.pulse)}</TableCell>
+                        <TableCell>{dash(o.temperature_c)}</TableCell>
+                        <TableCell>{dash(o.blood_sugar)}</TableCell>
+                        <TableCell>{dash(o.weight_kg)}</TableCell>
+                        <TableCell className="max-w-[18rem] text-muted-foreground">
+                          {o.note ?? "—"}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="conditions" className="mt-4">
+            {loadingCond ? (
+              <Skeleton className="h-40 w-full" />
+            ) : conditions.length === 0 ? (
+              <EmptyState
+                icon={HeartPulse}
+                title="No medical conditions recorded"
+                description="Add conditions already diagnosed by a doctor so caregivers see them at a glance."
+              />
+            ) : (
+              <div className="surface-card overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Resident</TableHead>
+                      <TableHead>Condition</TableHead>
+                      <TableHead>Diagnosed on</TableHead>
+                      <TableHead>Notes</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {conditions.map((c) => (
+                      <TableRow key={c.id}>
+                        <TableCell className="font-medium">{nameOf(c.resident_id)}</TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">{c.condition}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          {c.diagnosed_on ? new Date(c.diagnosed_on).toLocaleDateString() : "—"}
+                        </TableCell>
+                        <TableCell className="max-w-[18rem] text-muted-foreground">
+                          {c.notes ?? "—"}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      )}
     </>
   );
 }
