@@ -14,6 +14,103 @@ export type Database = {
   }
   public: {
     Tables: {
+      health_observations: {
+        Row: {
+          blood_sugar: number | null
+          bp_diastolic: number | null
+          bp_systolic: number | null
+          created_at: string
+          id: string
+          note: string | null
+          pulse: number | null
+          recorded_at: string
+          recorded_by: string | null
+          resident_id: string
+          temperature_c: number | null
+          updated_at: string
+          weight_kg: number | null
+        }
+        Insert: {
+          blood_sugar?: number | null
+          bp_diastolic?: number | null
+          bp_systolic?: number | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          pulse?: number | null
+          recorded_at?: string
+          recorded_by?: string | null
+          resident_id: string
+          temperature_c?: number | null
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Update: {
+          blood_sugar?: number | null
+          bp_diastolic?: number | null
+          bp_systolic?: number | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          pulse?: number | null
+          recorded_at?: string
+          recorded_by?: string | null
+          resident_id?: string
+          temperature_c?: number | null
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "health_observations_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medical_conditions: {
+        Row: {
+          condition: string
+          created_at: string
+          diagnosed_on: string | null
+          id: string
+          notes: string | null
+          recorded_by: string | null
+          resident_id: string
+          updated_at: string
+        }
+        Insert: {
+          condition: string
+          created_at?: string
+          diagnosed_on?: string | null
+          id?: string
+          notes?: string | null
+          recorded_by?: string | null
+          resident_id: string
+          updated_at?: string
+        }
+        Update: {
+          condition?: string
+          created_at?: string
+          diagnosed_on?: string | null
+          id?: string
+          notes?: string | null
+          recorded_by?: string | null
+          resident_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_conditions_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -34,6 +131,51 @@ export type Database = {
           full_name?: string
           id?: string
           phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      residents: {
+        Row: {
+          admission_date: string
+          created_at: string
+          created_by: string | null
+          date_of_birth: string | null
+          full_name: string
+          gender: Database["public"]["Enums"]["gender_type"] | null
+          id: string
+          mobility: Database["public"]["Enums"]["mobility_level"]
+          notes: string | null
+          room_label: string | null
+          status: Database["public"]["Enums"]["resident_status"]
+          updated_at: string
+        }
+        Insert: {
+          admission_date?: string
+          created_at?: string
+          created_by?: string | null
+          date_of_birth?: string | null
+          full_name: string
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          id?: string
+          mobility?: Database["public"]["Enums"]["mobility_level"]
+          notes?: string | null
+          room_label?: string | null
+          status?: Database["public"]["Enums"]["resident_status"]
+          updated_at?: string
+        }
+        Update: {
+          admission_date?: string
+          created_at?: string
+          created_by?: string | null
+          date_of_birth?: string | null
+          full_name?: string
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          id?: string
+          mobility?: Database["public"]["Enums"]["mobility_level"]
+          notes?: string | null
+          room_label?: string | null
+          status?: Database["public"]["Enums"]["resident_status"]
           updated_at?: string
         }
         Relationships: []
@@ -78,6 +220,9 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "caregiver"
+      gender_type: "male" | "female" | "other"
+      mobility_level: "independent" | "walker" | "wheelchair" | "bedridden"
+      resident_status: "active" | "discharged" | "deceased"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -206,6 +351,9 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "caregiver"],
+      gender_type: ["male", "female", "other"],
+      mobility_level: ["independent", "walker", "wheelchair", "bedridden"],
+      resident_status: ["active", "discharged", "deceased"],
     },
   },
 } as const
