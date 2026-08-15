@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateResident } from "@/features/care/queries";
+import { useRole } from "@/hooks/use-auth";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -38,6 +39,7 @@ export function ResidentFormDialog() {
   const [status, setStatus] = useState("active");
   const [notes, setNotes] = useState("");
   const create = useCreateResident();
+  const { isAdmin } = useRole();
 
   const reset = () => {
     setFullName("");
@@ -89,6 +91,13 @@ export function ResidentFormDialog() {
             Only the details the home actually keeps. Everything except the name is optional.
           </DialogDescription>
         </DialogHeader>
+
+        {!isAdmin && (
+          <p className="rounded-md border border-border bg-muted/50 p-3 text-sm text-muted-foreground">
+            Only an administrator can register residents. Ask your admin to add them, then you can
+            record vitals and medical history.
+          </p>
+        )}
 
         <div className="grid gap-4">
           <div className="grid gap-2">
@@ -181,7 +190,7 @@ export function ResidentFormDialog() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={submit} disabled={create.isPending}>
+          <Button onClick={submit} disabled={create.isPending || !isAdmin}>
             {create.isPending ? "Saving…" : "Save resident"}
           </Button>
         </DialogFooter>
