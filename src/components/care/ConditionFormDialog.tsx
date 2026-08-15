@@ -63,7 +63,7 @@ export function ConditionFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" disabled={!isLoading && residents.length === 0}>
+        <Button variant="outline">
           <Stethoscope className="size-4" />
           Add medical condition
         </Button>
@@ -92,6 +92,11 @@ export function ConditionFormDialog() {
                 ))}
               </SelectContent>
             </Select>
+            {!isLoading && residents.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                No residents yet — add a resident on the Residents page first.
+              </p>
+            ) : null}
           </div>
 
           <div className="grid gap-2">

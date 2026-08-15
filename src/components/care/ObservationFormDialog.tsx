@@ -81,7 +81,7 @@ export function ObservationFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button disabled={!isLoading && residents.length === 0}>
+        <Button>
           <HeartPulse className="size-4" />
           Record vitals
         </Button>
@@ -110,6 +110,11 @@ export function ObservationFormDialog() {
                 ))}
               </SelectContent>
             </Select>
+            {!isLoading && residents.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                No residents yet — add a resident on the Residents page first.
+              </p>
+            ) : null}
           </div>
 
           <div className="grid gap-2">
