@@ -60,7 +60,7 @@ function ResidentsPage() {
         eyebrow="People"
         title="Residents"
         description="Every resident of the home with their room, mobility needs and admission details."
-        actions={isAdmin ? <ResidentFormDialog /> : undefined}
+        actions={<ResidentFormDialog />}
       />
 
       {isLoading ? (
@@ -74,7 +74,7 @@ function ResidentsPage() {
               ? "Add the first resident to start recording health and medical records."
               : "An administrator needs to add residents before care records can be recorded."
           }
-          action={isAdmin ? <ResidentFormDialog /> : undefined}
+          action={<ResidentFormDialog />}
         />
       ) : (
         <div className="surface-card overflow-x-auto">
