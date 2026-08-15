@@ -138,3 +138,69 @@ export function useCreateCondition() {
     onSuccess: () => void qc.invalidateQueries({ queryKey: ["medical_conditions"] }),
   });
 }
+
+/** Edit an existing resident so mistakes can be corrected later. */
+export function useUpdateResident() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, values }: { id: string; values: TablesUpdate<"residents"> }) => {
+      const { data, error } = await supabase
+        .from("residents")
+        .update(values)
+        .eq("id", id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["residents"] }),
+  });
+}
+
+/** Edit a recorded set of vitals. */
+export function useUpdateObservation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      values,
+    }: {
+      id: string;
+      values: TablesUpdate<"health_observations">;
+    }) => {
+      const { data, error } = await supabase
+        .from("health_observations")
+        .update(values)
+        .eq("id", id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["health_observations"] }),
+  });
+}
+
+/** Edit a recorded medical condition. */
+export function useUpdateCondition() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      values,
+    }: {
+      id: string;
+      values: TablesUpdate<"medical_conditions">;
+    }) => {
+      const { data, error } = await supabase
+        .from("medical_conditions")
+        .update(values)
+        .eq("id", id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["medical_conditions"] }),
+  });
+}
