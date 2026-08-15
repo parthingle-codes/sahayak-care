@@ -1,11 +1,49 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
-import type { Tables, TablesInsert } from "@/integrations/supabase/types";
+import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
+import type { Role } from "@/lib/navigation";
 
 export type Resident = Tables<"residents">;
 export type Observation = Tables<"health_observations">;
 export type Condition = Tables<"medical_conditions">;
+
+export type StaffMember = {
+  user_id: string;
+  email: string;
+  full_name: string;
+  role: Role | null;
+  created_at: string;
+};
+
+/** Admin-only staff directory with each account's role. */
+export function useStaff(enabled: boolean) {
+  return useQuery({
+    queryKey: ["staff"],
+    enabled,
+    queryFn: async (): Promise<StaffMember[]> => {
+      const { data, error } = await supabase.rpc("list_staff");
+      if (error) throw error;
+      return (data ?? []) as StaffMember[];
+    },
+  });
+}
+
+/** Admin-only: promote to admin or move back to caregiver. */
+export function useSetStaffRole() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId, role }: { userId: string; role: Role }) => {
+      const { error } = await supabase.rpc("set_staff_role", {
+        _user_id: userId,
+        _role: role,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["staff"] }),
+  });
+}
+
 
 /** Residents, newest admissions first. Used by every record form's picker. */
 export function useResidents() {
