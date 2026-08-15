@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { UserPlus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Pencil, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -22,13 +22,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateResident } from "@/features/care/queries";
-import { useRole } from "@/hooks/use-auth";
+import { useCreateResident, useUpdateResident, type Resident } from "@/features/care/queries";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-/** Admin-only form to register a resident so care records can be attached. */
-export function ResidentFormDialog() {
+/** Registers a resident, or edits an existing record when `resident` is given. */
+export function ResidentFormDialog({ resident }: { resident?: Resident }) {
+  const isEdit = Boolean(resident);
   const [open, setOpen] = useState(false);
   const [fullName, setFullName] = useState("");
   const [gender, setGender] = useState<string>("");
@@ -39,37 +39,45 @@ export function ResidentFormDialog() {
   const [status, setStatus] = useState("active");
   const [notes, setNotes] = useState("");
   const create = useCreateResident();
-  const { isAdmin } = useRole();
+  const update = useUpdateResident();
+  const pending = create.isPending || update.isPending;
 
-  const reset = () => {
-    setFullName("");
-    setGender("");
-    setDob("");
-    setRoom("");
-    setAdmission(today());
-    setMobility("independent");
-    setStatus("active");
-    setNotes("");
-  };
+  // Refills the form each time it opens so edits always start from saved data.
+  useEffect(() => {
+    if (!open) return;
+    setFullName(resident?.full_name ?? "");
+    setGender(resident?.gender ?? "");
+    setDob(resident?.date_of_birth ?? "");
+    setRoom(resident?.room_label ?? "");
+    setAdmission(resident?.admission_date ?? today());
+    setMobility(resident?.mobility ?? "independent");
+    setStatus(resident?.status ?? "active");
+    setNotes(resident?.notes ?? "");
+  }, [open, resident]);
 
   const submit = async () => {
     if (!fullName.trim()) {
       toast.error("Please enter the resident's full name.");
       return;
     }
+    const values = {
+      full_name: fullName.trim(),
+      gender: (gender || null) as never,
+      date_of_birth: dob || null,
+      room_label: room.trim() || null,
+      admission_date: admission || today(),
+      mobility: mobility as never,
+      status: status as never,
+      notes: notes.trim() || null,
+    };
     try {
-      await create.mutateAsync({
-        full_name: fullName.trim(),
-        gender: (gender || null) as never,
-        date_of_birth: dob || null,
-        room_label: room.trim() || null,
-        admission_date: admission || today(),
-        mobility: mobility as never,
-        status: status as never,
-        notes: notes.trim() || null,
-      });
-      toast.success("Resident added.");
-      reset();
+      if (resident) {
+        await update.mutateAsync({ id: resident.id, values });
+        toast.success("Resident details updated.");
+      } else {
+        await create.mutateAsync(values);
+        toast.success("Resident added.");
+      }
       setOpen(false);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not save the resident.");
@@ -79,25 +87,27 @@ export function ResidentFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <UserPlus className="size-4" />
-          Add resident
-        </Button>
+        {isEdit ? (
+          <Button variant="ghost" size="sm">
+            <Pencil className="size-4" />
+            Edit
+          </Button>
+        ) : (
+          <Button>
+            <UserPlus className="size-4" />
+            Add resident
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Add resident</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit resident" : "Add resident"}</DialogTitle>
           <DialogDescription>
-            Only the details the home actually keeps. Everything except the name is optional.
+            {isEdit
+              ? "Correct any detail that was recorded wrongly. Changes are saved immediately."
+              : "Only the details the home actually keeps. Everything except the name is optional."}
           </DialogDescription>
         </DialogHeader>
-
-        {!isAdmin && (
-          <p className="rounded-md border border-border bg-muted/50 p-3 text-sm text-muted-foreground">
-            Only an administrator can register residents. Ask your admin to add them, then you can
-            record vitals and medical history.
-          </p>
-        )}
 
         <div className="grid gap-4">
           <div className="grid gap-2">
@@ -190,8 +200,8 @@ export function ResidentFormDialog() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={submit} disabled={create.isPending || !isAdmin}>
-            {create.isPending ? "Saving…" : "Save resident"}
+          <Button onClick={submit} disabled={pending}>
+            {pending ? "Saving…" : isEdit ? "Save changes" : "Save resident"}
           </Button>
         </DialogFooter>
       </DialogContent>

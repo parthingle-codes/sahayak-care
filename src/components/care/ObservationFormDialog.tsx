@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { HeartPulse } from "lucide-react";
+import { useEffect, useState } from "react";
+import { HeartPulse, Pencil } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -22,17 +22,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateObservation, useResidents } from "@/features/care/queries";
+import {
+  useCreateObservation,
+  useResidents,
+  useUpdateObservation,
+  type Observation,
+} from "@/features/care/queries";
 
 const num = (v: string) => (v.trim() === "" ? null : Number(v));
-const localNow = () => {
-  const d = new Date();
+const str = (v: number | null) => (v === null ? "" : String(v));
+const toLocal = (iso: string) => {
+  const d = new Date(iso);
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
   return d.toISOString().slice(0, 16);
 };
+const localNow = () => toLocal(new Date().toISOString());
 
-/** Records one set of measured vitals. Every vital is optional on purpose. */
-export function ObservationFormDialog() {
+/** Records one set of measured vitals, or edits a saved record. */
+export function ObservationFormDialog({ record }: { record?: Observation }) {
+  const isEdit = Boolean(record);
   const [open, setOpen] = useState(false);
   const [residentId, setResidentId] = useState("");
   const [recordedAt, setRecordedAt] = useState(localNow());
@@ -45,33 +53,46 @@ export function ObservationFormDialog() {
   const [note, setNote] = useState("");
   const { data: residents = [], isLoading } = useResidents();
   const create = useCreateObservation();
+  const update = useUpdateObservation();
+  const pending = create.isPending || update.isPending;
+
+  useEffect(() => {
+    if (!open) return;
+    setResidentId(record?.resident_id ?? "");
+    setRecordedAt(record ? toLocal(record.recorded_at) : localNow());
+    setSys(str(record?.bp_systolic ?? null));
+    setDia(str(record?.bp_diastolic ?? null));
+    setPulse(str(record?.pulse ?? null));
+    setTemp(str(record?.temperature_c ?? null));
+    setSugar(str(record?.blood_sugar ?? null));
+    setWeight(str(record?.weight_kg ?? null));
+    setNote(record?.note ?? "");
+  }, [open, record]);
 
   const submit = async () => {
     if (!residentId) {
       toast.error("Choose the resident these readings belong to.");
       return;
     }
+    const values = {
+      resident_id: residentId,
+      recorded_at: new Date(recordedAt).toISOString(),
+      bp_systolic: num(sys),
+      bp_diastolic: num(dia),
+      pulse: num(pulse),
+      temperature_c: num(temp),
+      blood_sugar: num(sugar),
+      weight_kg: num(weight),
+      note: note.trim() || null,
+    };
     try {
-      await create.mutateAsync({
-        resident_id: residentId,
-        recorded_at: new Date(recordedAt).toISOString(),
-        bp_systolic: num(sys),
-        bp_diastolic: num(dia),
-        pulse: num(pulse),
-        temperature_c: num(temp),
-        blood_sugar: num(sugar),
-        weight_kg: num(weight),
-        note: note.trim() || null,
-      });
-      toast.success("Observation recorded.");
-      setSys("");
-      setDia("");
-      setPulse("");
-      setTemp("");
-      setSugar("");
-      setWeight("");
-      setNote("");
-      setRecordedAt(localNow());
+      if (record) {
+        await update.mutateAsync({ id: record.id, values });
+        toast.success("Observation updated.");
+      } else {
+        await create.mutateAsync(values);
+        toast.success("Observation recorded.");
+      }
       setOpen(false);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not save the observation.");
@@ -81,16 +102,25 @@ export function ObservationFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <HeartPulse className="size-4" />
-          Record vitals
-        </Button>
+        {isEdit ? (
+          <Button variant="ghost" size="sm">
+            <Pencil className="size-4" />
+            Edit
+          </Button>
+        ) : (
+          <Button>
+            <HeartPulse className="size-4" />
+            Record vitals
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Record vitals</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit vitals" : "Record vitals"}</DialogTitle>
           <DialogDescription>
-            Fill in only what was actually measured. Blank fields stay empty in the record.
+            {isEdit
+              ? "Correct any reading that was entered wrongly."
+              : "Fill in only what was actually measured. Blank fields stay empty in the record."}
           </DialogDescription>
         </DialogHeader>
 
@@ -210,8 +240,8 @@ export function ObservationFormDialog() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={submit} disabled={create.isPending}>
-            {create.isPending ? "Saving…" : "Save observation"}
+          <Button onClick={submit} disabled={pending}>
+            {pending ? "Saving…" : isEdit ? "Save changes" : "Save observation"}
           </Button>
         </DialogFooter>
       </DialogContent>

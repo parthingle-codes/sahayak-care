@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Stethoscope } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Pencil, Stethoscope } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -22,10 +22,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateCondition, useResidents } from "@/features/care/queries";
+import {
+  useCreateCondition,
+  useResidents,
+  useUpdateCondition,
+  type Condition,
+} from "@/features/care/queries";
 
-/** Adds an existing, already-diagnosed condition to a resident's record. */
-export function ConditionFormDialog() {
+/** Adds or edits an already-diagnosed condition on a resident's record. */
+export function ConditionFormDialog({ record }: { record?: Condition }) {
+  const isEdit = Boolean(record);
   const [open, setOpen] = useState(false);
   const [residentId, setResidentId] = useState("");
   const [condition, setCondition] = useState("");
@@ -33,6 +39,16 @@ export function ConditionFormDialog() {
   const [notes, setNotes] = useState("");
   const { data: residents = [], isLoading } = useResidents();
   const create = useCreateCondition();
+  const update = useUpdateCondition();
+  const pending = create.isPending || update.isPending;
+
+  useEffect(() => {
+    if (!open) return;
+    setResidentId(record?.resident_id ?? "");
+    setCondition(record?.condition ?? "");
+    setDiagnosedOn(record?.diagnosed_on ?? "");
+    setNotes(record?.notes ?? "");
+  }, [open, record]);
 
   const submit = async () => {
     if (!residentId) {
@@ -43,17 +59,20 @@ export function ConditionFormDialog() {
       toast.error("Please enter the condition.");
       return;
     }
+    const values = {
+      resident_id: residentId,
+      condition: condition.trim(),
+      diagnosed_on: diagnosedOn || null,
+      notes: notes.trim() || null,
+    };
     try {
-      await create.mutateAsync({
-        resident_id: residentId,
-        condition: condition.trim(),
-        diagnosed_on: diagnosedOn || null,
-        notes: notes.trim() || null,
-      });
-      toast.success("Medical condition added.");
-      setCondition("");
-      setDiagnosedOn("");
-      setNotes("");
+      if (record) {
+        await update.mutateAsync({ id: record.id, values });
+        toast.success("Condition updated.");
+      } else {
+        await create.mutateAsync(values);
+        toast.success("Medical condition added.");
+      }
       setOpen(false);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not save the condition.");
@@ -63,14 +82,21 @@ export function ConditionFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          <Stethoscope className="size-4" />
-          Add medical condition
-        </Button>
+        {isEdit ? (
+          <Button variant="ghost" size="sm">
+            <Pencil className="size-4" />
+            Edit
+          </Button>
+        ) : (
+          <Button variant="outline">
+            <Stethoscope className="size-4" />
+            Add medical condition
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Add medical condition</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit medical condition" : "Add medical condition"}</DialogTitle>
           <DialogDescription>
             Record a condition already diagnosed by a doctor. SAHAAYAK never diagnoses.
           </DialogDescription>
@@ -134,8 +160,8 @@ export function ConditionFormDialog() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={submit} disabled={create.isPending}>
-            {create.isPending ? "Saving…" : "Save condition"}
+          <Button onClick={submit} disabled={pending}>
+            {pending ? "Saving…" : isEdit ? "Save changes" : "Save condition"}
           </Button>
         </DialogFooter>
       </DialogContent>
