@@ -72,7 +72,7 @@ function ResidentsPage() {
           description={
             isAdmin
               ? "Add the first resident to start recording health and medical records."
-              : "An administrator needs to add residents before care records can be recorded."
+              : "Add the first resident to start recording health and medical records."
           }
           action={<ResidentFormDialog />}
         />
@@ -87,6 +87,7 @@ function ResidentsPage() {
                 <TableHead>Mobility</TableHead>
                 <TableHead>Admitted</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead className="text-right">Edit</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -102,6 +103,9 @@ function ResidentsPage() {
                       {r.status}
                     </Badge>
                   </TableCell>
+                  <TableCell className="text-right">
+                    <ResidentFormDialog resident={r} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -111,3 +115,4 @@ function ResidentsPage() {
     </>
   );
 }
+
