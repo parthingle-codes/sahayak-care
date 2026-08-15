@@ -145,6 +145,7 @@ function HealthRecordsPage() {
                       <TableHead>Condition</TableHead>
                       <TableHead>Diagnosed on</TableHead>
                       <TableHead>Notes</TableHead>
+                      <TableHead className="text-right">Edit</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -160,8 +161,12 @@ function HealthRecordsPage() {
                         <TableCell className="max-w-[18rem] text-muted-foreground">
                           {c.notes ?? "—"}
                         </TableCell>
+                        <TableCell className="text-right">
+                          <ConditionFormDialog record={c} />
+                        </TableCell>
                       </TableRow>
                     ))}
+
                   </TableBody>
                 </Table>
               </div>
