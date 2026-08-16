@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Settings as SettingsIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -5,6 +6,9 @@ import { toast } from "sonner";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -21,7 +25,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useSetStaffRole, useStaff } from "@/features/care/queries";
+import {
+  useCareSettings,
+  useSetStaffRole,
+  useStaff,
+  useUpdateCareSettings,
+} from "@/features/care/queries";
 import { useAuth } from "@/hooks/use-auth";
 import type { Role } from "@/lib/navigation";
 
@@ -39,6 +48,57 @@ export const Route = createFileRoute("/_shell/settings")({
   }),
   component: SettingsPage,
 });
+
+function ObservationCycleCard() {
+  const { data: settings } = useCareSettings();
+  const update = useUpdateCareSettings();
+  const [days, setDays] = useState("");
+
+  useEffect(() => {
+    if (settings) setDays(String(settings.observation_interval_days));
+  }, [settings]);
+
+  const save = async () => {
+    const value = Number(days);
+    if (!Number.isInteger(value) || value < 1 || value > 365) {
+      toast.error("Enter a cycle length between 1 and 365 days.");
+      return;
+    }
+    try {
+      await update.mutateAsync(value);
+      toast.success("Observation cycle updated.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not save the setting.");
+    }
+  };
+
+  return (
+    <div className="surface-card mb-6 p-5">
+      <h2 className="font-display text-lg font-semibold">Medical observation cycle</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        How many days between routine medical observations. New appointment dates are suggested from
+        this value and can still be changed per resident.
+      </p>
+      <div className="mt-4 flex flex-wrap items-end gap-3">
+        <div className="grid gap-2">
+          <Label htmlFor="cycle-days">Days between observations</Label>
+          <Input
+            id="cycle-days"
+            type="number"
+            min={1}
+            max={365}
+            value={days}
+            onChange={(e) => setDays(e.target.value)}
+            className="w-32"
+          />
+        </div>
+        <Button onClick={save} disabled={update.isPending}>
+          {update.isPending ? "Saving…" : "Save cycle"}
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 function SettingsPage() {
   const { isAdmin, user } = useAuth();
@@ -61,10 +121,12 @@ function SettingsPage() {
         title="Settings"
         description={
           isAdmin
-            ? "Staff accounts and role assignment. Caregivers and admins can both add residents and record care."
+            ? "Staff accounts, role assignment and the facility's medical observation cycle."
             : "Your profile and personal preferences."
         }
       />
+
+      {isAdmin ? <ObservationCycleCard /> : null}
 
       {!isAdmin ? (
         <EmptyState

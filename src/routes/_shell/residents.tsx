@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 
 import { ResidentFormDialog } from "@/components/care/ResidentFormDialog";
@@ -93,7 +93,15 @@ function ResidentsPage() {
             <TableBody>
               {residents.map((r) => (
                 <TableRow key={r.id}>
-                  <TableCell className="font-medium">{r.full_name}</TableCell>
+                  <TableCell className="font-medium">
+                    <Link
+                      to="/residents/$id"
+                      params={{ id: r.id }}
+                      className="underline-offset-4 hover:underline"
+                    >
+                      {r.full_name}
+                    </Link>
+                  </TableCell>
                   <TableCell>{age(r.date_of_birth)}</TableCell>
                   <TableCell>{r.room_label ?? "—"}</TableCell>
                   <TableCell>{mobilityLabels[r.mobility] ?? r.mobility}</TableCell>

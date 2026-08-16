@@ -5,7 +5,6 @@ import {
   Pill,
   CalendarClock,
   BedDouble,
-  UserRoundCheck,
   FileBarChart,
   Settings,
   type LucideIcon,
@@ -57,10 +56,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Facility",
-    items: [
-      { label: "Rooms & Beds", to: "/rooms", icon: BedDouble, roles: ["admin"] },
-      { label: "Visitors", to: "/visitors", icon: UserRoundCheck, roles: ["admin", "caregiver"] },
-    ],
+    items: [{ label: "Rooms & Beds", to: "/rooms", icon: BedDouble, roles: ["admin"] }],
   },
   {
     label: "Insights",

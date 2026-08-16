@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      care_settings: {
+        Row: {
+          created_at: string
+          id: boolean
+          observation_interval_days: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: boolean
+          observation_interval_days?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: boolean
+          observation_interval_days?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       health_observations: {
         Row: {
           blood_sugar: number | null
@@ -63,6 +84,56 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "health_observations_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medical_appointments: {
+        Row: {
+          created_at: string
+          doctor_name: string | null
+          id: string
+          next_due_on: string | null
+          notes: string | null
+          reason: string | null
+          recorded_by: string | null
+          resident_id: string
+          scheduled_on: string
+          status: Database["public"]["Enums"]["appointment_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          doctor_name?: string | null
+          id?: string
+          next_due_on?: string | null
+          notes?: string | null
+          reason?: string | null
+          recorded_by?: string | null
+          resident_id: string
+          scheduled_on?: string
+          status?: Database["public"]["Enums"]["appointment_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          doctor_name?: string | null
+          id?: string
+          next_due_on?: string | null
+          notes?: string | null
+          reason?: string | null
+          recorded_by?: string | null
+          resident_id?: string
+          scheduled_on?: string
+          status?: Database["public"]["Enums"]["appointment_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_appointments_resident_id_fkey"
             columns: ["resident_id"]
             isOneToOne: false
             referencedRelation: "residents"
@@ -237,6 +308,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "caregiver"
+      appointment_status: "upcoming" | "completed" | "missed"
       gender_type: "male" | "female" | "other"
       mobility_level: "independent" | "walker" | "wheelchair" | "bedridden"
       resident_status: "active" | "discharged" | "deceased"
@@ -368,6 +440,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "caregiver"],
+      appointment_status: ["upcoming", "completed", "missed"],
       gender_type: ["male", "female", "other"],
       mobility_level: ["independent", "walker", "wheelchair", "bedridden"],
       resident_status: ["active", "discharged", "deceased"],
