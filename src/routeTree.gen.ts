@@ -20,7 +20,7 @@ import { Route as ShellReportsRouteImport } from './routes/_shell/reports'
 import { Route as ShellResidentsRouteImport } from './routes/_shell/residents'
 import { Route as ShellRoomsRouteImport } from './routes/_shell/rooms'
 import { Route as ShellSettingsRouteImport } from './routes/_shell/settings'
-import { Route as ShellVisitorsRouteImport } from './routes/_shell/visitors'
+import { Route as ShellResidentsIdRouteImport } from './routes/_shell/residents.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,10 +76,10 @@ const ShellSettingsRoute = ShellSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => ShellRouteRoute,
 } as any)
-const ShellVisitorsRoute = ShellVisitorsRouteImport.update({
-  id: '/visitors',
-  path: '/visitors',
-  getParentRoute: () => ShellRouteRoute,
+const ShellResidentsIdRoute = ShellResidentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ShellResidentsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -90,10 +90,10 @@ export interface FileRoutesByFullPath {
   '/health-records': typeof ShellHealthRecordsRoute
   '/medicines': typeof ShellMedicinesRoute
   '/reports': typeof ShellReportsRoute
-  '/residents': typeof ShellResidentsRoute
+  '/residents': typeof ShellResidentsRouteWithChildren
   '/rooms': typeof ShellRoomsRoute
   '/settings': typeof ShellSettingsRoute
-  '/visitors': typeof ShellVisitorsRoute
+  '/residents/$id': typeof ShellResidentsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -103,10 +103,10 @@ export interface FileRoutesByTo {
   '/health-records': typeof ShellHealthRecordsRoute
   '/medicines': typeof ShellMedicinesRoute
   '/reports': typeof ShellReportsRoute
-  '/residents': typeof ShellResidentsRoute
+  '/residents': typeof ShellResidentsRouteWithChildren
   '/rooms': typeof ShellRoomsRoute
   '/settings': typeof ShellSettingsRoute
-  '/visitors': typeof ShellVisitorsRoute
+  '/residents/$id': typeof ShellResidentsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -118,10 +118,10 @@ export interface FileRoutesById {
   '/_shell/health-records': typeof ShellHealthRecordsRoute
   '/_shell/medicines': typeof ShellMedicinesRoute
   '/_shell/reports': typeof ShellReportsRoute
-  '/_shell/residents': typeof ShellResidentsRoute
+  '/_shell/residents': typeof ShellResidentsRouteWithChildren
   '/_shell/rooms': typeof ShellRoomsRoute
   '/_shell/settings': typeof ShellSettingsRoute
-  '/_shell/visitors': typeof ShellVisitorsRoute
+  '/_shell/residents/$id': typeof ShellResidentsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -136,7 +136,7 @@ export interface FileRouteTypes {
     | '/residents'
     | '/rooms'
     | '/settings'
-    | '/visitors'
+    | '/residents/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,7 +149,7 @@ export interface FileRouteTypes {
     | '/residents'
     | '/rooms'
     | '/settings'
-    | '/visitors'
+    | '/residents/$id'
   id:
     | '__root__'
     | '/'
@@ -163,7 +163,7 @@ export interface FileRouteTypes {
     | '/_shell/residents'
     | '/_shell/rooms'
     | '/_shell/settings'
-    | '/_shell/visitors'
+    | '/_shell/residents/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -251,15 +251,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellSettingsRouteImport
       parentRoute: typeof ShellRouteRoute
     }
-    '/_shell/visitors': {
-      id: '/_shell/visitors'
-      path: '/visitors'
-      fullPath: '/visitors'
-      preLoaderRoute: typeof ShellVisitorsRouteImport
-      parentRoute: typeof ShellRouteRoute
+    '/_shell/residents/$id': {
+      id: '/_shell/residents/$id'
+      path: '/$id'
+      fullPath: '/residents/$id'
+      preLoaderRoute: typeof ShellResidentsIdRouteImport
+      parentRoute: typeof ShellResidentsRoute
     }
   }
 }
+
+interface ShellResidentsRouteChildren {
+  ShellResidentsIdRoute: typeof ShellResidentsIdRoute
+}
+
+const ShellResidentsRouteChildren: ShellResidentsRouteChildren = {
+  ShellResidentsIdRoute: ShellResidentsIdRoute,
+}
+
+const ShellResidentsRouteWithChildren = ShellResidentsRoute._addFileChildren(
+  ShellResidentsRouteChildren,
+)
 
 interface ShellRouteRouteChildren {
   ShellAppointmentsRoute: typeof ShellAppointmentsRoute
@@ -267,10 +279,9 @@ interface ShellRouteRouteChildren {
   ShellHealthRecordsRoute: typeof ShellHealthRecordsRoute
   ShellMedicinesRoute: typeof ShellMedicinesRoute
   ShellReportsRoute: typeof ShellReportsRoute
-  ShellResidentsRoute: typeof ShellResidentsRoute
+  ShellResidentsRoute: typeof ShellResidentsRouteWithChildren
   ShellRoomsRoute: typeof ShellRoomsRoute
   ShellSettingsRoute: typeof ShellSettingsRoute
-  ShellVisitorsRoute: typeof ShellVisitorsRoute
 }
 
 const ShellRouteRouteChildren: ShellRouteRouteChildren = {
@@ -279,10 +290,9 @@ const ShellRouteRouteChildren: ShellRouteRouteChildren = {
   ShellHealthRecordsRoute: ShellHealthRecordsRoute,
   ShellMedicinesRoute: ShellMedicinesRoute,
   ShellReportsRoute: ShellReportsRoute,
-  ShellResidentsRoute: ShellResidentsRoute,
+  ShellResidentsRoute: ShellResidentsRouteWithChildren,
   ShellRoomsRoute: ShellRoomsRoute,
   ShellSettingsRoute: ShellSettingsRoute,
-  ShellVisitorsRoute: ShellVisitorsRoute,
 }
 
 const ShellRouteRouteWithChildren = ShellRouteRoute._addFileChildren(

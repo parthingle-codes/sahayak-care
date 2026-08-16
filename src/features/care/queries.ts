@@ -204,3 +204,91 @@ export function useUpdateCondition() {
     onSuccess: () => void qc.invalidateQueries({ queryKey: ["medical_conditions"] }),
   });
 }
+
+export type Appointment = Tables<"medical_appointments">;
+export type CareSettings = Tables<"care_settings">;
+
+/**
+ * Facility-wide care settings. Holds the medical observation cycle length,
+ * so the 14-day rhythm is data, not a hard-coded rule.
+ */
+export function useCareSettings() {
+  return useQuery({
+    queryKey: ["care_settings"],
+    queryFn: async (): Promise<CareSettings | null> => {
+      const { data, error } = await supabase.from("care_settings").select("*").maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+/** Admin-only: change the observation cycle length. */
+export function useUpdateCareSettings() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (days: number) => {
+      const { error } = await supabase
+        .from("care_settings")
+        .update({ observation_interval_days: days })
+        .eq("id", true);
+      if (error) throw error;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["care_settings"] }),
+  });
+}
+
+/** Medical appointments / observations, soonest first. */
+export function useAppointments() {
+  return useQuery({
+    queryKey: ["medical_appointments"],
+    queryFn: async (): Promise<Appointment[]> => {
+      const { data, error } = await supabase
+        .from("medical_appointments")
+        .select("*")
+        .order("scheduled_on", { ascending: true });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+}
+
+export function useCreateAppointment() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (values: Omit<TablesInsert<"medical_appointments">, "recorded_by">) => {
+      const { data: auth } = await supabase.auth.getUser();
+      const { data, error } = await supabase
+        .from("medical_appointments")
+        .insert({ ...values, recorded_by: auth.user?.id ?? null })
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["medical_appointments"] }),
+  });
+}
+
+export function useUpdateAppointment() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      values,
+    }: {
+      id: string;
+      values: TablesUpdate<"medical_appointments">;
+    }) => {
+      const { data, error } = await supabase
+        .from("medical_appointments")
+        .update(values)
+        .eq("id", id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["medical_appointments"] }),
+  });
+}
