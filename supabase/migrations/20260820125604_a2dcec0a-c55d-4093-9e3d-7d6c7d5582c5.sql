@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.sync_bed_status() FROM PUBLIC, anon, authenticated;
