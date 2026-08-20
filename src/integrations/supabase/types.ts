@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      beds: {
+        Row: {
+          bed_number: string
+          created_at: string
+          id: string
+          room_id: string
+          status: Database["public"]["Enums"]["bed_status"]
+          updated_at: string
+        }
+        Insert: {
+          bed_number: string
+          created_at?: string
+          id?: string
+          room_id: string
+          status?: Database["public"]["Enums"]["bed_status"]
+          updated_at?: string
+        }
+        Update: {
+          bed_number?: string
+          created_at?: string
+          id?: string
+          room_id?: string
+          status?: Database["public"]["Enums"]["bed_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "beds_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       care_settings: {
         Row: {
           created_at: string
@@ -182,6 +217,116 @@ export type Database = {
           },
         ]
       }
+      medicine_administrations: {
+        Row: {
+          administered_at: string | null
+          created_at: string
+          id: string
+          medicine_id: string
+          notes: string | null
+          recorded_by: string | null
+          resident_id: string
+          scheduled_at: string
+          status: Database["public"]["Enums"]["dose_status"]
+          updated_at: string
+        }
+        Insert: {
+          administered_at?: string | null
+          created_at?: string
+          id?: string
+          medicine_id: string
+          notes?: string | null
+          recorded_by?: string | null
+          resident_id: string
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["dose_status"]
+          updated_at?: string
+        }
+        Update: {
+          administered_at?: string | null
+          created_at?: string
+          id?: string
+          medicine_id?: string
+          notes?: string | null
+          recorded_by?: string | null
+          resident_id?: string
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["dose_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_administrations_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicine_administrations_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicines: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          dosage: string | null
+          end_date: string | null
+          frequency: string | null
+          id: string
+          instructions: string | null
+          medicine_name: string
+          resident_id: string
+          scheduled_times: string[]
+          start_date: string
+          status: Database["public"]["Enums"]["medicine_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          dosage?: string | null
+          end_date?: string | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          medicine_name: string
+          resident_id: string
+          scheduled_times?: string[]
+          start_date?: string
+          status?: Database["public"]["Enums"]["medicine_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          dosage?: string | null
+          end_date?: string | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          medicine_name?: string
+          resident_id?: string
+          scheduled_times?: string[]
+          start_date?: string
+          status?: Database["public"]["Enums"]["medicine_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicines_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -205,6 +350,54 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      resident_bed_assignments: {
+        Row: {
+          assigned_at: string
+          assigned_by: string | null
+          bed_id: string
+          created_at: string
+          id: string
+          released_at: string | null
+          resident_id: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by?: string | null
+          bed_id: string
+          created_at?: string
+          id?: string
+          released_at?: string | null
+          resident_id: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string | null
+          bed_id?: string
+          created_at?: string
+          id?: string
+          released_at?: string | null
+          resident_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resident_bed_assignments_bed_id_fkey"
+            columns: ["bed_id"]
+            isOneToOne: false
+            referencedRelation: "beds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_bed_assignments_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       residents: {
         Row: {
@@ -247,6 +440,36 @@ export type Database = {
           notes?: string | null
           room_label?: string | null
           status?: Database["public"]["Enums"]["resident_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rooms: {
+        Row: {
+          capacity: number
+          created_at: string
+          id: string
+          room_number: string
+          room_type: string
+          status: Database["public"]["Enums"]["room_status"]
+          updated_at: string
+        }
+        Insert: {
+          capacity?: number
+          created_at?: string
+          id?: string
+          room_number: string
+          room_type?: string
+          status?: Database["public"]["Enums"]["room_status"]
+          updated_at?: string
+        }
+        Update: {
+          capacity?: number
+          created_at?: string
+          id?: string
+          room_number?: string
+          room_type?: string
+          status?: Database["public"]["Enums"]["room_status"]
           updated_at?: string
         }
         Relationships: []
@@ -309,9 +532,13 @@ export type Database = {
     Enums: {
       app_role: "admin" | "caregiver"
       appointment_status: "upcoming" | "completed" | "missed"
+      bed_status: "available" | "occupied" | "maintenance"
+      dose_status: "pending" | "given" | "missed"
       gender_type: "male" | "female" | "other"
+      medicine_status: "active" | "paused" | "stopped"
       mobility_level: "independent" | "walker" | "wheelchair" | "bedridden"
       resident_status: "active" | "discharged" | "deceased"
+      room_status: "available" | "full" | "maintenance"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -441,9 +668,13 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "caregiver"],
       appointment_status: ["upcoming", "completed", "missed"],
+      bed_status: ["available", "occupied", "maintenance"],
+      dose_status: ["pending", "given", "missed"],
       gender_type: ["male", "female", "other"],
+      medicine_status: ["active", "paused", "stopped"],
       mobility_level: ["independent", "walker", "wheelchair", "bedridden"],
       resident_status: ["active", "discharged", "deceased"],
+      room_status: ["available", "full", "maintenance"],
     },
   },
 } as const
