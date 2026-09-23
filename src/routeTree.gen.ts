@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteRouteImport } from './routes/_shell/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ShellAppointmentsRouteImport } from './routes/_shell/appointments'
 import { Route as ShellDashboardRouteImport } from './routes/_shell/dashboard'
 import { Route as ShellHealthRecordsRouteImport } from './routes/_shell/health-records'
 import { Route as ShellMedicinesRouteImport } from './routes/_shell/medicines'
+import { Route as ShellRegistrationsRouteImport } from './routes/_shell/registrations'
 import { Route as ShellReportsRouteImport } from './routes/_shell/reports'
 import { Route as ShellResidentsRouteImport } from './routes/_shell/residents'
 import { Route as ShellRoomsRouteImport } from './routes/_shell/rooms'
@@ -36,6 +38,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShellAppointmentsRoute = ShellAppointmentsRouteImport.update({
   id: '/appointments',
   path: '/appointments',
@@ -54,6 +61,11 @@ const ShellHealthRecordsRoute = ShellHealthRecordsRouteImport.update({
 const ShellMedicinesRoute = ShellMedicinesRouteImport.update({
   id: '/medicines',
   path: '/medicines',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellRegistrationsRoute = ShellRegistrationsRouteImport.update({
+  id: '/registrations',
+  path: '/registrations',
   getParentRoute: () => ShellRouteRoute,
 } as any)
 const ShellReportsRoute = ShellReportsRouteImport.update({
@@ -85,10 +97,12 @@ const ShellResidentsIdRoute = ShellResidentsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/register': typeof RegisterRoute
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/health-records': typeof ShellHealthRecordsRoute
   '/medicines': typeof ShellMedicinesRoute
+  '/registrations': typeof ShellRegistrationsRoute
   '/reports': typeof ShellReportsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
   '/rooms': typeof ShellRoomsRoute
@@ -98,10 +112,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/register': typeof RegisterRoute
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/health-records': typeof ShellHealthRecordsRoute
   '/medicines': typeof ShellMedicinesRoute
+  '/registrations': typeof ShellRegistrationsRoute
   '/reports': typeof ShellReportsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
   '/rooms': typeof ShellRoomsRoute
@@ -113,10 +129,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/register': typeof RegisterRoute
   '/_shell/appointments': typeof ShellAppointmentsRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/health-records': typeof ShellHealthRecordsRoute
   '/_shell/medicines': typeof ShellMedicinesRoute
+  '/_shell/registrations': typeof ShellRegistrationsRoute
   '/_shell/reports': typeof ShellReportsRoute
   '/_shell/residents': typeof ShellResidentsRouteWithChildren
   '/_shell/rooms': typeof ShellRoomsRoute
@@ -128,10 +146,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/register'
     | '/appointments'
     | '/dashboard'
     | '/health-records'
     | '/medicines'
+    | '/registrations'
     | '/reports'
     | '/residents'
     | '/rooms'
@@ -141,10 +161,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/register'
     | '/appointments'
     | '/dashboard'
     | '/health-records'
     | '/medicines'
+    | '/registrations'
     | '/reports'
     | '/residents'
     | '/rooms'
@@ -155,10 +177,12 @@ export interface FileRouteTypes {
     | '/'
     | '/_shell'
     | '/auth'
+    | '/register'
     | '/_shell/appointments'
     | '/_shell/dashboard'
     | '/_shell/health-records'
     | '/_shell/medicines'
+    | '/_shell/registrations'
     | '/_shell/reports'
     | '/_shell/residents'
     | '/_shell/rooms'
@@ -170,6 +194,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ShellRouteRoute: typeof ShellRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -193,6 +218,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_shell/appointments': {
@@ -221,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/medicines'
       fullPath: '/medicines'
       preLoaderRoute: typeof ShellMedicinesRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/registrations': {
+      id: '/_shell/registrations'
+      path: '/registrations'
+      fullPath: '/registrations'
+      preLoaderRoute: typeof ShellRegistrationsRouteImport
       parentRoute: typeof ShellRouteRoute
     }
     '/_shell/reports': {
@@ -278,6 +317,7 @@ interface ShellRouteRouteChildren {
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellHealthRecordsRoute: typeof ShellHealthRecordsRoute
   ShellMedicinesRoute: typeof ShellMedicinesRoute
+  ShellRegistrationsRoute: typeof ShellRegistrationsRoute
   ShellReportsRoute: typeof ShellReportsRoute
   ShellResidentsRoute: typeof ShellResidentsRouteWithChildren
   ShellRoomsRoute: typeof ShellRoomsRoute
@@ -289,6 +329,7 @@ const ShellRouteRouteChildren: ShellRouteRouteChildren = {
   ShellDashboardRoute: ShellDashboardRoute,
   ShellHealthRecordsRoute: ShellHealthRecordsRoute,
   ShellMedicinesRoute: ShellMedicinesRoute,
+  ShellRegistrationsRoute: ShellRegistrationsRoute,
   ShellReportsRoute: ShellReportsRoute,
   ShellResidentsRoute: ShellResidentsRouteWithChildren,
   ShellRoomsRoute: ShellRoomsRoute,
@@ -303,6 +344,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ShellRouteRoute: ShellRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

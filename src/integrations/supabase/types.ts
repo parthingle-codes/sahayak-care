@@ -399,6 +399,89 @@ export type Database = {
           },
         ]
       }
+      resident_registrations: {
+        Row: {
+          contact_address: string | null
+          contact_email: string | null
+          contact_name: string
+          contact_phone: string
+          contact_relationship: string | null
+          created_at: string
+          current_medicines: string | null
+          date_of_birth: string | null
+          full_name: string
+          gender: Database["public"]["Enums"]["gender_type"] | null
+          id: string
+          known_conditions: string | null
+          mobility: Database["public"]["Enums"]["mobility_level"]
+          preferred_admission_date: string | null
+          reference: string
+          resident_id: string | null
+          resident_notes: string | null
+          review_note: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["registration_status"]
+          updated_at: string
+        }
+        Insert: {
+          contact_address?: string | null
+          contact_email?: string | null
+          contact_name: string
+          contact_phone: string
+          contact_relationship?: string | null
+          created_at?: string
+          current_medicines?: string | null
+          date_of_birth?: string | null
+          full_name: string
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          id?: string
+          known_conditions?: string | null
+          mobility?: Database["public"]["Enums"]["mobility_level"]
+          preferred_admission_date?: string | null
+          reference?: string
+          resident_id?: string | null
+          resident_notes?: string | null
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["registration_status"]
+          updated_at?: string
+        }
+        Update: {
+          contact_address?: string | null
+          contact_email?: string | null
+          contact_name?: string
+          contact_phone?: string
+          contact_relationship?: string | null
+          created_at?: string
+          current_medicines?: string | null
+          date_of_birth?: string | null
+          full_name?: string
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          id?: string
+          known_conditions?: string | null
+          mobility?: Database["public"]["Enums"]["mobility_level"]
+          preferred_admission_date?: string | null
+          reference?: string
+          resident_id?: string | null
+          resident_notes?: string | null
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["registration_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resident_registrations_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       residents: {
         Row: {
           admission_date: string
@@ -500,6 +583,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_registration: { Args: { _id: string }; Returns: string }
       ensure_staff_account: {
         Args: { _full_name?: string }
         Returns: Database["public"]["Enums"]["app_role"]
@@ -537,6 +621,7 @@ export type Database = {
       gender_type: "male" | "female" | "other"
       medicine_status: "active" | "paused" | "stopped"
       mobility_level: "independent" | "walker" | "wheelchair" | "bedridden"
+      registration_status: "pending" | "approved" | "rejected"
       resident_status: "active" | "discharged" | "deceased"
       room_status: "available" | "full" | "maintenance"
     }
@@ -673,6 +758,7 @@ export const Constants = {
       gender_type: ["male", "female", "other"],
       medicine_status: ["active", "paused", "stopped"],
       mobility_level: ["independent", "walker", "wheelchair", "bedridden"],
+      registration_status: ["pending", "approved", "rejected"],
       resident_status: ["active", "discharged", "deceased"],
       room_status: ["available", "full", "maintenance"],
     },
