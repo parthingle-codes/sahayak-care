@@ -16,7 +16,6 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ShellAppointmentsRouteImport } from './routes/_shell/appointments'
 import { Route as ShellDashboardRouteImport } from './routes/_shell/dashboard'
 import { Route as ShellHealthRecordsRouteImport } from './routes/_shell/health-records'
-import { Route as ShellMedicinesRouteImport } from './routes/_shell/medicines'
 import { Route as ShellRegistrationsRouteImport } from './routes/_shell/registrations'
 import { Route as ShellReportsRouteImport } from './routes/_shell/reports'
 import { Route as ShellResidentsRouteImport } from './routes/_shell/residents'
@@ -58,11 +57,6 @@ const ShellHealthRecordsRoute = ShellHealthRecordsRouteImport.update({
   path: '/health-records',
   getParentRoute: () => ShellRouteRoute,
 } as any)
-const ShellMedicinesRoute = ShellMedicinesRouteImport.update({
-  id: '/medicines',
-  path: '/medicines',
-  getParentRoute: () => ShellRouteRoute,
-} as any)
 const ShellRegistrationsRoute = ShellRegistrationsRouteImport.update({
   id: '/registrations',
   path: '/registrations',
@@ -101,7 +95,6 @@ export interface FileRoutesByFullPath {
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/health-records': typeof ShellHealthRecordsRoute
-  '/medicines': typeof ShellMedicinesRoute
   '/registrations': typeof ShellRegistrationsRoute
   '/reports': typeof ShellReportsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
@@ -116,7 +109,6 @@ export interface FileRoutesByTo {
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/health-records': typeof ShellHealthRecordsRoute
-  '/medicines': typeof ShellMedicinesRoute
   '/registrations': typeof ShellRegistrationsRoute
   '/reports': typeof ShellReportsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
@@ -133,7 +125,6 @@ export interface FileRoutesById {
   '/_shell/appointments': typeof ShellAppointmentsRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/health-records': typeof ShellHealthRecordsRoute
-  '/_shell/medicines': typeof ShellMedicinesRoute
   '/_shell/registrations': typeof ShellRegistrationsRoute
   '/_shell/reports': typeof ShellReportsRoute
   '/_shell/residents': typeof ShellResidentsRouteWithChildren
@@ -150,7 +141,6 @@ export interface FileRouteTypes {
     | '/appointments'
     | '/dashboard'
     | '/health-records'
-    | '/medicines'
     | '/registrations'
     | '/reports'
     | '/residents'
@@ -165,7 +155,6 @@ export interface FileRouteTypes {
     | '/appointments'
     | '/dashboard'
     | '/health-records'
-    | '/medicines'
     | '/registrations'
     | '/reports'
     | '/residents'
@@ -181,7 +170,6 @@ export interface FileRouteTypes {
     | '/_shell/appointments'
     | '/_shell/dashboard'
     | '/_shell/health-records'
-    | '/_shell/medicines'
     | '/_shell/registrations'
     | '/_shell/reports'
     | '/_shell/residents'
@@ -248,13 +236,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellHealthRecordsRouteImport
       parentRoute: typeof ShellRouteRoute
     }
-    '/_shell/medicines': {
-      id: '/_shell/medicines'
-      path: '/medicines'
-      fullPath: '/medicines'
-      preLoaderRoute: typeof ShellMedicinesRouteImport
-      parentRoute: typeof ShellRouteRoute
-    }
     '/_shell/registrations': {
       id: '/_shell/registrations'
       path: '/registrations'
@@ -316,7 +297,6 @@ interface ShellRouteRouteChildren {
   ShellAppointmentsRoute: typeof ShellAppointmentsRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellHealthRecordsRoute: typeof ShellHealthRecordsRoute
-  ShellMedicinesRoute: typeof ShellMedicinesRoute
   ShellRegistrationsRoute: typeof ShellRegistrationsRoute
   ShellReportsRoute: typeof ShellReportsRoute
   ShellResidentsRoute: typeof ShellResidentsRouteWithChildren
@@ -328,7 +308,6 @@ const ShellRouteRouteChildren: ShellRouteRouteChildren = {
   ShellAppointmentsRoute: ShellAppointmentsRoute,
   ShellDashboardRoute: ShellDashboardRoute,
   ShellHealthRecordsRoute: ShellHealthRecordsRoute,
-  ShellMedicinesRoute: ShellMedicinesRoute,
   ShellRegistrationsRoute: ShellRegistrationsRoute,
   ShellReportsRoute: ShellReportsRoute,
   ShellResidentsRoute: ShellResidentsRouteWithChildren,
