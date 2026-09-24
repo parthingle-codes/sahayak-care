@@ -2,7 +2,6 @@ import {
   LayoutDashboard,
   Users,
   HeartPulse,
-  Pill,
   CalendarClock,
   BedDouble,
   FileBarChart,
@@ -54,7 +53,6 @@ export const navGroups: NavGroup[] = [
         icon: HeartPulse,
         roles: ["admin", "caregiver"],
       },
-      { label: "Medicines", to: "/medicines", icon: Pill, roles: ["admin", "caregiver"] },
       {
         label: "Appointments",
         to: "/appointments",
