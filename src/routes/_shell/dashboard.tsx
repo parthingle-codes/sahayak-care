@@ -81,9 +81,20 @@ function DashboardPage() {
         title="What needs attention today"
         description={`Residents are seen on a ${interval}-day medical observation cycle. Overdue checks come first.`}
         actions={
-          <Button asChild variant="outline">
-            <Link to="/appointments">Open appointments</Link>
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button asChild>
+              <Link to="/register" target="_blank">
+                <ClipboardList />
+                Registration form
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/registrations">Registrations</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/appointments">Open appointments</Link>
+            </Button>
+          </div>
         }
       />
 
