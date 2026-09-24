@@ -31,11 +31,6 @@ const highlights = [
     body: "Room and bed, admission details, emergency contacts, medical conditions and care notes, all on one screen.",
   },
   {
-    icon: Pill,
-    title: "Medicine rounds without paperwork",
-    body: "Today's doses are listed by round, so a caregiver can see what is pending and mark it given in one tap.",
-  },
-  {
     icon: ShieldCheck,
     title: "Right access for each staff role",
     body: "Administrators manage the facility; caregivers focus on the residents in their care. Records stay protected.",
