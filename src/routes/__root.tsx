@@ -82,13 +82,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "SAHAAYAK helps small old age homes manage residents, medicines, health records and appointments in one calm, simple platform.",
+          "SAHAAYAK helps small old age homes manage residents, health records and appointments in one calm, simple platform.",
       },
       { property: "og:title", content: "SAHAAYAK — Elderly Care & Health Management" },
       {
         property: "og:description",
         content:
-          "Building technology with compassion: resident records, medicine rounds and daily care in one place.",
+          "Building technology with compassion: resident records and daily care in one place.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

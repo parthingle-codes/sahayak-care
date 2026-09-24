@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeartHandshake, ShieldCheck, Pill, Users, ArrowRight } from "lucide-react";
+import { HeartHandshake, ShieldCheck, Users, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/care-hero.jpg";
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A calm, simple platform for small old age homes: resident records, medicine rounds, health observations, appointments and bed management in one place.",
+          "A calm, simple platform for small old age homes: resident records, health observations, appointments and bed management in one place.",
       },
       { property: "og:title", content: "SAHAAYAK — Smart Elderly Care & Health Management" },
       {
@@ -66,7 +66,7 @@ function LandingPage() {
               Care records that keep up with the people giving the care.
             </h1>
             <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-              SAHAAYAK gives a small old age home one calm place for residents, medicines, health
+              SAHAAYAK gives a small old age home one calm place for residents, health
               observations, appointments and beds — replacing scattered registers and files.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">

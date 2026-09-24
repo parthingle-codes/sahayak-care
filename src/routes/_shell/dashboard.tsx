@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Users,
   AlertTriangle,
-  Pill,
+ 
   CalendarClock,
   HeartPulse,
   CheckCircle2,

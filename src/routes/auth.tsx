@@ -25,7 +25,7 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Sign in to SAHAAYAK to manage residents, medicine rounds, health records and daily care at your elderly care home.",
+          "Sign in to SAHAAYAK to manage residents, health records and daily care at your elderly care home.",
       },
       { property: "og:title", content: "Staff sign in — SAHAAYAK" },
       {
