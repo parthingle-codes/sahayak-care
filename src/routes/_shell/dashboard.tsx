@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, AlertTriangle, Pill, CalendarClock, HeartPulse, CheckCircle2 } from "lucide-react";
+import {
+  Users,
+  AlertTriangle,
+  Pill,
+  CalendarClock,
+  HeartPulse,
+  CheckCircle2,
+  ClipboardList,
+} from "lucide-react";
+import { useRegistrations } from "@/features/registrations/queries";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
@@ -52,6 +61,8 @@ function DashboardPage() {
   const { data: appointments = [] } = useAppointments();
   const { data: observations = [] } = useObservations();
   const { data: settings } = useCareSettings();
+  const { data: registrations = [] } = useRegistrations();
+  const pendingRegistrations = registrations.filter((r) => r.status === "pending").length;
   const interval = settings?.observation_interval_days ?? DEFAULT_OBSERVATION_INTERVAL_DAYS;
 
   const rows = buildRows(appointments, residents);
@@ -97,6 +108,21 @@ function DashboardPage() {
           icon={CheckCircle2}
           tone="done"
         />
+      </div>
+
+      <div className="surface-card mt-4 flex flex-wrap items-center justify-between gap-3 p-4">
+        <div className="flex items-center gap-3">
+          <ClipboardList className="size-5 text-primary" aria-hidden />
+          <div>
+            <p className="font-medium">Pending registrations: {pendingRegistrations}</p>
+            <p className="text-sm text-muted-foreground">
+              Online admission forms waiting for staff review.
+            </p>
+          </div>
+        </div>
+        <Button asChild size="sm" variant="outline">
+          <Link to="/registrations">Review</Link>
+        </Button>
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
