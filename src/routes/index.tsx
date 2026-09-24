@@ -82,7 +82,7 @@ function LandingPage() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/dashboard">Go to dashboard</Link>
+                <Link to="/register">Register a resident</Link>
               </Button>
             </div>
             <p className="mt-6 text-sm text-muted-foreground">

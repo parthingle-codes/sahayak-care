@@ -7,6 +7,7 @@ import {
   BedDouble,
   FileBarChart,
   Settings,
+  ClipboardList,
   type LucideIcon,
 } from "lucide-react";
 
@@ -34,7 +35,15 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "People",
-    items: [{ label: "Residents", to: "/residents", icon: Users, roles: ["admin", "caregiver"] }],
+    items: [
+      { label: "Residents", to: "/residents", icon: Users, roles: ["admin", "caregiver"] },
+      {
+        label: "Registrations",
+        to: "/registrations",
+        icon: ClipboardList,
+        roles: ["admin", "caregiver"],
+      },
+    ],
   },
   {
     label: "Care & Health",
