@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Users,
   AlertTriangle,
-  Pill,
+ 
   CalendarClock,
   HeartPulse,
   CheckCircle2,
@@ -224,12 +224,6 @@ function DashboardPage() {
             </div>
           )}
         </div>
-
-        <EmptyState
-          icon={Pill}
-          title="No medicine rounds yet"
-          description="Once medicines and schedules are set up, pending doses for the current round appear here with a one-tap way to mark them as given."
-        />
       </div>
     </>
   );
