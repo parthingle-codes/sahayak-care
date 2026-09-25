@@ -70,6 +70,66 @@ export type Database = {
         }
         Relationships: []
       }
+      donations: {
+        Row: {
+          amount: number | null
+          created_at: string
+          currency: string
+          description: string | null
+          donation_type: Database["public"]["Enums"]["donation_type"]
+          donor_address: string | null
+          donor_email: string | null
+          donor_name: string
+          donor_phone: string
+          id: string
+          preferred_date: string | null
+          reference: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          staff_note: string | null
+          status: Database["public"]["Enums"]["donation_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          donation_type?: Database["public"]["Enums"]["donation_type"]
+          donor_address?: string | null
+          donor_email?: string | null
+          donor_name: string
+          donor_phone: string
+          id?: string
+          preferred_date?: string | null
+          reference?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          staff_note?: string | null
+          status?: Database["public"]["Enums"]["donation_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          donation_type?: Database["public"]["Enums"]["donation_type"]
+          donor_address?: string | null
+          donor_email?: string | null
+          donor_name?: string
+          donor_phone?: string
+          id?: string
+          preferred_date?: string | null
+          reference?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          staff_note?: string | null
+          status?: Database["public"]["Enums"]["donation_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       health_observations: {
         Row: {
           blood_sugar: number | null
@@ -617,6 +677,14 @@ export type Database = {
       app_role: "admin" | "caregiver"
       appointment_status: "upcoming" | "completed" | "missed"
       bed_status: "available" | "occupied" | "maintenance"
+      donation_status: "pending" | "accepted" | "received" | "declined"
+      donation_type:
+        | "food"
+        | "clothing"
+        | "essentials"
+        | "financial"
+        | "volunteering"
+        | "other"
       dose_status: "pending" | "given" | "missed"
       gender_type: "male" | "female" | "other"
       medicine_status: "active" | "paused" | "stopped"
@@ -754,6 +822,15 @@ export const Constants = {
       app_role: ["admin", "caregiver"],
       appointment_status: ["upcoming", "completed", "missed"],
       bed_status: ["available", "occupied", "maintenance"],
+      donation_status: ["pending", "accepted", "received", "declined"],
+      donation_type: [
+        "food",
+        "clothing",
+        "essentials",
+        "financial",
+        "volunteering",
+        "other",
+      ],
       dose_status: ["pending", "given", "missed"],
       gender_type: ["male", "female", "other"],
       medicine_status: ["active", "paused", "stopped"],

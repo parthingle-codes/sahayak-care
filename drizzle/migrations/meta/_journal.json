@@ -8,6 +8,13 @@
       "when": 1790177872094,
       "tag": "0000_create_resident_registrations",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790323619510,
+      "tag": "0001_create_donations",
+      "breakpoints": true
     }
   ]
 }
