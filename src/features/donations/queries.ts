@@ -20,13 +20,11 @@ export const donationTypeLabels: Record<DonationType, string> = {
 export function useSubmitDonation() {
   return useMutation({
     mutationFn: async (values: TablesInsert<"donations">) => {
-      const { data, error } = await supabase
-        .from("donations")
-        .insert(values)
-        .select("reference")
-        .single();
+      // Public visitors cannot read rows back, so the reference is made here.
+      const reference = `DON-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+      const { error } = await supabase.from("donations").insert({ ...values, reference });
       if (error) throw error;
-      return data;
+      return { reference };
     },
   });
 }

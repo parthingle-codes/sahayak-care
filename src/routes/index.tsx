@@ -79,6 +79,9 @@ function LandingPage() {
               <Button asChild size="lg" variant="outline">
                 <Link to="/register">Register a resident</Link>
               </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link to="/donate">Donate</Link>
+              </Button>
             </div>
             <p className="mt-6 text-sm text-muted-foreground">
               A care-management and record-keeping system. It does not diagnose, prescribe or replace

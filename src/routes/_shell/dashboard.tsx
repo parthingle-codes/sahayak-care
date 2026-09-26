@@ -7,8 +7,10 @@ import {
   HeartPulse,
   CheckCircle2,
   ClipboardList,
+  HandHeart,
 } from "lucide-react";
 import { useRegistrations } from "@/features/registrations/queries";
+import { useDonations } from "@/features/donations/queries";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
@@ -63,6 +65,8 @@ function DashboardPage() {
   const { data: settings } = useCareSettings();
   const { data: registrations = [] } = useRegistrations();
   const pendingRegistrations = registrations.filter((r) => r.status === "pending").length;
+  const { data: donations = [] } = useDonations();
+  const pendingDonations = donations.filter((d) => d.status === "pending").length;
   const interval = settings?.observation_interval_days ?? DEFAULT_OBSERVATION_INTERVAL_DAYS;
 
   const rows = buildRows(appointments, residents);
@@ -133,6 +137,21 @@ function DashboardPage() {
         </div>
         <Button asChild size="sm" variant="outline">
           <Link to="/registrations">Review</Link>
+        </Button>
+      </div>
+
+      <div className="surface-card mt-4 flex flex-wrap items-center justify-between gap-3 p-4">
+        <div className="flex items-center gap-3">
+          <HandHeart className="size-5 text-primary" aria-hidden />
+          <div>
+            <p className="font-medium">Pending donations: {pendingDonations}</p>
+            <p className="text-sm text-muted-foreground">
+              Offers of food, clothing, money or time waiting for staff review.
+            </p>
+          </div>
+        </div>
+        <Button asChild size="sm" variant="outline">
+          <Link to="/donations">Review</Link>
         </Button>
       </div>
 

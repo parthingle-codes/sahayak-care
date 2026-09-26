@@ -7,6 +7,7 @@ import {
   FileBarChart,
   Settings,
   ClipboardList,
+  HandHeart,
   type LucideIcon,
 } from "lucide-react";
 
@@ -42,6 +43,7 @@ export const navGroups: NavGroup[] = [
         icon: ClipboardList,
         roles: ["admin", "caregiver"],
       },
+      { label: "Donations", to: "/donations", icon: HandHeart, roles: ["admin", "caregiver"] },
     ],
   },
   {
