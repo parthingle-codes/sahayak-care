@@ -9,13 +9,13 @@ export type Registration = Tables<"resident_registrations">;
 export function useSubmitRegistration() {
   return useMutation({
     mutationFn: async (values: TablesInsert<"resident_registrations">) => {
-      const { data, error } = await supabase
+      // Public visitors cannot read rows back, so the reference is made here.
+      const reference = `REG-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+      const { error } = await supabase
         .from("resident_registrations")
-        .insert(values)
-        .select("reference")
-        .single();
+        .insert({ ...values, reference });
       if (error) throw error;
-      return data;
+      return { reference };
     },
   });
 }
