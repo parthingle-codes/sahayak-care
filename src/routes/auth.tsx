@@ -90,14 +90,14 @@ function AuthPage() {
           return;
         }
         toast.success("Account created");
-        navigate({ to: "/dashboard", replace: true });
+        navigate({ to: await destinationFor(data.session.user.id), replace: true });
         return;
       }
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       toast.success("Welcome back");
-      navigate({ to: "/dashboard", replace: true });
+      navigate({ to: await destinationFor(data.user.id), replace: true });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not sign you in");
     } finally {
@@ -116,7 +116,10 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/dashboard", replace: true });
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      navigate({ to: await destinationFor(data.session.user.id), replace: true });
+    }
   }
 
   return (
@@ -132,9 +135,9 @@ function AuthPage() {
 
         <Card className="border-border/70 shadow-sm">
           <CardHeader className="text-center">
-            <CardTitle>Staff access</CardTitle>
+            <CardTitle>Sign in</CardTitle>
             <CardDescription>
-              For administrators and caregivers. Residents do not need an account.
+              For administrators, caregivers and family members. Residents do not need an account.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -222,8 +225,8 @@ function AuthPage() {
                 </Button>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  The first account created becomes the care home administrator. Later accounts join
-                  as caregivers.
+                  Family of a resident? Create an account with the same email you gave on the
+                  registration form to see your loved one's updates.
                 </p>
               </>
             )}
