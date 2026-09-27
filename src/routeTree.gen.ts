@@ -19,7 +19,6 @@ import { Route as ShellDashboardRouteImport } from './routes/_shell/dashboard'
 import { Route as ShellDonationsRouteImport } from './routes/_shell/donations'
 import { Route as ShellHealthRecordsRouteImport } from './routes/_shell/health-records'
 import { Route as ShellRegistrationsRouteImport } from './routes/_shell/registrations'
-import { Route as ShellReportsRouteImport } from './routes/_shell/reports'
 import { Route as ShellResidentsRouteImport } from './routes/_shell/residents'
 import { Route as ShellRoomsRouteImport } from './routes/_shell/rooms'
 import { Route as ShellSettingsRouteImport } from './routes/_shell/settings'
@@ -74,11 +73,6 @@ const ShellRegistrationsRoute = ShellRegistrationsRouteImport.update({
   path: '/registrations',
   getParentRoute: () => ShellRouteRoute,
 } as any)
-const ShellReportsRoute = ShellReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => ShellRouteRoute,
-} as any)
 const ShellResidentsRoute = ShellResidentsRouteImport.update({
   id: '/residents',
   path: '/residents',
@@ -110,7 +104,6 @@ export interface FileRoutesByFullPath {
   '/donations': typeof ShellDonationsRoute
   '/health-records': typeof ShellHealthRecordsRoute
   '/registrations': typeof ShellRegistrationsRoute
-  '/reports': typeof ShellReportsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
   '/rooms': typeof ShellRoomsRoute
   '/settings': typeof ShellSettingsRoute
@@ -126,7 +119,6 @@ export interface FileRoutesByTo {
   '/donations': typeof ShellDonationsRoute
   '/health-records': typeof ShellHealthRecordsRoute
   '/registrations': typeof ShellRegistrationsRoute
-  '/reports': typeof ShellReportsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
   '/rooms': typeof ShellRoomsRoute
   '/settings': typeof ShellSettingsRoute
@@ -144,7 +136,6 @@ export interface FileRoutesById {
   '/_shell/donations': typeof ShellDonationsRoute
   '/_shell/health-records': typeof ShellHealthRecordsRoute
   '/_shell/registrations': typeof ShellRegistrationsRoute
-  '/_shell/reports': typeof ShellReportsRoute
   '/_shell/residents': typeof ShellResidentsRouteWithChildren
   '/_shell/rooms': typeof ShellRoomsRoute
   '/_shell/settings': typeof ShellSettingsRoute
@@ -162,7 +153,6 @@ export interface FileRouteTypes {
     | '/donations'
     | '/health-records'
     | '/registrations'
-    | '/reports'
     | '/residents'
     | '/rooms'
     | '/settings'
@@ -178,7 +168,6 @@ export interface FileRouteTypes {
     | '/donations'
     | '/health-records'
     | '/registrations'
-    | '/reports'
     | '/residents'
     | '/rooms'
     | '/settings'
@@ -195,7 +184,6 @@ export interface FileRouteTypes {
     | '/_shell/donations'
     | '/_shell/health-records'
     | '/_shell/registrations'
-    | '/_shell/reports'
     | '/_shell/residents'
     | '/_shell/rooms'
     | '/_shell/settings'
@@ -282,13 +270,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellRegistrationsRouteImport
       parentRoute: typeof ShellRouteRoute
     }
-    '/_shell/reports': {
-      id: '/_shell/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ShellReportsRouteImport
-      parentRoute: typeof ShellRouteRoute
-    }
     '/_shell/residents': {
       id: '/_shell/residents'
       path: '/residents'
@@ -338,7 +319,6 @@ interface ShellRouteRouteChildren {
   ShellDonationsRoute: typeof ShellDonationsRoute
   ShellHealthRecordsRoute: typeof ShellHealthRecordsRoute
   ShellRegistrationsRoute: typeof ShellRegistrationsRoute
-  ShellReportsRoute: typeof ShellReportsRoute
   ShellResidentsRoute: typeof ShellResidentsRouteWithChildren
   ShellRoomsRoute: typeof ShellRoomsRoute
   ShellSettingsRoute: typeof ShellSettingsRoute
@@ -350,7 +330,6 @@ const ShellRouteRouteChildren: ShellRouteRouteChildren = {
   ShellDonationsRoute: ShellDonationsRoute,
   ShellHealthRecordsRoute: ShellHealthRecordsRoute,
   ShellRegistrationsRoute: ShellRegistrationsRoute,
-  ShellReportsRoute: ShellReportsRoute,
   ShellResidentsRoute: ShellResidentsRouteWithChildren,
   ShellRoomsRoute: ShellRoomsRoute,
   ShellSettingsRoute: ShellSettingsRoute,
