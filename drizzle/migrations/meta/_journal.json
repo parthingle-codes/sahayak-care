@@ -15,6 +15,20 @@
       "when": 1790323619510,
       "tag": "0001_create_donations",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790512768905,
+      "tag": "0002_add_family_role",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790512803599,
+      "tag": "0003_family_portal",
+      "breakpoints": true
     }
   ]
 }

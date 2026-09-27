@@ -11,6 +11,14 @@ export const Route = createFileRoute("/_shell")({
   beforeLoad: async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth" });
+    const { data: roles } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", data.user.id);
+    const list = roles?.map((r) => r.role) ?? [];
+    if (list.includes("family") && !list.includes("admin") && !list.includes("caregiver")) {
+      throw redirect({ to: "/family" });
+    }
     return { user: data.user };
   },
   component: ShellLayout,

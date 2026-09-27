@@ -4,15 +4,14 @@ import {
   HeartPulse,
   CalendarClock,
   BedDouble,
-  FileBarChart,
   Settings,
   ClipboardList,
   HandHeart,
   type LucideIcon,
 } from "lucide-react";
 
-/** Roles used across the app. Version 1 has exactly two. */
-export type Role = "admin" | "caregiver";
+/** Roles used across the app. Family members sign in but never see the staff shell. */
+export type Role = "admin" | "caregiver" | "family";
 
 export type NavItem = {
   label: string;
@@ -66,10 +65,6 @@ export const navGroups: NavGroup[] = [
   {
     label: "Facility",
     items: [{ label: "Rooms & Beds", to: "/rooms", icon: BedDouble, roles: ["admin"] }],
-  },
-  {
-    label: "Insights",
-    items: [{ label: "Reports", to: "/reports", icon: FileBarChart, roles: ["admin"] }],
   },
   {
     label: "Account",

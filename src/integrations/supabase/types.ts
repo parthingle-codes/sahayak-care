@@ -130,6 +130,38 @@ export type Database = {
         }
         Relationships: []
       }
+      family_access: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          resident_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          resident_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          resident_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_access_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       health_observations: {
         Row: {
           blood_sugar: number | null
@@ -655,6 +687,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      link_family_by_email: {
+        Args: { _email: string; _resident_id: string }
+        Returns: string
+      }
       list_staff: {
         Args: never
         Returns: {
@@ -674,7 +710,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "caregiver"
+      app_role: "admin" | "caregiver" | "family"
       appointment_status: "upcoming" | "completed" | "missed"
       bed_status: "available" | "occupied" | "maintenance"
       donation_status: "pending" | "accepted" | "received" | "declined"
@@ -819,7 +855,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "caregiver"],
+      app_role: ["admin", "caregiver", "family"],
       appointment_status: ["upcoming", "completed", "missed"],
       bed_status: ["available", "occupied", "maintenance"],
       donation_status: ["pending", "accepted", "received", "declined"],
