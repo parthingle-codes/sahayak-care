@@ -39,6 +39,17 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
+/** Family accounts land on their read-only portal; staff land on the dashboard. */
+async function destinationFor(userId: string): Promise<"/family" | "/dashboard"> {
+  // Ensures profile/role rows exist (and auto-links family accounts) on first sign-in.
+  await supabase.rpc("ensure_staff_account", { _full_name: "" });
+  const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", userId);
+  const list = roles?.map((r) => r.role) ?? [];
+  return list.includes("family") && !list.includes("admin") && !list.includes("caregiver")
+    ? "/family"
+    : "/dashboard";
+}
+
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
@@ -50,8 +61,10 @@ function AuthPage() {
 
   useEffect(() => {
     let active = true;
-    void supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) navigate({ to: "/dashboard", replace: true });
+    void supabase.auth.getSession().then(async ({ data }) => {
+      if (!active || !data.session) return;
+      const to = await destinationFor(data.session.user.id);
+      if (active) navigate({ to, replace: true });
     });
     return () => {
       active = false;
