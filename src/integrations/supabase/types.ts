@@ -130,6 +130,38 @@ export type Database = {
         }
         Relationships: []
       }
+      family_access: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          resident_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          resident_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          resident_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_access_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       health_observations: {
         Row: {
           blood_sugar: number | null
@@ -654,6 +686,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      link_family_by_email: {
+        Args: { _email: string; _resident_id: string }
+        Returns: string
       }
       list_staff: {
         Args: never
