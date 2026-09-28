@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CalendarClock, HeartHandshake, HeartPulse, LogOut, Stethoscope } from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
@@ -11,7 +11,7 @@ import {
   useFamilyObservations,
   useFamilyResidents,
 } from "@/features/family/queries";
-import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 import { formatDate } from "@/lib/appointments";
 
 export const Route = createFileRoute("/family")({
