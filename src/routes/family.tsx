@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CalendarClock, HeartHandshake, HeartPulse, LogOut, Stethoscope } from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
@@ -11,7 +11,7 @@ import {
   useFamilyObservations,
   useFamilyResidents,
 } from "@/features/family/queries";
-import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 import { formatDate } from "@/lib/appointments";
 
 export const Route = createFileRoute("/family")({
@@ -48,28 +48,54 @@ function ageOf(dateOfBirth: string | null): string | null {
   return `${age} years`;
 }
 
+type Gate = "loading" | "signed-out" | "staff" | "family";
+
 function FamilyPage() {
   const navigate = useNavigate();
-  const { user, role, loading, signOut } = useAuth();
-  const isFamily = role === "family";
-  const enabled = !!user && isFamily;
+  const [gate, setGate] = useState<Gate>("loading");
 
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!active) return;
+      if (!data.user) {
+        setGate("signed-out");
+        return;
+      }
+      const { data: roles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", data.user.id);
+      if (!active) return;
+      const list = roles?.map((r) => r.role) ?? [];
+      setGate(
+        list.includes("family") && !list.includes("admin") && !list.includes("caregiver")
+          ? "family"
+          : "staff",
+      );
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (gate === "signed-out") navigate({ to: "/auth", replace: true });
+    if (gate === "staff") navigate({ to: "/dashboard", replace: true });
+  }, [gate, navigate]);
+
+  const enabled = gate === "family";
   const { data: residents = [], isLoading: loadingResidents } = useFamilyResidents(enabled);
   const { data: observations = [] } = useFamilyObservations(enabled);
   const { data: appointments = [] } = useFamilyAppointments(enabled);
 
-  useEffect(() => {
-    if (loading) return;
-    if (!user) {
-      navigate({ to: "/auth", replace: true });
-      return;
-    }
-    if (role === "admin" || role === "caregiver") {
-      navigate({ to: "/dashboard", replace: true });
-    }
-  }, [user, role, loading, navigate]);
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
-  if (loading || !user || !isFamily) {
+  if (!enabled) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-secondary/40 p-6">
         <Skeleton className="h-64 w-full max-w-2xl" />
@@ -85,7 +111,7 @@ function FamilyPage() {
             <HeartHandshake className="size-5 text-primary" aria-hidden />
             SAHAAYAK — Family updates
           </div>
-          <Button variant="outline" size="sm" onClick={() => void signOut()}>
+          <Button variant="outline" size="sm" onClick={() => void handleSignOut()}>
             <LogOut className="size-4" />
             Sign out
           </Button>
@@ -136,7 +162,7 @@ function FamilyPage() {
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
                     {nextCheckup
-                      ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · Dr. ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
+                      ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
                       : "No checkup scheduled yet — the home will add one soon."}
                   </p>
                 </div>

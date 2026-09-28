@@ -3,6 +3,7 @@ import { ArrowLeft, CalendarClock, HeartPulse, Stethoscope } from "lucide-react"
 
 import { AppointmentFormDialog } from "@/components/care/AppointmentFormDialog";
 import { CompleteObservationDialog } from "@/components/care/CompleteObservationDialog";
+import { FamilyAccessCard } from "@/components/care/FamilyAccessCard";
 import { ResidentFormDialog } from "@/components/care/ResidentFormDialog";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
@@ -249,6 +250,8 @@ function ResidentProfilePage() {
             </div>
           )}
         </section>
+
+        <FamilyAccessCard residentId={resident.id} />
       </div>
     </>
   );
