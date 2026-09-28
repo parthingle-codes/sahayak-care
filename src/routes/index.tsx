@@ -84,6 +84,13 @@ function LandingPage() {
               </Button>
             </div>
             <p className="mt-6 text-sm text-muted-foreground">
+              Family of a resident?{" "}
+              <Link to="/auth" className="font-medium text-primary underline">
+                Sign in
+              </Link>{" "}
+              with the email from the registration form to see how your loved one is doing.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               A care-management and record-keeping system. It does not diagnose, prescribe or replace
               healthcare professionals.
             </p>
