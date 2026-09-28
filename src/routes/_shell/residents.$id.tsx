@@ -250,6 +250,8 @@ function ResidentProfilePage() {
             </div>
           )}
         </section>
+
+        <FamilyAccessCard residentId={resident.id} />
       </div>
     </>
   );
