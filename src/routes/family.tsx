@@ -48,28 +48,54 @@ function ageOf(dateOfBirth: string | null): string | null {
   return `${age} years`;
 }
 
+type Gate = "loading" | "signed-out" | "staff" | "family";
+
 function FamilyPage() {
   const navigate = useNavigate();
-  const { user, role, loading, signOut } = useAuth();
-  const isFamily = role === "family";
-  const enabled = !!user && isFamily;
+  const [gate, setGate] = useState<Gate>("loading");
 
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!active) return;
+      if (!data.user) {
+        setGate("signed-out");
+        return;
+      }
+      const { data: roles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", data.user.id);
+      if (!active) return;
+      const list = roles?.map((r) => r.role) ?? [];
+      setGate(
+        list.includes("family") && !list.includes("admin") && !list.includes("caregiver")
+          ? "family"
+          : "staff",
+      );
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (gate === "signed-out") navigate({ to: "/auth", replace: true });
+    if (gate === "staff") navigate({ to: "/dashboard", replace: true });
+  }, [gate, navigate]);
+
+  const enabled = gate === "family";
   const { data: residents = [], isLoading: loadingResidents } = useFamilyResidents(enabled);
   const { data: observations = [] } = useFamilyObservations(enabled);
   const { data: appointments = [] } = useFamilyAppointments(enabled);
 
-  useEffect(() => {
-    if (loading) return;
-    if (!user) {
-      navigate({ to: "/auth", replace: true });
-      return;
-    }
-    if (role === "admin" || role === "caregiver") {
-      navigate({ to: "/dashboard", replace: true });
-    }
-  }, [user, role, loading, navigate]);
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
-  if (loading || !user || !isFamily) {
+  if (!enabled) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-secondary/40 p-6">
         <Skeleton className="h-64 w-full max-w-2xl" />
