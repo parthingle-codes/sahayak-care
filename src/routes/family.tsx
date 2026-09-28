@@ -111,7 +111,7 @@ function FamilyPage() {
             <HeartHandshake className="size-5 text-primary" aria-hidden />
             SAHAAYAK — Family updates
           </div>
-          <Button variant="outline" size="sm" onClick={() => void signOut()}>
+          <Button variant="outline" size="sm" onClick={() => void handleSignOut()}>
             <LogOut className="size-4" />
             Sign out
           </Button>
