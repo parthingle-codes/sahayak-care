@@ -162,7 +162,7 @@ function FamilyPage() {
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
                     {nextCheckup
-                      ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · Dr. ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
+                      ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
                       : "No checkup scheduled yet — the home will add one soon."}
                   </p>
                 </div>
