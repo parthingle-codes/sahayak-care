@@ -29,6 +29,13 @@
       "when": 1790512803599,
       "tag": "0003_family_portal",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790690521723,
+      "tag": "0004_ensure_family_account",
+      "breakpoints": true
     }
   ]
 }
