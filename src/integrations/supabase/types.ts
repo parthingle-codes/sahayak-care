@@ -676,6 +676,10 @@ export type Database = {
     }
     Functions: {
       approve_registration: { Args: { _id: string }; Returns: string }
+      ensure_family_account: {
+        Args: { _full_name?: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
       ensure_staff_account: {
         Args: { _full_name?: string }
         Returns: Database["public"]["Enums"]["app_role"]

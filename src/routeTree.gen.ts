@@ -14,6 +14,7 @@ import { Route as ShellRouteRouteImport } from './routes/_shell/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as FamilyRouteImport } from './routes/family'
+import { Route as FamilySigninRouteImport } from './routes/family-signin'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ShellAppointmentsRouteImport } from './routes/_shell/appointments'
 import { Route as ShellDashboardRouteImport } from './routes/_shell/dashboard'
@@ -47,6 +48,11 @@ const DonateRoute = DonateRouteImport.update({
 const FamilyRoute = FamilyRouteImport.update({
   id: '/family',
   path: '/family',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FamilySigninRoute = FamilySigninRouteImport.update({
+  id: '/family-signin',
+  path: '/family-signin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/donate': typeof DonateRoute
   '/family': typeof FamilyRoute
+  '/family-signin': typeof FamilySigninRoute
   '/register': typeof RegisterRoute
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/donate': typeof DonateRoute
   '/family': typeof FamilyRoute
+  '/family-signin': typeof FamilySigninRoute
   '/register': typeof RegisterRoute
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/donate': typeof DonateRoute
   '/family': typeof FamilyRoute
+  '/family-signin': typeof FamilySigninRoute
   '/register': typeof RegisterRoute
   '/_shell/appointments': typeof ShellAppointmentsRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/donate'
     | '/family'
+    | '/family-signin'
     | '/register'
     | '/appointments'
     | '/dashboard'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/donate'
     | '/family'
+    | '/family-signin'
     | '/register'
     | '/appointments'
     | '/dashboard'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/donate'
     | '/family'
+    | '/family-signin'
     | '/register'
     | '/_shell/appointments'
     | '/_shell/dashboard'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DonateRoute: typeof DonateRoute
   FamilyRoute: typeof FamilyRoute
+  FamilySigninRoute: typeof FamilySigninRoute
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -246,6 +259,13 @@ declare module '@tanstack/react-router' {
       path: '/family'
       fullPath: '/family'
       preLoaderRoute: typeof FamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/family-signin': {
+      id: '/family-signin'
+      path: '/family-signin'
+      fullPath: '/family-signin'
+      preLoaderRoute: typeof FamilySigninRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DonateRoute: DonateRoute,
   FamilyRoute: FamilyRoute,
+  FamilySigninRoute: FamilySigninRoute,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
