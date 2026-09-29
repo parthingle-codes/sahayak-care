@@ -58,18 +58,31 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const [existing, setExisting] = useState<{ id: string; email: string } | null>(null);
 
   useEffect(() => {
     let active = true;
-    void supabase.auth.getSession().then(async ({ data }) => {
+    void supabase.auth.getSession().then(({ data }) => {
       if (!active || !data.session) return;
-      const to = await destinationFor(data.session.user.id);
-      if (active) navigate({ to, replace: true });
+      setExisting({ id: data.session.user.id, email: data.session.user.email ?? "" });
     });
     return () => {
       active = false;
     };
-  }, [navigate]);
+  }, []);
+
+  async function continueExisting() {
+    if (!existing) return;
+    setBusy(true);
+    navigate({ to: await destinationFor(existing.id), replace: true });
+  }
+
+  async function switchAccount() {
+    await supabase.auth.signOut();
+    setExisting(null);
+    setEmail("");
+    setPassword("");
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -141,7 +154,20 @@ function AuthPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
-            {checkEmail ? (
+            {existing ? (
+              <div className="space-y-3 text-center">
+                <p className="text-sm text-muted-foreground">
+                  You are already signed in as{" "}
+                  <span className="font-medium text-foreground">{existing.email}</span>.
+                </p>
+                <Button className="w-full" onClick={() => void continueExisting()} disabled={busy}>
+                  Continue as this account
+                </Button>
+                <Button variant="outline" className="w-full" onClick={() => void switchAccount()}>
+                  Sign out and use a different account
+                </Button>
+              </div>
+            ) : checkEmail ? (
               <div className="space-y-3 text-center">
                 <p className="text-sm font-medium text-foreground">Confirm your email</p>
                 <p className="text-sm text-muted-foreground">
