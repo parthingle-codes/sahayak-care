@@ -251,8 +251,11 @@ function AuthPage() {
                 </Button>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  Family of a resident? Create an account with the same email you gave on the
-                  registration form to see your loved one's updates.
+                  Family of a resident?{" "}
+                  <Link to="/family-signin" className="underline">
+                    Use family sign in
+                  </Link>{" "}
+                  with the email from the registration form.
                 </p>
               </>
             )}
