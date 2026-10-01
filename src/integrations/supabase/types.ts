@@ -691,6 +691,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_staff: { Args: { _uid: string }; Returns: boolean }
       link_family_by_email: {
         Args: { _email: string; _resident_id: string }
         Returns: string

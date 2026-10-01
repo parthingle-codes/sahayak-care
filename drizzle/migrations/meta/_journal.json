@@ -36,6 +36,13 @@
       "when": 1790690521723,
       "tag": "0004_ensure_family_account",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790881139074,
+      "tag": "0005_staff_only_guard",
+      "breakpoints": true
     }
   ]
 }
