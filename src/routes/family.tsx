@@ -81,7 +81,7 @@ function FamilyPage() {
   }, []);
 
   useEffect(() => {
-    if (gate === "signed-out") navigate({ to: "/auth", replace: true });
+    if (gate === "signed-out") navigate({ to: "/family-signin", replace: true });
     if (gate === "staff") navigate({ to: "/dashboard", replace: true });
   }, [gate, navigate]);
 
@@ -92,7 +92,7 @@ function FamilyPage() {
 
   async function handleSignOut() {
     await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
+    navigate({ to: "/family-signin", replace: true });
   }
 
   if (!enabled) {

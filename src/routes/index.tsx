@@ -76,6 +76,12 @@ function LandingPage() {
                   <ArrowRight />
                 </Link>
               </Button>
+              <Button asChild size="lg">
+                <Link to="/family-signin">
+                  Family sign in
+                  <ArrowRight />
+                </Link>
+              </Button>
               <Button asChild size="lg" variant="outline">
                 <Link to="/register">Register a resident</Link>
               </Button>
