@@ -46,18 +46,21 @@ const actions = [
     icon: Users,
     label: "Family sign in",
     hint: "See how your loved one is doing",
+    featured: false,
   },
   {
     to: "/auth",
     icon: UserRound,
     label: "Staff portal",
     hint: "Administrators and caregivers",
+    featured: false,
   },
   {
     to: "/donate",
     icon: HandHeart,
     label: "Donate",
     hint: "Food, clothes, funds or time",
+    featured: false,
   },
 ] as const;
 
