@@ -1,3 +1,4 @@
+import { StatusBadge } from "@/components/common/StatusBadge";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AlertTriangle, CalendarClock, Search, User } from "lucide-react";

@@ -1,3 +1,4 @@
+import { StatusBadge } from "@/components/common/StatusBadge";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 
