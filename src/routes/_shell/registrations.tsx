@@ -128,17 +128,7 @@ function RegistrationTable({ rows, emptyLabel }: { rows: Registration[]; emptyLa
               </TableCell>
               <TableCell>{new Date(r.created_at).toLocaleDateString()}</TableCell>
               <TableCell>
-                <Badge
-                  variant={
-                    r.status === "pending"
-                      ? "secondary"
-                      : r.status === "approved"
-                        ? "outline"
-                        : "destructive"
-                  }
-                >
-                  {r.status}
-                </Badge>
+                <StatusBadge status={r.status} />
               </TableCell>
               <TableCell className="text-right">
                 <ReviewRegistrationDialog registration={r} />

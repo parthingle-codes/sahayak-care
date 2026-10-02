@@ -149,17 +149,7 @@ function DonationTable({ rows, emptyLabel }: { rows: Donation[]; emptyLabel: str
               </TableCell>
               <TableCell>{new Date(d.created_at).toLocaleDateString()}</TableCell>
               <TableCell>
-                <Badge
-                  variant={
-                    d.status === "pending"
-                      ? "secondary"
-                      : d.status === "declined"
-                        ? "destructive"
-                        : "outline"
-                  }
-                >
-                  {d.status}
-                </Badge>
+                <StatusBadge status={d.status} />
               </TableCell>
               <TableCell className="text-right">
                 <DonationReviewDialog donation={d} />
