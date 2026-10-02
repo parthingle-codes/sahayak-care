@@ -107,9 +107,7 @@ function ResidentsPage() {
                   <TableCell>{mobilityLabels[r.mobility] ?? r.mobility}</TableCell>
                   <TableCell>{new Date(r.admission_date).toLocaleDateString()}</TableCell>
                   <TableCell>
-                    <Badge variant={r.status === "active" ? "secondary" : "outline"}>
-                      {r.status}
-                    </Badge>
+                    <StatusBadge status={r.status} />
                   </TableCell>
                   <TableCell className="text-right">
                     <ResidentFormDialog resident={r} />

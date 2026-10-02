@@ -102,7 +102,7 @@ function AppointmentTable({ rows }: { rows: AppointmentRow[] }) {
                 {appointment.doctor_name ?? "—"}
               </TableCell>
               <TableCell>
-                <Badge variant={badgeVariant(bucket)}>{bucketLabel[bucket]}</Badge>
+                <StatusBadge status={bucket} label={bucketLabel[bucket]} />
               </TableCell>
               <TableCell>
                 <div className="flex items-center justify-end gap-1">
