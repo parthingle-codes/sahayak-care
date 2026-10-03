@@ -3,7 +3,6 @@ import {
   Users,
   HeartPulse,
   CalendarClock,
-  BedDouble,
   Settings,
   ClipboardList,
   HandHeart,
