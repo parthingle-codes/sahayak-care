@@ -114,7 +114,7 @@ function LandingPage() {
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
               SAHAAYAK gives a small old age home one calm place for residents, health
-              observations, appointments and beds — replacing scattered registers and files.
+              observations and appointments — replacing scattered registers and files.
             </p>
           </div>
 

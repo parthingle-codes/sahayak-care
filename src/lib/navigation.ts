@@ -3,7 +3,6 @@ import {
   Users,
   HeartPulse,
   CalendarClock,
-  BedDouble,
   Settings,
   ClipboardList,
   HandHeart,
@@ -61,10 +60,6 @@ export const navGroups: NavGroup[] = [
         roles: ["admin", "caregiver"],
       },
     ],
-  },
-  {
-    label: "Facility",
-    items: [{ label: "Rooms & Beds", to: "/rooms", icon: BedDouble, roles: ["admin"] }],
   },
   {
     label: "Account",
