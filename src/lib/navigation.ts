@@ -63,10 +63,6 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Facility",
-    items: [{ label: "Rooms & Beds", to: "/rooms", icon: BedDouble, roles: ["admin"] }],
-  },
-  {
     label: "Account",
     items: [
       { label: "Settings", to: "/settings", icon: Settings, roles: ["admin", "caregiver"] },
