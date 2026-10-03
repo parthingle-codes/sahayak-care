@@ -1,3 +1,4 @@
+import { StatusBadge } from "@/components/common/StatusBadge";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CalendarClock, HeartPulse, Stethoscope } from "lucide-react";
 
