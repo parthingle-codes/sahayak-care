@@ -1,3 +1,4 @@
+import { StatusBadge } from "@/components/common/StatusBadge";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CalendarClock, HeartPulse, Stethoscope } from "lucide-react";
 
@@ -141,17 +142,7 @@ function ResidentProfilePage() {
                         </TableCell>
                         <TableCell className="text-muted-foreground">{a.reason ?? "—"}</TableCell>
                         <TableCell>
-                          <Badge
-                            variant={
-                              bucket === "overdue" || bucket === "missed"
-                                ? "destructive"
-                                : bucket === "completed"
-                                  ? "outline"
-                                  : "secondary"
-                            }
-                          >
-                            {bucketLabel[bucket]}
-                          </Badge>
+                          <StatusBadge status={bucket} label={bucketLabel[bucket]} />
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center justify-end gap-1">

@@ -125,18 +125,18 @@ function DonatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-secondary/40 px-4 py-10">
+    <div className="min-h-screen public-canvas px-4 py-10">
       <div className="mx-auto w-full max-w-2xl">
         <Link
           to="/"
-          className="mb-6 flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-card/80 px-4 py-2 font-display text-sm font-semibold tracking-wide text-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/40"
         >
           <HeartHandshake className="size-5 text-primary" aria-hidden />
           SAHAAYAK
         </Link>
 
         {reference ? (
-          <Card className="border-border/70 shadow-sm">
+          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
             <CardHeader className="text-center">
               <CheckCircle2 className="mx-auto size-10 text-done" aria-hidden />
               <CardTitle className="mt-2">Thank you for your kindness</CardTitle>
@@ -153,7 +153,7 @@ function DonatePage() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="border-border/70 shadow-sm">
+          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
             <CardHeader>
               <CardTitle>Donate or volunteer</CardTitle>
               <CardDescription>

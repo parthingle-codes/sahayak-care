@@ -45,7 +45,12 @@ export function AppSidebar() {
                   const active = pathname === item.to || pathname.startsWith(`${item.to}/`);
                   return (
                     <SidebarMenuItem key={item.to}>
-                      <SidebarMenuButton asChild isActive={active} tooltip={item.label}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={active}
+                        tooltip={item.label}
+                        className="h-10 rounded-lg font-medium data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm"
+                      >
                         <Link to={item.to}>
                           <item.icon />
                           <span>{item.label}</span>
