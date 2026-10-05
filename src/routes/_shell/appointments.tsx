@@ -1,13 +1,12 @@
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AlertTriangle, CalendarClock, Search, User } from "lucide-react";
+import { CalendarClock, Search, User } from "lucide-react";
 
 import { AppointmentFormDialog } from "@/components/care/AppointmentFormDialog";
 import { CompleteObservationDialog } from "@/components/care/CompleteObservationDialog";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -49,16 +48,26 @@ export const Route = createFileRoute("/_shell/appointments")({
   component: AppointmentsPage,
 });
 
-const badgeVariant = (bucket: AppointmentRow["bucket"]) =>
-  bucket === "overdue" || bucket === "missed"
-    ? ("destructive" as const)
-    : bucket === "completed"
-      ? ("outline" as const)
-      : ("secondary" as const);
-
 function AppointmentTable({ rows }: { rows: AppointmentRow[] }) {
   return (
-    <div className="surface-card overflow-x-auto">
+    <>
+    <div className="grid gap-3 md:hidden">
+      {rows.map(({ appointment, resident, bucket }) => (
+        <article key={appointment.id} className="surface-card p-4">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+            <div className="min-w-0"><p className="font-display font-semibold">{resident?.full_name ?? "Unknown resident"}</p><p className="mt-1 text-sm text-muted-foreground">{formatDate(appointment.scheduled_on)} · {appointment.status === "completed" ? "Completed" : daysRemainingLabel(appointment.scheduled_on)}</p></div>
+            <StatusBadge status={bucket} label={bucketLabel[bucket]} />
+          </div>
+          {appointment.doctor_name ? <p className="mt-3 text-sm text-muted-foreground">Doctor: {appointment.doctor_name}</p> : null}
+          <div className="mt-4 flex flex-wrap justify-end gap-1 border-t border-border pt-3">
+            {appointment.status !== "completed" ? <CompleteObservationDialog appointment={appointment} residentName={resident?.full_name ?? "resident"} /> : null}
+            <AppointmentFormDialog record={appointment} />
+            {resident ? <Button asChild variant="ghost" size="sm"><Link to="/residents/$id" params={{ id: resident.id }}><User className="size-4" />Profile</Link></Button> : null}
+          </div>
+        </article>
+      ))}
+    </div>
+    <div className="surface-card hidden overflow-x-auto md:block">
       <Table>
         <TableHeader>
           <TableRow>
@@ -128,7 +137,7 @@ function AppointmentTable({ rows }: { rows: AppointmentRow[] }) {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </div></>
   );
 }
 
@@ -194,18 +203,6 @@ function AppointmentsPage() {
               className="pl-9"
             />
           </div>
-
-          {overdue.length > 0 ? (
-            <div className="mb-6">
-              <div className="mb-2 flex items-center gap-2 text-alert-foreground">
-                <AlertTriangle className="size-4" aria-hidden />
-                <h2 className="font-display text-lg font-semibold">
-                  Overdue observations ({overdue.length})
-                </h2>
-              </div>
-              <AppointmentTable rows={overdue} />
-            </div>
-          ) : null}
 
           <Tabs defaultValue="upcoming">
             <TabsList>

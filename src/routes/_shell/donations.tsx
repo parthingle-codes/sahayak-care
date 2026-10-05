@@ -116,7 +116,7 @@ function DonationTable({ rows, emptyLabel }: { rows: Donation[]; emptyLabel: str
     return <p className="p-4 text-sm text-muted-foreground">{emptyLabel}</p>;
   }
   return (
-    <div className="surface-card overflow-x-auto">
+    <div className="surface-card mt-4 overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
@@ -132,7 +132,7 @@ function DonationTable({ rows, emptyLabel }: { rows: Donation[]; emptyLabel: str
         <TableBody>
           {rows.map((d) => (
             <TableRow key={d.id}>
-              <TableCell className="font-mono text-xs">{d.reference}</TableCell>
+              <TableCell><Badge variant="secondary" className="font-mono font-medium">{d.reference}</Badge></TableCell>
               <TableCell>{donationTypeLabels[d.donation_type]}</TableCell>
               <TableCell className="max-w-xs">
                 {d.amount != null ? (

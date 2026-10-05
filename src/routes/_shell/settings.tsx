@@ -137,7 +137,9 @@ function SettingsPage() {
       ) : isLoading ? (
         <Skeleton className="h-40 w-full" />
       ) : (
-        <div className="surface-card overflow-x-auto">
+        <div>
+          <h2 className="mb-2 font-display text-lg font-semibold">Staff access</h2>
+          <div className="surface-card overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -179,6 +181,7 @@ function SettingsPage() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </div>
       )}
     </>

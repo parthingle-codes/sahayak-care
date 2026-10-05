@@ -208,7 +208,7 @@ function LandingPage() {
           <div className="text-sm">
             <p className="font-semibold">Contact</p>
             <p className="mt-2 text-muted-foreground">
-              For admissions, use the online registration form — the care team will contact you. A Community Engagement Program project, Government College of Engineering, Nagpur.
+              For admissions, use the online registration form. For other enquiries, please use your usual care-home contact. A Community Engagement Program project, Government College of Engineering, Nagpur.
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CalendarClock, HeartHandshake, HeartPulse, LogOut, Stethoscope } from "lucide-react";
+import { Activity, CalendarClock, HeartHandshake, HeartPulse, LogOut, Scale, Stethoscope, Thermometer } from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { Badge } from "@/components/ui/badge";
@@ -105,25 +105,25 @@ function FamilyPage() {
 
   return (
     <div className="min-h-screen bg-secondary/40">
-      <header className="border-b border-border/70 bg-background">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-2 font-display font-semibold">
-            <HeartHandshake className="size-5 text-primary" aria-hidden />
-            SAHAAYAK — Family updates
+      <header className="sticky top-0 z-10 border-b border-border/70 bg-background/90 backdrop-blur">
+        <div className="mx-auto grid max-w-3xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
+          <div className="flex min-w-0 items-center gap-2 font-display font-semibold">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground"><HeartHandshake className="size-5" aria-hidden /></span>
+            <span className="min-w-0"><span className="block truncate">SAHAAYAK</span><span className="block text-xs font-normal text-muted-foreground">Family updates</span></span>
           </div>
-          <Button variant="outline" size="sm" onClick={() => void handleSignOut()}>
+          <Button variant="outline" size="sm" className="min-h-11" onClick={() => void handleSignOut()}>
             <LogOut className="size-4" />
             Sign out
           </Button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl space-y-8 px-4 py-8">
-        <div>
-          <h1 className="font-display text-2xl font-semibold">How your loved one is doing</h1>
+      <main className="mx-auto max-w-3xl space-y-8 px-4 py-8 sm:py-10">
+        <div className="border-b border-border pb-6">
+          <p className="text-eyebrow">Shared by the care home</p>
+          <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">How your loved one is doing</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            A read-only summary shared by the care home. For anything urgent, please call the home
-            directly.
+            A private, read-only summary of recent care records. For anything urgent, please call the home directly.
           </p>
         </div>
 
@@ -133,7 +133,7 @@ function FamilyPage() {
           <EmptyState
             icon={Stethoscope}
             title="No resident linked yet"
-            description="Your account is not linked to a resident yet. Please ask the care home staff to link your email, or use the same email you gave on the registration form."
+            description="Ask the care home to link your sign-in email. It should match the email used on the registration form."
           />
         ) : (
           residents.map((resident) => {
@@ -146,29 +146,30 @@ function FamilyPage() {
             const age = ageOf(resident.date_of_birth);
 
             return (
-              <section key={resident.id} className="surface-card space-y-5 p-6">
+              <section key={resident.id} className="space-y-6">
+                <div className="surface-card p-5 sm:p-6">
                 <div className="flex flex-wrap items-center gap-3">
-                  <h2 className="font-display text-xl font-semibold">{resident.full_name}</h2>
+                  <h2 className="min-w-0 break-words font-display text-xl font-semibold sm:text-2xl">{resident.full_name}</h2>
                   {age ? <Badge variant="secondary">{age}</Badge> : null}
                   <Badge variant="outline" className="capitalize">
                     {resident.mobility}
                   </Badge>
                 </div>
 
-                <div className="rounded-lg border border-border/70 bg-secondary/50 p-4">
+                <div className="mt-5 rounded-lg border border-border bg-secondary/50 p-4">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <CalendarClock className="size-4 text-primary" aria-hidden />
                     Next medical observation
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {nextCheckup
                       ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
                       : "No checkup scheduled yet — the home will add one soon."}
                   </p>
-                </div>
+                </div></div>
 
                 <div>
-                  <div className="mb-2 flex items-center gap-2 text-sm font-medium">
+                  <div className="mb-3 flex items-center gap-2 font-display font-semibold">
                     <HeartPulse className="size-4 text-primary" aria-hidden />
                     Recent health updates
                   </div>
@@ -181,24 +182,19 @@ function FamilyPage() {
                       {residentObs.map((o) => (
                         <li
                           key={o.id}
-                          className="rounded-lg border border-border/60 p-3 text-sm"
+                          className="surface-card p-4 text-sm"
                         >
                           <p className="text-xs text-muted-foreground">
                             {new Date(o.recorded_at).toLocaleString()}
                           </p>
-                          <p className="mt-1">
-                            {[
-                              o.bp_systolic && o.bp_diastolic
-                                ? `Blood pressure ${o.bp_systolic}/${o.bp_diastolic}`
-                                : null,
-                              o.pulse ? `Pulse ${o.pulse}` : null,
-                              o.temperature_c ? `Temperature ${o.temperature_c}°C` : null,
-                              o.blood_sugar ? `Blood sugar ${o.blood_sugar}` : null,
-                              o.weight_kg ? `Weight ${o.weight_kg} kg` : null,
-                            ]
-                              .filter(Boolean)
-                              .join(" · ") || "General checkup"}
-                          </p>
+                          <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                            {o.bp_systolic && o.bp_diastolic ? <span className="rounded-lg bg-muted p-2"><Activity className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Blood pressure</span><strong>{o.bp_systolic}/{o.bp_diastolic}</strong></span> : null}
+                            {o.pulse ? <span className="rounded-lg bg-muted p-2"><HeartPulse className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Pulse</span><strong>{o.pulse}</strong></span> : null}
+                            {o.temperature_c ? <span className="rounded-lg bg-muted p-2"><Thermometer className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Temperature</span><strong>{o.temperature_c} °C</strong></span> : null}
+                            {o.weight_kg ? <span className="rounded-lg bg-muted p-2"><Scale className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Weight</span><strong>{o.weight_kg} kg</strong></span> : null}
+                          </div>
+                          {!o.bp_systolic && !o.pulse && !o.temperature_c && !o.weight_kg && !o.blood_sugar ? <p className="mt-2">General checkup</p> : null}
+                          {o.blood_sugar ? <p className="mt-2 text-sm"><span className="text-muted-foreground">Blood sugar:</span> {o.blood_sugar}</p> : null}
                           {o.note ? (
                             <p className="mt-1 text-muted-foreground">{o.note}</p>
                           ) : null}

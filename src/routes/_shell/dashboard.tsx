@@ -90,16 +90,8 @@ function DashboardPage() {
 
   return (
     <>
-      <section className="relative mb-8 overflow-hidden rounded-3xl bg-primary p-6 text-primary-foreground shadow-[var(--shadow-lift)] md:p-8">
-        <span
-          className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-primary-foreground/10"
-          aria-hidden
-        />
-        <span
-          className="pointer-events-none absolute -bottom-24 right-24 size-48 rounded-full bg-primary-foreground/5"
-          aria-hidden
-        />
-        <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <section className="mb-8 overflow-hidden rounded-xl bg-primary p-6 text-primary-foreground shadow-[var(--shadow-lift)] md:p-8">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-medium text-primary-foreground/75">{today}</p>
             <h1 className="mt-1 text-2xl font-semibold tracking-tight md:text-3xl">
@@ -171,9 +163,9 @@ function DashboardPage() {
         ].map((item) => (
           <div
             key={item.title}
-            className="surface-card flex items-center justify-between gap-4 p-4"
+            className="surface-card grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4"
           >
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 items-center gap-3">
               <span
                 className={
                   item.count
@@ -183,12 +175,12 @@ function DashboardPage() {
               >
                 <item.icon className="size-5" aria-hidden />
               </span>
-              <div>
+              <div className="min-w-0">
                 <p className="font-medium">
                   {item.title}{" "}
                   <span className="ml-1 font-display tabular-nums">{item.count}</span>
                 </p>
-                <p className="text-sm text-muted-foreground">{item.body}</p>
+                <p className="text-sm leading-snug text-muted-foreground">{item.body}</p>
               </div>
             </div>
             <Button asChild size="sm" variant={item.count ? "default" : "outline"}>
@@ -199,7 +191,7 @@ function DashboardPage() {
       </div>
 
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <div>
           <h2 className="mb-2 font-display text-lg font-semibold">Next medical observations</h2>
           {nextUp.length === 0 ? (
