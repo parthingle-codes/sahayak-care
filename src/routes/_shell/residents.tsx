@@ -6,6 +6,7 @@ import { Search, Users } from "lucide-react";
 import { ResidentFormDialog } from "@/components/care/ResidentFormDialog";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -97,7 +98,7 @@ function ResidentsPage() {
           </div>
           <div className="flex rounded-lg bg-muted p-1" aria-label="Filter residents by status">
             {(["all", "active", "inactive"] as const).map((value) => (
-              <button key={value} type="button" onClick={() => setStatus(value)} className={`min-h-9 rounded-md px-3 text-sm font-medium capitalize ${status === value ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"}`}>{value}</button>
+              <Button key={value} type="button" size="sm" variant={status === value ? "outline" : "ghost"} onClick={() => setStatus(value)} className="capitalize">{value}</Button>
             ))}
           </div>
         </div>

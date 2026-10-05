@@ -77,8 +77,8 @@ export function FamilyAccessCard({ residentId }: { residentId: string }) {
           </ul>
         )}
 
-        <form onSubmit={handleLink} className="flex flex-wrap items-end gap-2">
-          <div className="min-w-56 flex-1 space-y-1">
+        <form onSubmit={handleLink} className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+          <div className="min-w-0 space-y-1">
             <Label htmlFor="family-email">Family member's sign-in email</Label>
             <Input
               id="family-email"
@@ -89,7 +89,7 @@ export function FamilyAccessCard({ residentId }: { residentId: string }) {
               required
             />
           </div>
-          <Button type="submit" disabled={linkFamily.isPending}>
+          <Button type="submit" disabled={linkFamily.isPending} className="w-full sm:w-auto">
             <Link2 className="size-4" />
             Link account
           </Button>

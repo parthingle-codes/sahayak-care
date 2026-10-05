@@ -83,7 +83,25 @@ function HealthRecordsPage() {
                 description="Use Record vitals to log blood pressure, pulse, temperature, blood sugar, weight and a care note."
               />
             ) : (
-              <div className="surface-card overflow-x-auto">
+              <>
+              <div className="grid gap-3 md:hidden">
+                {observations.map((o) => (
+                  <article key={o.id} className="surface-card p-4">
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+                      <div className="min-w-0"><h3 className="font-display font-semibold">{nameOf(o.resident_id)}</h3><p className="mt-1 text-xs text-muted-foreground">{new Date(o.recorded_at).toLocaleString()}</p></div>
+                      <ObservationFormDialog record={o} />
+                    </div>
+                    <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-border pt-3 text-sm">
+                      <div><dt className="text-muted-foreground">Blood pressure</dt><dd className="font-medium">{o.bp_systolic || o.bp_diastolic ? `${dash(o.bp_systolic)}/${dash(o.bp_diastolic)}` : "—"}</dd></div>
+                      <div><dt className="text-muted-foreground">Pulse</dt><dd className="font-medium">{dash(o.pulse)}</dd></div>
+                      <div><dt className="text-muted-foreground">Temperature</dt><dd className="font-medium">{dash(o.temperature_c)}{o.temperature_c ? " °C" : ""}</dd></div>
+                      <div><dt className="text-muted-foreground">Weight</dt><dd className="font-medium">{dash(o.weight_kg)}{o.weight_kg ? " kg" : ""}</dd></div>
+                    </dl>
+                    {o.note ? <p className="mt-3 border-t border-border pt-3 text-sm text-muted-foreground">{o.note}</p> : null}
+                  </article>
+                ))}
+              </div>
+              <div className="surface-card hidden overflow-x-auto md:block">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -123,7 +141,7 @@ function HealthRecordsPage() {
                   </TableBody>
                 </Table>
 
-              </div>
+              </div></>
             )}
           </TabsContent>
 
@@ -137,7 +155,15 @@ function HealthRecordsPage() {
                 description="Add conditions already diagnosed by a doctor so caregivers see them at a glance."
               />
             ) : (
-              <div className="surface-card overflow-x-auto">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {conditions.map((c) => (
+                  <article key={c.id} className="surface-card flex min-h-40 flex-col p-5">
+                    <div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="text-sm text-muted-foreground">{nameOf(c.resident_id)}</p><h3 className="mt-1 break-words font-display text-lg font-semibold">{c.condition}</h3></div><ConditionFormDialog record={c} /></div>
+                    <p className="mt-3 text-sm text-muted-foreground">Diagnosed {c.diagnosed_on ? new Date(c.diagnosed_on).toLocaleDateString() : "date not recorded"}</p>
+                    <p className="mt-auto pt-4 text-sm text-muted-foreground">{c.notes ?? "No additional notes."}</p>
+                  </article>
+                ))}
+                <div className="hidden">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -169,6 +195,7 @@ function HealthRecordsPage() {
 
                   </TableBody>
                 </Table>
+                </div>
               </div>
             )}
           </TabsContent>
