@@ -94,7 +94,7 @@ function RegistrationTable({ rows, emptyLabel }: { rows: Registration[]; emptyLa
     return <p className="p-4 text-sm text-muted-foreground">{emptyLabel}</p>;
   }
   return (
-    <div className="surface-card overflow-x-auto">
+    <div className="surface-card mt-4 overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
@@ -109,7 +109,7 @@ function RegistrationTable({ rows, emptyLabel }: { rows: Registration[]; emptyLa
         <TableBody>
           {rows.map((r) => (
             <TableRow key={r.id}>
-              <TableCell className="font-mono text-xs">{r.reference}</TableCell>
+              <TableCell><Badge variant="secondary" className="font-mono font-medium">{r.reference}</Badge></TableCell>
               <TableCell className="font-medium">
                 {r.resident_id ? (
                   <Link

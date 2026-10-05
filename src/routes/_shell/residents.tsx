@@ -1,11 +1,12 @@
 import { StatusBadge } from "@/components/common/StatusBadge";
+import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users } from "lucide-react";
+import { Search, Users } from "lucide-react";
 
 import { ResidentFormDialog } from "@/components/care/ResidentFormDialog";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -54,6 +55,16 @@ function age(dob: string | null) {
 function ResidentsPage() {
   const { isAdmin } = useRole();
   const { data: residents = [], isLoading } = useResidents();
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState<"all" | "active" | "inactive">("all");
+  const visibleResidents = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return residents.filter((resident) => {
+      const matchesQuery = !q || resident.full_name.toLowerCase().includes(q) || resident.room_label?.toLowerCase().includes(q);
+      const matchesStatus = status === "all" || (status === "active" ? resident.status === "active" : resident.status !== "active");
+      return matchesQuery && matchesStatus;
+    });
+  }, [query, residents, status]);
 
   return (
     <>
@@ -78,7 +89,31 @@ function ResidentsPage() {
           action={<ResidentFormDialog />}
         />
       ) : (
-        <div className="surface-card overflow-x-auto">
+        <>
+        <div className="mb-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="relative max-w-md">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+            <Input value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder="Search by name or room…" aria-label="Search residents" className="pl-9" />
+          </div>
+          <div className="flex rounded-lg bg-muted p-1" aria-label="Filter residents by status">
+            {(["all", "active", "inactive"] as const).map((value) => (
+              <button key={value} type="button" onClick={() => setStatus(value)} className={`min-h-9 rounded-md px-3 text-sm font-medium capitalize ${status === value ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"}`}>{value}</button>
+            ))}
+          </div>
+        </div>
+        {visibleResidents.length === 0 ? <EmptyState icon={Search} title="No residents found" description="Try a different name, room or status." /> : <>
+        <div className="grid gap-3 md:hidden">
+          {visibleResidents.map((r) => (
+            <article key={r.id} className="surface-card p-4">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+                <div className="min-w-0"><Link to="/residents/$id" params={{ id: r.id }} className="font-display font-semibold hover:underline">{r.full_name}</Link><p className="mt-1 text-sm text-muted-foreground">{age(r.date_of_birth)} years · {r.room_label ? `Room ${r.room_label}` : "Room not assigned"}</p></div>
+                <StatusBadge status={r.status} />
+              </div>
+              <div className="mt-4 flex items-center justify-between border-t border-border pt-3"><span className="text-sm text-muted-foreground">{mobilityLabels[r.mobility] ?? r.mobility}</span><ResidentFormDialog resident={r} /></div>
+            </article>
+          ))}
+        </div>
+        <div className="surface-card hidden overflow-x-auto md:block">
           <Table>
             <TableHeader>
               <TableRow>
@@ -92,7 +127,7 @@ function ResidentsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {residents.map((r) => (
+              {visibleResidents.map((r) => (
                 <TableRow key={r.id}>
                   <TableCell className="font-medium">
                     <Link
@@ -117,7 +152,8 @@ function ResidentsPage() {
               ))}
             </TableBody>
           </Table>
-        </div>
+        </div></>}
+        </>
       )}
     </>
   );
