@@ -14,12 +14,15 @@ Goal: make every staff and public screen look like a finished healthcare product
 8. **Accessibility & mobile** — readable sizes, focus rings, contrast, layouts checked on phone, tablet and desktop.
 
 ## Not changing
+
 No database changes, no route removals, no fake analytics, no new libraries, no medical-advice wording.
 
 ## Order
+
 Shared pieces → shell → dashboard → residents → appointments/health → other staff pages → public pages → browser check on all screens at phone and desktop sizes.
 
 ## Technical details
+
 - New `src/components/common/StatusBadge.tsx` mapping statuses to existing due/done/alert/info/muted tokens; replace ad-hoc badge styling.
 - Add `PageSkeleton`, `ErrorState` alongside existing `EmptyState`, `PageHeader`, `StatCard` (upgrade these in place).
 - Only semantic tokens from `src/styles.css`; add a few utilities (e.g. `surface-elevated`) if needed, no palette change.

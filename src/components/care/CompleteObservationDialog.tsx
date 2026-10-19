@@ -80,9 +80,7 @@ export function CompleteObservationDialog({
         });
       }
       toast.success(
-        nextDueOn
-          ? "Observation recorded and the next one scheduled."
-          : "Observation recorded.",
+        nextDueOn ? "Observation recorded and the next one scheduled." : "Observation recorded.",
       );
       setOpen(false);
     } catch (error) {

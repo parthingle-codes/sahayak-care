@@ -44,7 +44,6 @@ export function useSetStaffRole() {
   });
 }
 
-
 /** Residents, newest admissions first. Used by every record form's picker. */
 export function useResidents() {
   return useQuery({

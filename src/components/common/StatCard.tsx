@@ -38,7 +38,10 @@ export function StatCard({
       <div className="flex items-center justify-between gap-3">
         <p className="text-eyebrow">{label}</p>
         <span
-          className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl", toneStyles[tone])}
+          className={cn(
+            "flex size-10 shrink-0 items-center justify-center rounded-xl",
+            toneStyles[tone],
+          )}
         >
           <Icon className="size-5" aria-hidden />
         </span>

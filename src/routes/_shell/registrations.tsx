@@ -109,7 +109,11 @@ function RegistrationTable({ rows, emptyLabel }: { rows: Registration[]; emptyLa
         <TableBody>
           {rows.map((r) => (
             <TableRow key={r.id}>
-              <TableCell><Badge variant="secondary" className="font-mono font-medium">{r.reference}</Badge></TableCell>
+              <TableCell>
+                <Badge variant="secondary" className="font-mono font-medium">
+                  {r.reference}
+                </Badge>
+              </TableCell>
               <TableCell className="font-medium">
                 {r.resident_id ? (
                   <Link

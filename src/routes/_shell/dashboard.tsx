@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Users,
   AlertTriangle,
- 
   CalendarClock,
   HeartPulse,
   CheckCircle2,
@@ -98,8 +97,8 @@ function DashboardPage() {
               {greeting}, {firstName}
             </h1>
             <p className="mt-2 max-w-xl text-primary-foreground/80">
-              Here's what needs your attention today. Residents are seen on a {interval}-day
-              medical observation cycle — overdue checks come first.
+              Here's what needs your attention today. Residents are seen on a {interval}-day medical
+              observation cycle — overdue checks come first.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -177,8 +176,7 @@ function DashboardPage() {
               </span>
               <div className="min-w-0">
                 <p className="font-medium">
-                  {item.title}{" "}
-                  <span className="ml-1 font-display tabular-nums">{item.count}</span>
+                  {item.title} <span className="ml-1 font-display tabular-nums">{item.count}</span>
                 </p>
                 <p className="text-sm leading-snug text-muted-foreground">{item.body}</p>
               </div>
@@ -189,7 +187,6 @@ function DashboardPage() {
           </div>
         ))}
       </div>
-
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <div>

@@ -6,6 +6,7 @@ import {
   Settings,
   ClipboardList,
   HandHeart,
+  Building2,
   type LucideIcon,
 } from "lucide-react";
 
@@ -28,7 +29,12 @@ export const navGroups: NavGroup[] = [
   {
     label: "Overview",
     items: [
-      { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard, roles: ["admin", "caregiver"] },
+      {
+        label: "Dashboard",
+        to: "/dashboard",
+        icon: LayoutDashboard,
+        roles: ["admin", "caregiver"],
+      },
     ],
   },
   {
@@ -62,10 +68,19 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Account",
+    label: "Directory",
     items: [
-      { label: "Settings", to: "/settings", icon: Settings, roles: ["admin", "caregiver"] },
+      {
+        label: "Facility listings",
+        to: "/facilities",
+        icon: Building2,
+        roles: ["admin"],
+      },
     ],
+  },
+  {
+    label: "Account",
+    items: [{ label: "Settings", to: "/settings", icon: Settings, roles: ["admin", "caregiver"] }],
   },
 ];
 

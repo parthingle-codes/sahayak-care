@@ -46,10 +46,7 @@ export function useUpdateRegistration() {
       id: string;
       values: TablesUpdate<"resident_registrations">;
     }) => {
-      const { error } = await supabase
-        .from("resident_registrations")
-        .update(values)
-        .eq("id", id);
+      const { error } = await supabase.from("resident_registrations").update(values).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => void qc.invalidateQueries({ queryKey: ["resident_registrations"] }),

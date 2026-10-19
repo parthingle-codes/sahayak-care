@@ -106,7 +106,8 @@ function FamilySignInPage() {
             {existing !== null ? (
               <div className="space-y-3 text-center">
                 <p className="text-sm text-muted-foreground">
-                  You are signed in as <span className="font-medium text-foreground">{existing}</span>.
+                  You are signed in as{" "}
+                  <span className="font-medium text-foreground">{existing}</span>.
                 </p>
                 <Button
                   className="w-full"

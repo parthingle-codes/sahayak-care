@@ -140,47 +140,47 @@ function SettingsPage() {
         <div>
           <h2 className="mb-2 font-display text-lg font-semibold">Staff access</h2>
           <div className="surface-card overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead>Role</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {staff.map((s) => (
-                <TableRow key={s.user_id}>
-                  <TableCell className="font-medium">
-                    {s.full_name || "—"}
-                    {s.user_id === user?.id ? (
-                      <Badge variant="outline" className="ml-2">
-                        You
-                      </Badge>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{s.email}</TableCell>
-                  <TableCell>{new Date(s.created_at).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Select
-                      value={s.role ?? "caregiver"}
-                      onValueChange={(v) => void change(s.user_id, v as Role)}
-                      disabled={setRole.isPending || s.user_id === user?.id}
-                    >
-                      <SelectTrigger className="w-40">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="admin">Administrator</SelectItem>
-                        <SelectItem value="caregiver">Caregiver</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Joined</TableHead>
+                  <TableHead>Role</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {staff.map((s) => (
+                  <TableRow key={s.user_id}>
+                    <TableCell className="font-medium">
+                      {s.full_name || "—"}
+                      {s.user_id === user?.id ? (
+                        <Badge variant="outline" className="ml-2">
+                          You
+                        </Badge>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">{s.email}</TableCell>
+                    <TableCell>{new Date(s.created_at).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Select
+                        value={s.role ?? "caregiver"}
+                        onValueChange={(v) => void change(s.user_id, v as Role)}
+                        disabled={setRole.isPending || s.user_id === user?.id}
+                      >
+                        <SelectTrigger className="w-40">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="admin">Administrator</SelectItem>
+                          <SelectItem value="caregiver">Caregiver</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       )}

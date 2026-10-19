@@ -43,6 +43,13 @@
       "when": 1790881139074,
       "tag": "0005_staff_only_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792331872554,
+      "tag": "0006_create_facility_directory",
+      "breakpoints": true
     }
   ]
 }

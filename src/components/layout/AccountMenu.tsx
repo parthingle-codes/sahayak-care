@@ -34,7 +34,11 @@ export function AccountMenu() {
       </Badge>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-10 gap-2 rounded-full px-1.5 pr-3" aria-label="Account menu">
+          <Button
+            variant="ghost"
+            className="h-10 gap-2 rounded-full px-1.5 pr-3"
+            aria-label="Account menu"
+          >
             <span className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground ring-2 ring-primary-soft">
               {initials || <UserRound className="size-4" aria-hidden />}
             </span>
