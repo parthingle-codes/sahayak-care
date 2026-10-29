@@ -1,8 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { HeartHandshake, Loader2, CheckCircle2 } from "lucide-react";
+import {
+  HeartHandshake,
+  Loader2,
+  CheckCircle2,
+  FlaskConical,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import { toast } from "sonner";
 import { z } from "zod";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +25,10 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useSubmitRegistration } from "@/features/registrations/queries";
+import {
+  DigiLockerAuthDialog,
+  type DigiLockerDocumentData,
+} from "@/components/registrations/DigiLockerAuthDialog";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -76,10 +89,23 @@ function RegisterPage() {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [reference, setReference] = useState<string | null>(null);
+  const [digiLockerOpen, setDigiLockerOpen] = useState(false);
+  const [retrievedDoc, setRetrievedDoc] = useState<DigiLockerDocumentData | null>(null);
   const submit = useSubmitRegistration();
 
   const set = (key: keyof typeof emptyForm) => (value: string) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  function handleApplyRetrievedData() {
+    if (!retrievedDoc) return;
+    setForm((prev) => ({
+      ...prev,
+      full_name: retrievedDoc.fullName,
+      date_of_birth: retrievedDoc.dateOfBirthIso,
+      contact_address: prev.contact_address || retrievedDoc.address,
+    }));
+    toast.success("Applied document details into registration form");
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -112,6 +138,7 @@ function RegisterPage() {
       });
       setReference(row.reference);
       setForm(emptyForm);
+      setRetrievedDoc(null);
     } catch (error) {
       setErrors({
         form:
@@ -160,6 +187,139 @@ function RegisterPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
+              {/* ── DigiLocker DEMO MODE notice ── */}
+              <div
+                role="note"
+                aria-label="DigiLocker demo mode notice"
+                className="mb-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200"
+              >
+                <FlaskConical
+                  className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400"
+                  aria-hidden
+                />
+                <span>
+                  <strong>DEMO MODE</strong> — This feature does not perform real Aadhaar or
+                  DigiLocker verification. No identity verification has occurred.
+                </span>
+              </div>
+
+              {/* ── DigiLocker Integration Panel ── */}
+              <div className="mb-6 rounded-2xl border border-blue-200/90 bg-gradient-to-r from-blue-50/80 via-indigo-50/40 to-blue-50/80 p-4.5 dark:border-blue-900/60 dark:from-blue-950/25 dark:to-indigo-950/25">
+                <div className="flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-start gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
+                      <ShieldCheck className="size-5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-sm text-foreground">
+                          DigiLocker Verification
+                        </h3>
+                        <Badge
+                          variant="outline"
+                          className="border-blue-300/80 bg-blue-100/60 text-[10px] text-blue-800 dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-300 font-normal"
+                        >
+                          Integration Preview
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Authorize digital document sharing to automatically retrieve intake details.
+                      </p>
+                    </div>
+                  </div>
+
+                  <Button
+                    type="button"
+                    onClick={() => setDigiLockerOpen(true)}
+                    className="bg-blue-600 text-white hover:bg-blue-700 shadow-xs shrink-0 cursor-pointer text-xs font-semibold h-9"
+                  >
+                    <ShieldCheck className="mr-1.5 size-4" />
+                    Continue with DigiLocker
+                  </Button>
+                </div>
+
+                {/* Retrieved Document Details Card */}
+                {retrievedDoc && (
+                  <div className="mt-4 rounded-xl border border-blue-200/90 bg-card p-3.5 shadow-xs dark:border-blue-800/80 space-y-3 animate-in fade-in-50 duration-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                        <span className="font-medium text-xs text-foreground">
+                          Retrieved Document:{" "}
+                          <span className="font-mono text-blue-700 dark:text-blue-300">
+                            {retrievedDoc.documentReference}
+                          </span>
+                        </span>
+                      </div>
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/40 dark:text-emerald-300"
+                      >
+                        Document Shared
+                      </Badge>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-2 rounded-lg bg-muted/40 p-2.5 text-xs sm:grid-cols-3">
+                      <div>
+                        <span className="text-muted-foreground block text-[11px]">Name</span>
+                        <span className="font-semibold text-foreground">
+                          {retrievedDoc.fullName}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground block text-[11px]">DOB</span>
+                        <span className="font-semibold text-foreground">
+                          {retrievedDoc.dateOfBirthFormatted}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground block text-[11px]">Address</span>
+                        <span className="font-semibold text-foreground truncate block">
+                          {retrievedDoc.address}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-2 text-xs">
+                      <span className="text-muted-foreground text-[11px]">
+                        Review sample data. Form fields are never altered without explicit
+                        confirmation.
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setRetrievedDoc(null)}
+                          className="h-7 text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Clear
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={handleApplyRetrievedData}
+                          className="h-7 border-blue-300 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 text-xs font-medium"
+                        >
+                          <Sparkles className="mr-1.5 size-3.5" />
+                          Fill into form
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* DigiLocker Dedicated Authorization Dialog */}
+              <DigiLockerAuthDialog
+                open={digiLockerOpen}
+                onOpenChange={setDigiLockerOpen}
+                onComplete={(doc) => {
+                  setRetrievedDoc(doc);
+                  toast.success("Document shared from DigiLocker! Review details below.");
+                }}
+              />
               <form onSubmit={handleSubmit} className="space-y-8">
                 <section className="space-y-4">
                   <h2 className="font-display text-base font-semibold">Resident details</h2>
