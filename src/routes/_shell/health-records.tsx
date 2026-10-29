@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+﻿import { createFileRoute } from "@tanstack/react-router";
 import { HeartPulse } from "lucide-react";
 
 import { ConditionFormDialog } from "@/components/care/ConditionFormDialog";
@@ -21,13 +21,13 @@ import { useConditions, useObservations, useResidents } from "@/features/care/qu
 export const Route = createFileRoute("/_shell/health-records")({
   head: () => ({
     meta: [
-      { title: "Health Records — SAHAAYAK Elderly Care" },
+      { title: "Health Records — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Recorded vitals and care observations for residents: blood pressure, pulse, temperature, weight and notes.",
       },
-      { property: "og:title", content: "Health Records — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Health Records — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Record and review daily health observations for each resident.",

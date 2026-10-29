@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+﻿import { Link, useRouterState } from "@tanstack/react-router";
 import { HeartHandshake, ShieldCheck } from "lucide-react";
 
 import {
@@ -30,7 +30,7 @@ export function AppSidebar() {
           </span>
           <span className="grid group-data-[collapsible=icon]:hidden">
             <span className="font-display text-base font-semibold tracking-tight text-sidebar-foreground">
-              SAHAAYAK
+              SAHAYAK
             </span>
             <span className="text-[11px] font-medium leading-snug tracking-wide text-muted-foreground">
               Building technology with compassion
@@ -81,7 +81,7 @@ export function AppSidebar() {
             Care records only — not a medical decision tool.
           </p>
           <p className="mt-2 text-[10px] font-semibold tracking-[0.1em] text-muted-foreground/80 uppercase">
-            SAHAAYAK · Care management
+            SAHAYAK · Care management
           </p>
         </div>
       </SidebarFooter>

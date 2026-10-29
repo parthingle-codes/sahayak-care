@@ -1,4 +1,4 @@
-import { StatusBadge } from "@/components/common/StatusBadge";
+﻿import { StatusBadge } from "@/components/common/StatusBadge";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ClipboardList } from "lucide-react";
 
@@ -22,13 +22,13 @@ import { useRegistrations, type Registration } from "@/features/registrations/qu
 export const Route = createFileRoute("/_shell/registrations")({
   head: () => ({
     meta: [
-      { title: "Registrations — SAHAAYAK Elderly Care" },
+      { title: "Registrations — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Review online admission requests for the care home and turn an approved request into a resident record in one step.",
       },
-      { property: "og:title", content: "Registrations — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Registrations — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Pending, approved and rejected online admission requests in one queue.",

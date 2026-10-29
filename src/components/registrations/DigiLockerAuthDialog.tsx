@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import {
   ShieldCheck,
   Lock,
@@ -162,7 +162,7 @@ export function DigiLockerAuthDialog({
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   You are continuing to share verified intake documents with{" "}
-                  <strong className="text-foreground">SAHAAYAK Elderly Care</strong>.
+                  <strong className="text-foreground">SAHAYAK Elderly Care</strong>.
                 </p>
               </div>
 
@@ -219,7 +219,7 @@ export function DigiLockerAuthDialog({
                   Consent Request
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  <strong className="text-foreground">SAHAAYAK Elderly Care</strong> requests your
+                  <strong className="text-foreground">SAHAYAK Elderly Care</strong> requests your
                   authorization to retrieve specific document details for registration.
                 </p>
               </div>
@@ -410,7 +410,7 @@ export function DigiLockerAuthDialog({
                     Document Preview
                   </h3>
                   <p className="text-xs text-muted-foreground">
-                    Inspect the attributes that will be shared with SAHAAYAK.
+                    Inspect the attributes that will be shared with SAHAYAK.
                   </p>
                 </div>
                 <Badge
@@ -498,7 +498,7 @@ export function DigiLockerAuthDialog({
                 <div className="flex items-center justify-between rounded-lg bg-blue-50/70 p-2.5 text-[11px] text-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
                   <span className="inline-flex items-center gap-1.5 font-medium">
                     <CheckCircle2 className="size-3.5 text-blue-600 dark:text-blue-400" />
-                    Digitally Authorized for SAHAAYAK Admission
+                    Digitally Authorized for SAHAYAK Admission
                   </span>
                   <span className="font-mono text-[10px] opacity-75">SHA-256 Validated</span>
                 </div>
@@ -536,7 +536,7 @@ export function DigiLockerAuthDialog({
                   <span className="font-mono font-medium text-foreground">
                     {SAMPLE_DIGILOCKER_DOC.documentReference}
                   </span>
-                  ) has been successfully authorized and transmitted to SAHAAYAK.
+                  ) has been successfully authorized and transmitted to SAHAYAK.
                 </p>
               </div>
 
@@ -573,7 +573,7 @@ export function DigiLockerAuthDialog({
                   onClick={handleFinishJourney}
                 >
                   <Sparkles className="mr-2 size-4" />
-                  Return to SAHAAYAK
+                  Return to SAHAYAK
                 </Button>
               </div>
             </div>

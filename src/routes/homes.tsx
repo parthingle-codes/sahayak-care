@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
   ArrowRight,
@@ -28,13 +28,13 @@ export const Route = createFileRoute("/homes")({
   loader: () => fetchPublishedFacilities(),
   head: () => ({
     meta: [
-      { title: "Find elderly care homes — SAHAAYAK" },
+      { title: "Find elderly care homes — SAHAYAK" },
       {
         name: "description",
         content:
           "Browse a public directory of old age homes. Every listing is published by the home's administrator and verified before it appears here.",
       },
-      { property: "og:title", content: "Find elderly care homes — SAHAAYAK" },
+      { property: "og:title", content: "Find elderly care homes — SAHAYAK" },
       {
         property: "og:description",
         content:
@@ -92,7 +92,7 @@ function HomesPage() {
         </h1>
         <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
           Every listing below is published by the home's own administrator and verified by the
-          SAHAAYAK team before it appears here.
+          SAHAYAK team before it appears here.
         </p>
 
         {facilities.length > 0 ? (
@@ -234,7 +234,7 @@ export function PublicBar() {
           </span>
           <span>
             <span className="block font-display text-base font-semibold leading-tight">
-              SAHAAYAK
+              SAHAYAK
             </span>
             <span className="hidden text-xs text-muted-foreground sm:block">
               Find elderly care homes
@@ -262,8 +262,8 @@ export function PublicFooter() {
     <footer className="border-t border-border bg-background py-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
         <p>
-          Listings are published by each home's administrator and verified by the SAHAAYAK team.
-          SAHAAYAK does not host ratings or reviews.
+          Listings are published by each home's administrator and verified by the SAHAYAK team.
+          SAHAYAK does not host ratings or reviews.
         </p>
         <p className="shrink-0">
           A Community Engagement Program project, Government College of Engineering, Nagpur.

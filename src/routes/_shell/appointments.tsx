@@ -1,4 +1,4 @@
-import { StatusBadge } from "@/components/common/StatusBadge";
+﻿import { StatusBadge } from "@/components/common/StatusBadge";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarClock, Search, User } from "lucide-react";
@@ -32,13 +32,13 @@ import {
 export const Route = createFileRoute("/_shell/appointments")({
   head: () => ({
     meta: [
-      { title: "Medical Appointments — SAHAAYAK Elderly Care" },
+      { title: "Medical Appointments — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Medical observation cycle for every resident: who is due, who is overdue, and what was observed at the last check.",
       },
-      { property: "og:title", content: "Medical Appointments — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Medical Appointments — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Track each resident's medical observation schedule, ordered by what is due next.",

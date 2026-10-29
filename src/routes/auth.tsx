@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { HeartHandshake, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -15,13 +15,13 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Staff sign in — SAHAAYAK" },
+      { title: "Staff sign in — SAHAYAK" },
       {
         name: "description",
         content:
-          "Sign in to SAHAAYAK to manage residents, health records and daily care at your elderly care home.",
+          "Sign in to SAHAYAK to manage residents, health records and daily care at your elderly care home.",
       },
-      { property: "og:title", content: "Staff sign in — SAHAAYAK" },
+      { property: "og:title", content: "Staff sign in — SAHAYAK" },
       {
         property: "og:description",
         content: "Secure access for administrators and caregivers of small elderly care homes.",
@@ -137,7 +137,7 @@ function AuthPage() {
           className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-card/80 px-4 py-2 font-display text-sm font-semibold tracking-wide text-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/40"
         >
           <HeartHandshake className="size-5 text-primary" aria-hidden />
-          SAHAAYAK
+          SAHAYAK
         </Link>
 
         <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">

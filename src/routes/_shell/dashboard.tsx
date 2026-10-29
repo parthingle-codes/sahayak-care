@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Users,
   AlertTriangle,
@@ -29,13 +29,13 @@ import {
 export const Route = createFileRoute("/_shell/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — SAHAAYAK Elderly Care" },
+      { title: "Dashboard — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Daily care overview for an elderly care home: residents, medical observations due, overdue checks and recent vitals.",
       },
-      { property: "og:title", content: "Dashboard — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Dashboard — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "See what needs attention today across residents and medical observations.",
@@ -340,7 +340,7 @@ function DashboardPage() {
             </div>
 
             <p className="pt-1 text-xs text-muted-foreground">
-              SAHAAYAK helps organise care information. It does not replace clinical judgement.
+              SAHAYAK helps organise care information. It does not replace clinical judgement.
             </p>
           </div>
         </section>
@@ -394,7 +394,7 @@ function DashboardPage() {
 
       {/* Page footer */}
       <div className="mt-6 flex flex-col gap-1 border-t border-border/70 pt-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p>SAHAAYAK helps organise care information. It does not replace clinical judgement.</p>
+        <p>SAHAYAK helps organise care information. It does not replace clinical judgement.</p>
         <p className="shrink-0">Designed for care teams · Built with compassion</p>
       </div>
     </>

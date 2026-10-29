@@ -593,6 +593,7 @@ export type Database = {
           created_at: string;
           current_medicines: string | null;
           date_of_birth: string | null;
+          digilocker_status: string;
           full_name: string;
           gender: Database["public"]["Enums"]["gender_type"] | null;
           id: string;
@@ -617,6 +618,7 @@ export type Database = {
           created_at?: string;
           current_medicines?: string | null;
           date_of_birth?: string | null;
+          digilocker_status?: string;
           full_name: string;
           gender?: Database["public"]["Enums"]["gender_type"] | null;
           id?: string;
@@ -641,6 +643,7 @@ export type Database = {
           created_at?: string;
           current_medicines?: string | null;
           date_of_birth?: string | null;
+          digilocker_status?: string;
           full_name?: string;
           gender?: Database["public"]["Enums"]["gender_type"] | null;
           id?: string;

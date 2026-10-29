@@ -69,6 +69,31 @@ export function useApproveRegistration() {
   });
 }
 
+/**
+ * Staff: simulate the DigiLocker demo flow for a pending registration.
+ *
+ * DEMO MODE ONLY — this does NOT perform real Aadhaar or DigiLocker
+ * verification.  It records only that a staff member ran the demo simulation.
+ * The value written ('demo_completed') is deliberately distinct from any real
+ * verification status.  Security is enforced entirely by the existing
+ * "Staff only update guard" RLS policy from migration 0005; a non-staff user
+ * cannot reach this code path or bypass the policy through the Supabase client.
+ */
+export function useSimulateDemoVerification() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("resident_registrations")
+        .update({ digilocker_status: "demo_completed" })
+        .eq("id", id)
+        .eq("digilocker_status", "unverified"); // idempotency guard: skip if already set
+      if (error) throw error;
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ["resident_registrations"] }),
+  });
+}
+
 /** Staff: decline a request, with an optional reason. */
 export function useRejectRegistration() {
   const qc = useQueryClient();

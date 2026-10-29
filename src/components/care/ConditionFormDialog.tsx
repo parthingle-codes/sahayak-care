@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Pencil, Stethoscope } from "lucide-react";
 import { toast } from "sonner";
 
@@ -98,7 +98,7 @@ export function ConditionFormDialog({ record }: { record?: Condition }) {
         <DialogHeader>
           <DialogTitle>{isEdit ? "Edit medical condition" : "Add medical condition"}</DialogTitle>
           <DialogDescription>
-            Record a condition already diagnosed by a doctor. SAHAAYAK never diagnoses.
+            Record a condition already diagnosed by a doctor. SAHAYAK never diagnoses.
           </DialogDescription>
         </DialogHeader>
 

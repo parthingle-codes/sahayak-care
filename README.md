@@ -1,10 +1,10 @@
-# SAHAAYAK
+﻿# SAHAYAK
 
 ### Smart Elderly Care & Health Management Platform
 
 > **Building Technology with Compassion.**
 
-SAHAAYAK is a modern web-based elderly care management platform that helps small old-age homes organize resident information, daily caregiving and family communication in one calm interface — and lets the public **discover verified care homes** through a dedicated directory.
+SAHAYAK is a modern web-based elderly care management platform that helps small old-age homes organize resident information, daily caregiving and family communication in one calm interface — and lets the public **discover verified care homes** through a dedicated directory.
 
 The project was developed as part of the **Community Engagement Program (CEP)** at **Government College of Engineering, Nagpur (GCOEN)**, exploring how thoughtful technology can simplify elderly-care management and improve access to important information.
 
@@ -23,7 +23,7 @@ During our Community Engagement Program, our team visited an elderly care facili
 
 ### Solution
 
-SAHAAYAK is deliberately **not a hospital-management system**. It focuses on the practical needs of a **small elderly-care facility**:
+SAHAYAK is deliberately **not a hospital-management system**. It focuses on the practical needs of a **small elderly-care facility**:
 
 1. **Inside the care home** — a role-based staff application for resident records, recurring health observations, appointments and family updates, secured end-to-end by PostgreSQL Row Level Security.
 2. **For the public** — a verified, administrator-curated **directory of real old-age homes** (`/homes`) with full profiles, contact details, directions and links to genuine external reviews. Every listing is checked and published by an administrator; the database itself refuses to show unverified listings.
@@ -58,7 +58,7 @@ A public, server-rendered page listing **published and verified** care homes in 
 
 ### 📄 Individual Facility Profiles — `/homes/$slug`
 
-A full profile for each listed home: complete description, structured address, phone, email, official website, a map/directions link, and **genuine external review links** where available. Optional fields disappear gracefully when absent, and SAHAAYAK never fabricates ratings, reviews or photos — external reviews are clearly labelled as third-party links.
+A full profile for each listed home: complete description, structured address, phone, email, official website, a map/directions link, and **genuine external review links** where available. Optional fields disappear gracefully when absent, and SAHAYAK never fabricates ratings, reviews or photos — external reviews are clearly labelled as third-party links.
 
 ### 🛡️ Admin Facility Management — `/facilities`
 
@@ -134,7 +134,7 @@ See the next section.
 
 ## 🗄️ Database Setup
 
-SAHAAYAK has **no automated migration runner**. SQL scripts are a _record_ of the schema and are applied **manually, once, in the Supabase SQL Editor**.
+SAHAYAK has **no automated migration runner**. SQL scripts are a _record_ of the schema and are applied **manually, once, in the Supabase SQL Editor**.
 
 | Script                                                  | What it does                                                                                                                                                                                                       | Status                                             |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
@@ -152,7 +152,7 @@ SAHAAYAK has **no automated migration runner**. SQL scripts are a _record_ of th
 
 1. SQL Editor → paste all of `restore/demo_residents.sql` → **Run**.
 2. Expect `INSERT 0 8` the first time and `INSERT 0 0` on later runs (the script skips names that already exist).
-3. Open SAHAAYAK → sign in as staff → **Residents** page: the 8 demo records appear alongside any real residents.
+3. Open SAHAYAK → sign in as staff → **Residents** page: the 8 demo records appear alongside any real residents.
 
 The demo rows are fictional and non-contactable, every note is marked `[DEMO RECORD]`, no auth-user ID is invented (`created_by` stays NULL), and the script disables nothing and alters no schema.
 
@@ -207,16 +207,16 @@ npm run build      # production build (also regenerates the route tree)
 ## 📌 Current Limitations
 
 - **The directory ships empty.** `/homes` only shows listings an administrator has created, verified and published — no listings, facilities, photos or reviews are invented or pre-seeded. Real, verified listings must be added through `/facilities`.
-- **No dedicated services, photos or ratings columns.** The current schema stores a summary, a full description (where services can be described in text), contact details, a map link and external review links. Structured service tags, photo galleries or on-site ratings would require a deliberate future schema change — by design, SAHAAYAK does not host ratings or reviews.
+- **No dedicated services, photos or ratings columns.** The current schema stores a summary, a full description (where services can be described in text), contact details, a map link and external review links. Structured service tags, photo galleries or on-site ratings would require a deliberate future schema change — by design, SAHAYAK does not host ratings or reviews.
 - **Demo resident records are synthetic.** The 8 "Demo Resident" rows exist only for demonstration and contain no real personal or medical information.
 - **Manual database setup.** Schema scripts are applied by hand in the Supabase SQL Editor (see above) — there is no automated migration command.
-- **Not a medical device.** SAHAAYAK organizes information; it does not diagnose, prescribe or replace healthcare professionals.
+- **Not a medical device.** SAHAYAK organizes information; it does not diagnose, prescribe or replace healthcare professionals.
 
 ---
 
 ## 🎨 Design Philosophy
 
-SAHAAYAK is designed to feel like a modern, trustworthy digital platform rather than a traditional college CRUD application — calm, human-centered, and accessible to users with limited technical experience.
+SAHAYAK is designed to feel like a modern, trustworthy digital platform rather than a traditional college CRUD application — calm, human-centered, and accessible to users with limited technical experience.
 
 - **Simple** — Easy for users with limited technical experience
 - **Clear** — Important information should be easy to find
@@ -239,7 +239,7 @@ SAHAAYAK is designed to feel like a modern, trustworthy digital platform rather 
 ## 🏗️ High-Level Architecture
 
 ```text
-                         SAHAAYAK
+                         SAHAYAK
                              │
                     ┌────────┴────────┐
                     │                 │

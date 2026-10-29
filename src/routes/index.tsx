@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   HeartHandshake,
@@ -18,13 +18,13 @@ import heroImage from "@/assets/care-hero.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SAHAAYAK — Manage elderly care with clarity" },
+      { title: "SAHAYAK — Manage elderly care with clarity" },
       {
         name: "description",
         content:
           "One calm place for small old age homes: resident records, health observations, appointments, family updates and online registration.",
       },
-      { property: "og:title", content: "SAHAAYAK — Manage elderly care with clarity" },
+      { property: "og:title", content: "SAHAYAK — Manage elderly care with clarity" },
       {
         property: "og:description",
         content: "Building technology with compassion. For care teams, families and facilities.",
@@ -100,7 +100,7 @@ function LandingPage() {
             </span>
             <span>
               <span className="block font-display text-base font-semibold leading-tight">
-                SAHAAYAK
+                SAHAYAK
               </span>
               <span className="hidden text-xs text-muted-foreground sm:block">
                 Building technology with compassion
@@ -144,7 +144,7 @@ function LandingPage() {
               Manage <span className="text-primary">care</span> with clarity.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              SAHAAYAK gives small old age homes one calm place for residents, health observations,
+              SAHAYAK gives small old age homes one calm place for residents, health observations,
               appointments and family updates — replacing scattered registers.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -194,7 +194,7 @@ function LandingPage() {
 
         <section aria-labelledby="paths" className="mx-auto w-full max-w-6xl px-4 pb-16 md:px-8">
           <h2 id="paths" className="sr-only">
-            Choose how you use SAHAAYAK
+            Choose how you use SAHAYAK
           </h2>
           <div className="grid gap-4 md:grid-cols-3">
             {paths.map((p, i) => (
@@ -288,7 +288,7 @@ function LandingPage() {
       <footer className="border-t border-border/60 bg-card/50 py-10 backdrop-blur-md">
         <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 md:grid-cols-3 md:px-8">
           <div>
-            <p className="font-display font-semibold text-primary">SAHAAYAK</p>
+            <p className="font-display font-semibold text-primary">SAHAYAK</p>
             <p className="mt-2 text-sm text-muted-foreground">
               A care-management and record-keeping system. It does not diagnose, prescribe or
               replace healthcare professionals.

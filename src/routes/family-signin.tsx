@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { HeartHandshake, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -14,13 +14,13 @@ export const Route = createFileRoute("/family-signin")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Family sign in — SAHAAYAK" },
+      { title: "Family sign in — SAHAYAK" },
       {
         name: "description",
         content:
           "Relatives of residents can sign in to see their loved one's health updates and upcoming checkups.",
       },
-      { property: "og:title", content: "Family sign in — SAHAAYAK" },
+      { property: "og:title", content: "Family sign in — SAHAYAK" },
       {
         property: "og:description",
         content: "A calm, read-only view of your loved one's care, shared by their care home.",
@@ -92,7 +92,7 @@ function FamilySignInPage() {
           className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-card/80 px-4 py-2 font-display text-sm font-semibold tracking-wide text-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/40"
         >
           <HeartHandshake className="size-5 text-primary" aria-hidden />
-          SAHAAYAK
+          SAHAYAK
         </Link>
 
         <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">

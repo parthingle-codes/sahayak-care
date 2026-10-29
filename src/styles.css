@@ -1,11 +1,11 @@
-@import "tailwindcss" source(none);
+﻿@import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 /*
- * SAHAAYAK design system — "Calm Care" (blue-led healthcare-wellness).
+ * SAHAYAK design system — "Calm Care" (blue-led healthcare-wellness).
  *
  * A warm-neutral cool canvas (#F3F6FA), an ivory sidebar (#FBFAF7) with a
  * blue-toned active pill, warm-ivory content cards (#FDFCF9), and a single

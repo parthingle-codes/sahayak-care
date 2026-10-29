@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Activity,
@@ -27,13 +27,13 @@ export const Route = createFileRoute("/family")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Family updates — SAHAAYAK" },
+      { title: "Family updates — SAHAYAK" },
       {
         name: "description",
         content:
           "See how your loved one is doing: recent health updates, upcoming checkups and care notes from their care home.",
       },
-      { property: "og:title", content: "Family updates — SAHAAYAK" },
+      { property: "og:title", content: "Family updates — SAHAYAK" },
       {
         property: "og:description",
         content: "A read-only view of your loved one's care, shared by their care home.",
@@ -121,7 +121,7 @@ function FamilyPage() {
               <HeartHandshake className="size-5" aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block truncate">SAHAAYAK</span>
+              <span className="block truncate">SAHAYAK</span>
               <span className="block text-xs font-normal text-muted-foreground">
                 Family updates
               </span>

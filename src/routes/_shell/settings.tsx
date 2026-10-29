@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { CalendarClock, Settings as SettingsIcon, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
@@ -38,12 +38,12 @@ import type { Role } from "@/lib/navigation";
 export const Route = createFileRoute("/_shell/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — SAHAAYAK Elderly Care" },
+      { title: "Settings — SAHAYAK Elderly Care" },
       {
         name: "description",
         content: "Manage staff accounts, roles and your own profile in the care platform.",
       },
-      { property: "og:title", content: "Settings — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Settings — SAHAYAK Elderly Care" },
       { property: "og:description", content: "Staff accounts, roles and personal profile." },
     ],
   }),

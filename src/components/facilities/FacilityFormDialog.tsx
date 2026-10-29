@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Loader2, Plus, X } from "lucide-react";
 import { toast } from "sonner";
 
@@ -365,7 +365,7 @@ export function FacilityFormDialog({
             </Button>
             <p className="text-xs text-muted-foreground">
               Link to genuine third-party pages only (Google Maps reviews, directories, news
-              articles). Leave empty if none exist — SAHAAYAK never hosts ratings.
+              articles). Leave empty if none exist — SAHAYAK never hosts ratings.
             </p>
           </div>
 

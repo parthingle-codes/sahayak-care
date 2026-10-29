@@ -1,4 +1,4 @@
-import { StatusBadge } from "@/components/common/StatusBadge";
+﻿import { StatusBadge } from "@/components/common/StatusBadge";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search, Users } from "lucide-react";
@@ -23,13 +23,13 @@ import { useRole } from "@/hooks/use-auth";
 export const Route = createFileRoute("/_shell/residents")({
   head: () => ({
     meta: [
-      { title: "Residents — SAHAAYAK Elderly Care" },
+      { title: "Residents — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Directory of residents in the care home with room, bed, mobility and admission details.",
       },
-      { property: "og:title", content: "Residents — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Residents — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Search residents and open a full care profile in one click.",

@@ -1,4 +1,4 @@
-import { StatusBadge } from "@/components/common/StatusBadge";
+﻿import { StatusBadge } from "@/components/common/StatusBadge";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CalendarClock, HeartPulse, Stethoscope } from "lucide-react";
 
@@ -31,13 +31,13 @@ import { bucketLabel, bucketOf, daysRemainingLabel, formatDate } from "@/lib/app
 export const Route = createFileRoute("/_shell/residents/$id")({
   head: () => ({
     meta: [
-      { title: "Resident profile — SAHAAYAK Elderly Care" },
+      { title: "Resident profile — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "One resident's care profile: room and mobility details, medical conditions, recorded vitals and medical observation schedule.",
       },
-      { property: "og:title", content: "Resident profile — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Resident profile — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Everything recorded for one resident, in one place.",

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Building2, Eye, ExternalLink, Plus, ShieldCheck } from "lucide-react";
 
@@ -28,7 +28,7 @@ import {
 
 export const Route = createFileRoute("/_shell/facilities")({
   head: () => ({
-    meta: [{ title: "Facility listings — SAHAAYAK" }],
+    meta: [{ title: "Facility listings — SAHAYAK" }],
   }),
   component: () => (
     <AdminOnly>

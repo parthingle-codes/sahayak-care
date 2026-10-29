@@ -1,4 +1,4 @@
-<!-- LOVABLE:BEGIN -->
+﻿<!-- LOVABLE:BEGIN -->
 
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
@@ -13,7 +13,7 @@
 
 # AGENTS.md
 
-SAHAAYAK — elderly-care management app. TanStack Start (file-based routes) + React 19 + Vite + Tailwind 4 + shadcn/ui. Supabase (Postgres + Auth + RLS) is the **only** backend; there is no custom API layer.
+SAHAYAK — elderly-care management app. TanStack Start (file-based routes) + React 19 + Vite + Tailwind 4 + shadcn/ui. Supabase (Postgres + Auth + RLS) is the **only** backend; there is no custom API layer.
 
 ## Commands
 

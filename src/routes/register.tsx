@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   HeartHandshake,
@@ -33,13 +33,13 @@ import {
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Register a resident — SAHAAYAK Elderly Care" },
+      { title: "Register a resident — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Fill the online admission form for an elderly care home: resident details, contact person and health information at intake. No paperwork needed.",
       },
-      { property: "og:title", content: "Register a resident — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Register a resident — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content:
@@ -157,7 +157,7 @@ function RegisterPage() {
           className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-card/80 px-4 py-2 font-display text-sm font-semibold tracking-wide text-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/40"
         >
           <HeartHandshake className="size-5 text-primary" aria-hidden />
-          SAHAAYAK
+          SAHAYAK
         </Link>
 
         {reference ? (

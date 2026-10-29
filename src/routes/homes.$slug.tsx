@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Building2,
@@ -31,15 +31,15 @@ export const Route = createFileRoute("/homes/$slug")({
     meta: [
       {
         title: loaderData
-          ? `${loaderData.name} — Find elderly care homes | SAHAAYAK`
-          : "Home not found — SAHAAYAK",
+          ? `${loaderData.name} — Find elderly care homes | SAHAYAK`
+          : "Home not found — SAHAYAK",
       },
       {
         name: "description",
         content:
-          loaderData?.summary ?? "Verified old age home listing on the SAHAAYAK public directory.",
+          loaderData?.summary ?? "Verified old age home listing on the SAHAYAK public directory.",
       },
-      { property: "og:title", content: loaderData ? `${loaderData.name} — SAHAAYAK` : "SAHAAYAK" },
+      { property: "og:title", content: loaderData ? `${loaderData.name} — SAHAYAK` : "SAHAYAK" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -266,7 +266,7 @@ function FacilityProfilePage() {
                     ))}
                   </ul>
                   <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                    These links open third-party sites. SAHAAYAK does not host ratings or reviews.
+                    These links open third-party sites. SAHAYAK does not host ratings or reviews.
                   </p>
                 </>
               ) : (

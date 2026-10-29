@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { HeartHandshake, Loader2, CheckCircle2 } from "lucide-react";
 import { z } from "zod";
@@ -20,13 +20,13 @@ import { useSubmitDonation } from "@/features/donations/queries";
 export const Route = createFileRoute("/donate")({
   head: () => ({
     meta: [
-      { title: "Donate or volunteer — SAHAAYAK Elderly Care" },
+      { title: "Donate or volunteer — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Offer food, clothing, everyday essentials, financial support or your time to a small old age home. Staff get in touch to arrange the hand-over.",
       },
-      { property: "og:title", content: "Donate or volunteer — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Donate or volunteer — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Support the residents with food, clothes, essentials, funds or volunteering.",
@@ -126,7 +126,7 @@ function DonatePage() {
           className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-card/80 px-4 py-2 font-display text-sm font-semibold tracking-wide text-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/40"
         >
           <HeartHandshake className="size-5 text-primary" aria-hidden />
-          SAHAAYAK
+          SAHAYAK
         </Link>
 
         {reference ? (

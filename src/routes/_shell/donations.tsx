@@ -1,4 +1,4 @@
-import { StatusBadge } from "@/components/common/StatusBadge";
+﻿import { StatusBadge } from "@/components/common/StatusBadge";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Gift, HandHeart, IndianRupee, PackageCheck } from "lucide-react";
 
@@ -23,13 +23,13 @@ import { donationTypeLabels, useDonations, type Donation } from "@/features/dona
 export const Route = createFileRoute("/_shell/donations")({
   head: () => ({
     meta: [
-      { title: "Donations — SAHAAYAK Elderly Care" },
+      { title: "Donations — SAHAYAK Elderly Care" },
       {
         name: "description",
         content:
           "Track offers of food, clothing, essentials, funds and volunteering for the care home, from first offer to received.",
       },
-      { property: "og:title", content: "Donations — SAHAAYAK Elderly Care" },
+      { property: "og:title", content: "Donations — SAHAYAK Elderly Care" },
       {
         property: "og:description",
         content: "Pending, accepted, received and declined donation offers in one queue.",

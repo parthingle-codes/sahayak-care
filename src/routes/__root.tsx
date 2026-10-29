@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+﻿import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -78,13 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SAHAAYAK — Elderly Care & Health Management" },
+      { title: "SAHAYAK — Elderly Care & Health Management" },
       {
         name: "description",
         content:
-          "SAHAAYAK helps small old age homes manage residents, health records and appointments in one calm, simple platform.",
+          "SAHAYAK helps small old age homes manage residents, health records and appointments in one calm, simple platform.",
       },
-      { property: "og:title", content: "SAHAAYAK — Elderly Care & Health Management" },
+      { property: "og:title", content: "SAHAYAK — Elderly Care & Health Management" },
       {
         property: "og:description",
         content:
