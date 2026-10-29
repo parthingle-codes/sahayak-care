@@ -52,7 +52,9 @@ function DonationsPage() {
   const sum = (rows: Donation[]) => rows.reduce((total, d) => total + Number(d.amount ?? 0), 0);
   const pledged = sum([...pending, ...accepted]);
   const collected = sum(received);
-  const inKindOpen = [...pending, ...accepted].filter((d) => d.donation_type !== "financial").length;
+  const inKindOpen = [...pending, ...accepted].filter(
+    (d) => d.donation_type !== "financial",
+  ).length;
 
   return (
     <>
@@ -71,7 +73,12 @@ function DonationsPage() {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard label="Pledged, not yet received" value={money(pledged)} icon={IndianRupee} />
-        <StatCard label="Received so far" value={money(collected)} icon={PackageCheck} tone="done" />
+        <StatCard
+          label="Received so far"
+          value={money(collected)}
+          icon={PackageCheck}
+          tone="done"
+        />
         <StatCard label="Goods & time offered" value={inKindOpen} icon={Gift} />
       </div>
 
@@ -132,7 +139,11 @@ function DonationTable({ rows, emptyLabel }: { rows: Donation[]; emptyLabel: str
         <TableBody>
           {rows.map((d) => (
             <TableRow key={d.id}>
-              <TableCell><Badge variant="secondary" className="font-mono font-medium">{d.reference}</Badge></TableCell>
+              <TableCell>
+                <Badge variant="secondary" className="font-mono font-medium">
+                  {d.reference}
+                </Badge>
+              </TableCell>
               <TableCell>{donationTypeLabels[d.donation_type]}</TableCell>
               <TableCell className="max-w-xs">
                 {d.amount != null ? (

@@ -39,27 +39,29 @@ Rules we hold to: data access lives in `features/*/queries.ts` only; components 
 
 ## 3. Database design
 
-Confirmed relationships only — nothing invented from field-visit assumptions. Fields marked *optional* stay nullable so the facility can adopt gradually.
+Confirmed relationships only — nothing invented from field-visit assumptions. Fields marked _optional_ stay nullable so the facility can adopt gradually.
 
 Core:
+
 - `profiles` — one row per staff user (id → auth user, full_name, phone, active)
 - `user_roles` — (user_id, role) with enum `admin | caregiver`, separate table for security; `has_role()` security-definer function drives all policies
-- `rooms` — name, floor, gender_preference *optional*, notes
+- `rooms` — name, floor, gender_preference _optional_, notes
 - `beds` — room_id, label, status (`available | occupied | maintenance`), unique (room_id, label)
-- `residents` — full_name, date_of_birth *optional*, gender, photo_path, admission_date, bed_id *nullable*, mobility (`independent | walker | wheelchair | bedridden`), status (`active | discharged | deceased`), notes
+- `residents` — full_name, date_of_birth _optional_, gender, photo_path, admission_date, bed_id _nullable_, mobility (`independent | walker | wheelchair | bedridden`), status (`active | discharged | deceased`), notes
 - `emergency_contacts` — resident_id, name, relation, phone, is_primary
 - `caregiver_assignments` — caregiver_id, resident_id, active (drives "my residents")
 
 Care & health:
-- `medical_conditions` — resident_id, condition, diagnosed_on *optional*, notes (replaces a vague "medical history" blob)
+
+- `medical_conditions` — resident_id, condition, diagnosed_on _optional_, notes (replaces a vague "medical history" blob)
 - `allergies` — resident_id, substance, severity
 - `health_observations` — resident_id, recorded_by, recorded_at, bp_systolic, bp_diastolic, pulse, temperature_c, blood_sugar, weight_kg, note (all vitals nullable — record only what was measured)
-- `medicines` — resident_id, name, dosage, form, instructions, start_date, end_date *nullable*, active
+- `medicines` — resident_id, name, dosage, form, instructions, start_date, end_date _nullable_, active
 - `medicine_schedules` — medicine_id, time_of_day (time), days_of_week (default daily)
 - `medicine_administrations` — schedule_id, resident_id, due_date, due_time, status (`pending | given | missed | refused`), given_at, given_by, note; unique (schedule_id, due_date, due_time) so today's list is generated deterministically and never duplicated
 - `doctors` — name, specialization, phone
-- `appointments` — resident_id, doctor_id *nullable*, doctor_name fallback, scheduled_at, purpose, status, outcome_note
-- `visitors` — resident_id, name, relation, phone, check_in, check_out *nullable*
+- `appointments` — resident_id, doctor_id _nullable_, doctor_name fallback, scheduled_at, purpose, status, outcome_note
+- `visitors` — resident_id, name, relation, phone, check_in, check_out _nullable_
 - `audit_logs` — actor_id, action, entity, entity_id, meta jsonb
 
 No diagnoses, prescriptions-as-medical-advice, or ID numbers stored. Every table: timestamps, foreign keys with sensible `on delete`, indexes on `resident_id` and date columns, `GRANT`s plus RLS.
@@ -70,14 +72,14 @@ Access model: admins read/write everything; caregivers read residents and write 
 
 Sidebar, role-aware:
 
-| Section | Items | Admin | Caregiver |
-| --- | --- | --- | --- |
-| Overview | Dashboard | yes | yes |
-| People | Residents | full | read + care actions |
-| Care & Health | Health Records, Medicines, Appointments | yes | yes |
-| Facility | Rooms & Beds, Visitors | yes | Visitors only |
-| Insights | Reports | yes | no |
-| — | Settings (staff & roles) | yes | own profile |
+| Section       | Items                                   | Admin | Caregiver           |
+| ------------- | --------------------------------------- | ----- | ------------------- |
+| Overview      | Dashboard                               | yes   | yes                 |
+| People        | Residents                               | full  | read + care actions |
+| Care & Health | Health Records, Medicines, Appointments | yes   | yes                 |
+| Facility      | Rooms & Beds, Visitors                  | yes   | Visitors only       |
+| Insights      | Reports                                 | yes   | no                  |
+| —             | Settings (staff & roles)                | yes   | own profile         |
 
 Resident profile at `/residents/:id` is the hub, tabbed: Overview · Medical · Medicines · Health Records · Appointments · Visitors. Emergency contacts pinned in the header so they are always one glance away.
 

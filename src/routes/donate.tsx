@@ -4,13 +4,7 @@ import { HeartHandshake, Loader2, CheckCircle2 } from "lucide-react";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -136,7 +130,7 @@ function DonatePage() {
         </Link>
 
         {reference ? (
-          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+          <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
             <CardHeader className="text-center">
               <CheckCircle2 className="mx-auto size-10 text-done" aria-hidden />
               <CardTitle className="mt-2">Thank you for your kindness</CardTitle>
@@ -153,7 +147,7 @@ function DonatePage() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+          <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
             <CardHeader>
               <CardTitle>Donate or volunteer</CardTitle>
               <CardDescription>
@@ -164,7 +158,9 @@ function DonatePage() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-8">
                 <section className="space-y-4">
-                  <h2 className="font-display text-base font-semibold">What you would like to give</h2>
+                  <h2 className="font-display text-base font-semibold">
+                    What you would like to give
+                  </h2>
                   <Field id="donation_type" label="Type of support" required>
                     <Select value={form.donation_type} onValueChange={set("donation_type")}>
                       <SelectTrigger id="donation_type">

@@ -51,93 +51,141 @@ export const Route = createFileRoute("/_shell/appointments")({
 function AppointmentTable({ rows }: { rows: AppointmentRow[] }) {
   return (
     <>
-    <div className="grid gap-3 md:hidden">
-      {rows.map(({ appointment, resident, bucket }) => (
-        <article key={appointment.id} className="surface-card p-4">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
-            <div className="min-w-0"><p className="font-display font-semibold">{resident?.full_name ?? "Unknown resident"}</p><p className="mt-1 text-sm text-muted-foreground">{formatDate(appointment.scheduled_on)} · {appointment.status === "completed" ? "Completed" : daysRemainingLabel(appointment.scheduled_on)}</p></div>
-            <StatusBadge status={bucket} label={bucketLabel[bucket]} />
-          </div>
-          {appointment.doctor_name ? <p className="mt-3 text-sm text-muted-foreground">Doctor: {appointment.doctor_name}</p> : null}
-          <div className="mt-4 flex flex-wrap justify-end gap-1 border-t border-border pt-3">
-            {appointment.status !== "completed" ? <CompleteObservationDialog appointment={appointment} residentName={resident?.full_name ?? "resident"} /> : null}
-            <AppointmentFormDialog record={appointment} />
-            {resident ? <Button asChild variant="ghost" size="sm"><Link to="/residents/$id" params={{ id: resident.id }}><User className="size-4" />Profile</Link></Button> : null}
-          </div>
-        </article>
-      ))}
-    </div>
-    <div className="surface-card hidden overflow-x-auto md:block">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Resident</TableHead>
-            <TableHead>Appointment date</TableHead>
-            <TableHead>Days remaining</TableHead>
-            <TableHead>Doctor</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map(({ appointment, resident, bucket }) => (
-            <TableRow key={appointment.id}>
-              <TableCell className="font-medium">
-                {resident ? (
-                  <Link
-                    to="/residents/$id"
-                    params={{ id: resident.id }}
-                    className="underline-offset-4 hover:underline"
-                  >
-                    {resident.full_name}
+      <div className="grid gap-3 md:hidden">
+        {rows.map(({ appointment, resident, bucket }) => (
+          <article key={appointment.id} className="surface-card p-4">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+              <div className="min-w-0">
+                <p className="font-display font-semibold">
+                  {resident?.full_name ?? "Unknown resident"}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {formatDate(appointment.scheduled_on)} ·{" "}
+                  {appointment.status === "completed"
+                    ? "Completed"
+                    : daysRemainingLabel(appointment.scheduled_on)}
+                </p>
+              </div>
+              <StatusBadge status={bucket} label={bucketLabel[bucket]} />
+            </div>
+            {appointment.doctor_name ? (
+              <p className="mt-3 text-sm text-muted-foreground">
+                Doctor: {appointment.doctor_name}
+              </p>
+            ) : null}
+            <div className="mt-4 flex flex-wrap justify-end gap-1 border-t border-border pt-3">
+              {appointment.status !== "completed" ? (
+                <CompleteObservationDialog
+                  appointment={appointment}
+                  residentName={resident?.full_name ?? "resident"}
+                />
+              ) : null}
+              <AppointmentFormDialog record={appointment} />
+              {resident ? (
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/residents/$id" params={{ id: resident.id }}>
+                    <User className="size-4" />
+                    Profile
                   </Link>
-                ) : (
-                  "Unknown resident"
-                )}
-                {resident?.room_label ? (
-                  <span className="block text-sm text-muted-foreground">{resident.room_label}</span>
-                ) : null}
-              </TableCell>
-              <TableCell>{formatDate(appointment.scheduled_on)}</TableCell>
-              <TableCell
-                className={
-                  bucket === "overdue" ? "font-medium text-alert-foreground" : undefined
-                }
-              >
-                {appointment.status === "completed"
-                  ? "—"
-                  : daysRemainingLabel(appointment.scheduled_on)}
-              </TableCell>
-              <TableCell className="text-muted-foreground">
-                {appointment.doctor_name ?? "—"}
-              </TableCell>
-              <TableCell>
-                <StatusBadge status={bucket} label={bucketLabel[bucket]} />
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center justify-end gap-1">
-                  {appointment.status !== "completed" ? (
-                    <CompleteObservationDialog
-                      appointment={appointment}
-                      residentName={resident?.full_name ?? "resident"}
-                    />
-                  ) : null}
-                  <AppointmentFormDialog record={appointment} />
-                  {resident ? (
-                    <Button asChild variant="ghost" size="sm">
-                      <Link to="/residents/$id" params={{ id: resident.id }}>
-                        <User className="size-4" />
-                        Profile
-                      </Link>
-                    </Button>
-                  ) : null}
-                </div>
-              </TableCell>
+                </Button>
+              ) : null}
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="surface-card hidden overflow-x-auto md:block">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Resident</TableHead>
+              <TableHead>Appointment date</TableHead>
+              <TableHead>Days remaining</TableHead>
+              <TableHead>Doctor</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div></>
+          </TableHeader>
+          <TableBody>
+            {rows.map(({ appointment, resident, bucket }) => (
+              <TableRow key={appointment.id}>
+                <TableCell className="font-medium">
+                  {resident ? (
+                    <span className="flex items-center gap-2.5">
+                      <span
+                        className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-soft)] text-[10px] font-bold text-primary ring-1 ring-inset ring-primary/15"
+                        aria-hidden
+                      >
+                        {resident.full_name
+                          .split(" ")
+                          .filter(Boolean)
+                          .slice(0, 2)
+                          .map((word) => word[0]?.toUpperCase() ?? "")
+                          .join("")}
+                      </span>
+                      <span className="min-w-0">
+                        <Link
+                          to="/residents/$id"
+                          params={{ id: resident.id }}
+                          className="underline-offset-4 hover:underline"
+                        >
+                          {resident.full_name}
+                        </Link>
+                        {resident.room_label ? (
+                          <span className="block text-sm text-muted-foreground">
+                            {resident.room_label}
+                          </span>
+                        ) : null}
+                      </span>
+                    </span>
+                  ) : (
+                    "Unknown resident"
+                  )}
+                </TableCell>
+                <TableCell className="whitespace-nowrap font-medium tabular-nums">
+                  {formatDate(appointment.scheduled_on)}
+                </TableCell>
+                <TableCell
+                  className={
+                    bucket === "overdue"
+                      ? "whitespace-nowrap font-semibold tabular-nums text-alert-foreground"
+                      : "whitespace-nowrap tabular-nums"
+                  }
+                >
+                  {appointment.status === "completed"
+                    ? "—"
+                    : daysRemainingLabel(appointment.scheduled_on)}
+                </TableCell>
+                <TableCell className="text-muted-foreground">
+                  {appointment.doctor_name ?? "—"}
+                </TableCell>
+                <TableCell>
+                  <StatusBadge status={bucket} label={bucketLabel[bucket]} />
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center justify-end gap-1">
+                    {appointment.status !== "completed" ? (
+                      <CompleteObservationDialog
+                        appointment={appointment}
+                        residentName={resident?.full_name ?? "resident"}
+                      />
+                    ) : null}
+                    <AppointmentFormDialog record={appointment} />
+                    {resident ? (
+                      <Button asChild variant="ghost" size="sm">
+                        <Link to="/residents/$id" params={{ id: resident.id }}>
+                          <User className="size-4" />
+                          Profile
+                        </Link>
+                      </Button>
+                    ) : null}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </>
   );
 }
 
@@ -151,15 +199,11 @@ function AppointmentsPage() {
   const rows = useMemo(() => {
     const all = buildRows(appointments, residents);
     const q = query.trim().toLowerCase();
-    return q
-      ? all.filter((r) => (r.resident?.full_name ?? "").toLowerCase().includes(q))
-      : all;
+    return q ? all.filter((r) => (r.resident?.full_name ?? "").toLowerCase().includes(q)) : all;
   }, [appointments, residents, query]);
 
   const overdue = rows.filter((r) => r.bucket === "overdue");
-  const upcoming = rows.filter(
-    (r) => r.bucket === "due" || r.bucket === "upcoming",
-  );
+  const upcoming = rows.filter((r) => r.bucket === "due" || r.bucket === "upcoming");
   const completed = rows.filter((r) => r.bucket === "completed");
   const missed = rows.filter((r) => r.bucket === "missed");
 

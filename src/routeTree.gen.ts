@@ -15,14 +15,17 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as FamilySigninRouteImport } from './routes/family-signin'
+import { Route as HomesRouteImport } from './routes/homes'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ShellAppointmentsRouteImport } from './routes/_shell/appointments'
 import { Route as ShellDashboardRouteImport } from './routes/_shell/dashboard'
 import { Route as ShellDonationsRouteImport } from './routes/_shell/donations'
+import { Route as ShellFacilitiesRouteImport } from './routes/_shell/facilities'
 import { Route as ShellHealthRecordsRouteImport } from './routes/_shell/health-records'
 import { Route as ShellRegistrationsRouteImport } from './routes/_shell/registrations'
 import { Route as ShellResidentsRouteImport } from './routes/_shell/residents'
 import { Route as ShellSettingsRouteImport } from './routes/_shell/settings'
+import { Route as HomesSlugRouteImport } from './routes/homes.$slug'
 import { Route as ShellResidentsIdRouteImport } from './routes/_shell/residents.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -54,6 +57,11 @@ const FamilySigninRoute = FamilySigninRouteImport.update({
   path: '/family-signin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HomesRoute = HomesRouteImport.update({
+  id: '/homes',
+  path: '/homes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -72,6 +80,11 @@ const ShellDashboardRoute = ShellDashboardRouteImport.update({
 const ShellDonationsRoute = ShellDonationsRouteImport.update({
   id: '/donations',
   path: '/donations',
+  getParentRoute: () => ShellRouteRoute,
+} as any)
+const ShellFacilitiesRoute = ShellFacilitiesRouteImport.update({
+  id: '/facilities',
+  path: '/facilities',
   getParentRoute: () => ShellRouteRoute,
 } as any)
 const ShellHealthRecordsRoute = ShellHealthRecordsRouteImport.update({
@@ -94,6 +107,11 @@ const ShellSettingsRoute = ShellSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => ShellRouteRoute,
 } as any)
+const HomesSlugRoute = HomesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => HomesRoute,
+} as any)
 const ShellResidentsIdRoute = ShellResidentsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -106,14 +124,17 @@ export interface FileRoutesByFullPath {
   '/donate': typeof DonateRoute
   '/family': typeof FamilyRoute
   '/family-signin': typeof FamilySigninRoute
+  '/homes': typeof HomesRouteWithChildren
   '/register': typeof RegisterRoute
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/donations': typeof ShellDonationsRoute
+  '/facilities': typeof ShellFacilitiesRoute
   '/health-records': typeof ShellHealthRecordsRoute
   '/registrations': typeof ShellRegistrationsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
   '/settings': typeof ShellSettingsRoute
+  '/homes/$slug': typeof HomesSlugRoute
   '/residents/$id': typeof ShellResidentsIdRoute
 }
 export interface FileRoutesByTo {
@@ -122,14 +143,17 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateRoute
   '/family': typeof FamilyRoute
   '/family-signin': typeof FamilySigninRoute
+  '/homes': typeof HomesRouteWithChildren
   '/register': typeof RegisterRoute
   '/appointments': typeof ShellAppointmentsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/donations': typeof ShellDonationsRoute
+  '/facilities': typeof ShellFacilitiesRoute
   '/health-records': typeof ShellHealthRecordsRoute
   '/registrations': typeof ShellRegistrationsRoute
   '/residents': typeof ShellResidentsRouteWithChildren
   '/settings': typeof ShellSettingsRoute
+  '/homes/$slug': typeof HomesSlugRoute
   '/residents/$id': typeof ShellResidentsIdRoute
 }
 export interface FileRoutesById {
@@ -140,14 +164,17 @@ export interface FileRoutesById {
   '/donate': typeof DonateRoute
   '/family': typeof FamilyRoute
   '/family-signin': typeof FamilySigninRoute
+  '/homes': typeof HomesRouteWithChildren
   '/register': typeof RegisterRoute
   '/_shell/appointments': typeof ShellAppointmentsRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/donations': typeof ShellDonationsRoute
+  '/_shell/facilities': typeof ShellFacilitiesRoute
   '/_shell/health-records': typeof ShellHealthRecordsRoute
   '/_shell/registrations': typeof ShellRegistrationsRoute
   '/_shell/residents': typeof ShellResidentsRouteWithChildren
   '/_shell/settings': typeof ShellSettingsRoute
+  '/homes/$slug': typeof HomesSlugRoute
   '/_shell/residents/$id': typeof ShellResidentsIdRoute
 }
 export interface FileRouteTypes {
@@ -158,14 +185,17 @@ export interface FileRouteTypes {
     | '/donate'
     | '/family'
     | '/family-signin'
+    | '/homes'
     | '/register'
     | '/appointments'
     | '/dashboard'
     | '/donations'
+    | '/facilities'
     | '/health-records'
     | '/registrations'
     | '/residents'
     | '/settings'
+    | '/homes/$slug'
     | '/residents/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,14 +204,17 @@ export interface FileRouteTypes {
     | '/donate'
     | '/family'
     | '/family-signin'
+    | '/homes'
     | '/register'
     | '/appointments'
     | '/dashboard'
     | '/donations'
+    | '/facilities'
     | '/health-records'
     | '/registrations'
     | '/residents'
     | '/settings'
+    | '/homes/$slug'
     | '/residents/$id'
   id:
     | '__root__'
@@ -191,14 +224,17 @@ export interface FileRouteTypes {
     | '/donate'
     | '/family'
     | '/family-signin'
+    | '/homes'
     | '/register'
     | '/_shell/appointments'
     | '/_shell/dashboard'
     | '/_shell/donations'
+    | '/_shell/facilities'
     | '/_shell/health-records'
     | '/_shell/registrations'
     | '/_shell/residents'
     | '/_shell/settings'
+    | '/homes/$slug'
     | '/_shell/residents/$id'
   fileRoutesById: FileRoutesById
 }
@@ -209,6 +245,7 @@ export interface RootRouteChildren {
   DonateRoute: typeof DonateRoute
   FamilyRoute: typeof FamilyRoute
   FamilySigninRoute: typeof FamilySigninRoute
+  HomesRoute: typeof HomesRouteWithChildren
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -256,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FamilySigninRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/homes': {
+      id: '/homes'
+      path: '/homes'
+      fullPath: '/homes'
+      preLoaderRoute: typeof HomesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -282,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/donations'
       fullPath: '/donations'
       preLoaderRoute: typeof ShellDonationsRouteImport
+      parentRoute: typeof ShellRouteRoute
+    }
+    '/_shell/facilities': {
+      id: '/_shell/facilities'
+      path: '/facilities'
+      fullPath: '/facilities'
+      preLoaderRoute: typeof ShellFacilitiesRouteImport
       parentRoute: typeof ShellRouteRoute
     }
     '/_shell/health-records': {
@@ -312,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellSettingsRouteImport
       parentRoute: typeof ShellRouteRoute
     }
+    '/homes/$slug': {
+      id: '/homes/$slug'
+      path: '/$slug'
+      fullPath: '/homes/$slug'
+      preLoaderRoute: typeof HomesSlugRouteImport
+      parentRoute: typeof HomesRoute
+    }
     '/_shell/residents/$id': {
       id: '/_shell/residents/$id'
       path: '/$id'
@@ -338,6 +396,7 @@ interface ShellRouteRouteChildren {
   ShellAppointmentsRoute: typeof ShellAppointmentsRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellDonationsRoute: typeof ShellDonationsRoute
+  ShellFacilitiesRoute: typeof ShellFacilitiesRoute
   ShellHealthRecordsRoute: typeof ShellHealthRecordsRoute
   ShellRegistrationsRoute: typeof ShellRegistrationsRoute
   ShellResidentsRoute: typeof ShellResidentsRouteWithChildren
@@ -348,6 +407,7 @@ const ShellRouteRouteChildren: ShellRouteRouteChildren = {
   ShellAppointmentsRoute: ShellAppointmentsRoute,
   ShellDashboardRoute: ShellDashboardRoute,
   ShellDonationsRoute: ShellDonationsRoute,
+  ShellFacilitiesRoute: ShellFacilitiesRoute,
   ShellHealthRecordsRoute: ShellHealthRecordsRoute,
   ShellRegistrationsRoute: ShellRegistrationsRoute,
   ShellResidentsRoute: ShellResidentsRouteWithChildren,
@@ -358,6 +418,16 @@ const ShellRouteRouteWithChildren = ShellRouteRoute._addFileChildren(
   ShellRouteRouteChildren,
 )
 
+interface HomesRouteChildren {
+  HomesSlugRoute: typeof HomesSlugRoute
+}
+
+const HomesRouteChildren: HomesRouteChildren = {
+  HomesSlugRoute: HomesSlugRoute,
+}
+
+const HomesRouteWithChildren = HomesRoute._addFileChildren(HomesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ShellRouteRoute: ShellRouteRouteWithChildren,
@@ -365,6 +435,7 @@ const rootRouteChildren: RootRouteChildren = {
   DonateRoute: DonateRoute,
   FamilyRoute: FamilyRoute,
   FamilySigninRoute: FamilySigninRoute,
+  HomesRoute: HomesRouteWithChildren,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport

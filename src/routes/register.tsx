@@ -4,13 +4,7 @@ import { HeartHandshake, Loader2, CheckCircle2 } from "lucide-react";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -140,7 +134,7 @@ function RegisterPage() {
         </Link>
 
         {reference ? (
-          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+          <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
             <CardHeader className="text-center">
               <CheckCircle2 className="mx-auto size-10 text-done" aria-hidden />
               <CardTitle className="mt-2">Admission request received</CardTitle>
@@ -157,24 +151,19 @@ function RegisterPage() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+          <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
             <CardHeader>
               <CardTitle>Resident registration</CardTitle>
               <CardDescription>
-                Fill in whatever you know — staff can complete the rest at admission. This form keeps
-                care records only; it is not medical advice.
+                Fill in whatever you know — staff can complete the rest at admission. This form
+                keeps care records only; it is not medical advice.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-8">
                 <section className="space-y-4">
                   <h2 className="font-display text-base font-semibold">Resident details</h2>
-                  <Field
-                    id="full_name"
-                    label="Full name"
-                    required
-                    error={errors["full_name"]}
-                  >
+                  <Field id="full_name" label="Full name" required error={errors["full_name"]}>
                     <Input
                       id="full_name"
                       value={form.full_name}
@@ -242,12 +231,7 @@ function RegisterPage() {
                 <section className="space-y-4">
                   <h2 className="font-display text-base font-semibold">Contact person</h2>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <Field
-                      id="contact_name"
-                      label="Name"
-                      required
-                      error={errors["contact_name"]}
-                    >
+                    <Field id="contact_name" label="Name" required error={errors["contact_name"]}>
                       <Input
                         id="contact_name"
                         value={form.contact_name}
@@ -321,9 +305,7 @@ function RegisterPage() {
                   </Field>
                 </section>
 
-                {errors["form"] && (
-                  <p className="text-sm text-destructive">{errors["form"]}</p>
-                )}
+                {errors["form"] && <p className="text-sm text-destructive">{errors["form"]}</p>}
 
                 <Button type="submit" className="w-full" disabled={submit.isPending}>
                   {submit.isPending && <Loader2 className="mr-2 size-4 animate-spin" aria-hidden />}

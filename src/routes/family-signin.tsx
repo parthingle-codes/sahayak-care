@@ -95,7 +95,7 @@ function FamilySignInPage() {
           SAHAAYAK
         </Link>
 
-        <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+        <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
           <CardHeader className="text-center">
             <CardTitle>Family sign in</CardTitle>
             <CardDescription>
@@ -106,7 +106,8 @@ function FamilySignInPage() {
             {existing !== null ? (
               <div className="space-y-3 text-center">
                 <p className="text-sm text-muted-foreground">
-                  You are signed in as <span className="font-medium text-foreground">{existing}</span>.
+                  You are signed in as{" "}
+                  <span className="font-medium text-foreground">{existing}</span>.
                 </p>
                 <Button
                   className="w-full"

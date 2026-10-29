@@ -8,6 +8,7 @@ import { FamilyAccessCard } from "@/components/care/FamilyAccessCard";
 import { ResidentFormDialog } from "@/components/care/ResidentFormDialog";
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
+import { Panel } from "@/components/common/Panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -91,6 +92,7 @@ function ResidentProfilePage() {
       <PageHeader
         eyebrow="Resident profile"
         title={resident.full_name}
+        badge={<StatusBadge status={resident.status} />}
         description={[
           resident.room_label ? `Room ${resident.room_label}` : null,
           `Admitted ${new Date(resident.admission_date).toLocaleDateString()}`,
@@ -106,17 +108,20 @@ function ResidentProfilePage() {
         }
       />
 
-      <div className="grid gap-6">
-        <section>
-          <h2 className="mb-2 font-display text-lg font-semibold">Medical observations</h2>
-          {residentAppointments.length === 0 ? (
-            <EmptyState
-              icon={CalendarClock}
-              title="No observations scheduled"
-              description="Schedule this resident's medical observation to start the cycle."
-            />
-          ) : (
-            <div className="surface-card overflow-x-auto">
+      <div className="grid animate-rise gap-6 [animation-delay:60ms]">
+        {residentAppointments.length === 0 ? (
+          <EmptyState
+            icon={CalendarClock}
+            title="No observations scheduled"
+            description="Schedule this resident's medical observation to start the cycle."
+          />
+        ) : (
+          <Panel
+            icon={CalendarClock}
+            title="Medical observations"
+            count={residentAppointments.length}
+          >
+            <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -133,8 +138,10 @@ function ResidentProfilePage() {
                     const bucket = bucketOf(a);
                     return (
                       <TableRow key={a.id}>
-                        <TableCell>{formatDate(a.scheduled_on)}</TableCell>
-                        <TableCell>
+                        <TableCell className="whitespace-nowrap font-medium tabular-nums">
+                          {formatDate(a.scheduled_on)}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap font-semibold tabular-nums">
                           {a.status === "completed" ? "—" : daysRemainingLabel(a.scheduled_on)}
                         </TableCell>
                         <TableCell className="text-muted-foreground">
@@ -161,19 +168,18 @@ function ResidentProfilePage() {
                 </TableBody>
               </Table>
             </div>
-          )}
-        </section>
+          </Panel>
+        )}
 
-        <section>
-          <h2 className="mb-2 font-display text-lg font-semibold">Medical conditions</h2>
-          {residentConditions.length === 0 ? (
-            <EmptyState
-              icon={Stethoscope}
-              title="No conditions recorded"
-              description="Add conditions from the Health records page."
-            />
-          ) : (
-            <div className="surface-card overflow-x-auto">
+        {residentConditions.length === 0 ? (
+          <EmptyState
+            icon={Stethoscope}
+            title="No conditions recorded"
+            description="Add conditions from the Health records page."
+          />
+        ) : (
+          <Panel icon={Stethoscope} title="Medical conditions" count={residentConditions.length}>
+            <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -186,7 +192,7 @@ function ResidentProfilePage() {
                   {residentConditions.map((c) => (
                     <TableRow key={c.id}>
                       <TableCell className="font-medium">{c.condition}</TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap tabular-nums">
                         {c.diagnosed_on ? new Date(c.diagnosed_on).toLocaleDateString() : "—"}
                       </TableCell>
                       <TableCell className="text-muted-foreground">{c.notes ?? "—"}</TableCell>
@@ -195,19 +201,18 @@ function ResidentProfilePage() {
                 </TableBody>
               </Table>
             </div>
-          )}
-        </section>
+          </Panel>
+        )}
 
-        <section>
-          <h2 className="mb-2 font-display text-lg font-semibold">Recorded vitals</h2>
-          {residentObservations.length === 0 ? (
-            <EmptyState
-              icon={HeartPulse}
-              title="No vitals recorded"
-              description="Record vitals from the Health records page."
-            />
-          ) : (
-            <div className="surface-card overflow-x-auto">
+        {residentObservations.length === 0 ? (
+          <EmptyState
+            icon={HeartPulse}
+            title="No vitals recorded"
+            description="Record vitals from the Health records page."
+          />
+        ) : (
+          <Panel icon={HeartPulse} title="Recorded vitals" count={residentObservations.length}>
+            <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -223,24 +228,26 @@ function ResidentProfilePage() {
                 <TableBody>
                   {residentObservations.map((o) => (
                     <TableRow key={o.id}>
-                      <TableCell>{new Date(o.recorded_at).toLocaleString()}</TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap tabular-nums">
+                        {new Date(o.recorded_at).toLocaleString()}
+                      </TableCell>
+                      <TableCell className="font-semibold tabular-nums">
                         {o.bp_systolic && o.bp_diastolic
                           ? `${o.bp_systolic}/${o.bp_diastolic}`
                           : "—"}
                       </TableCell>
-                      <TableCell>{dash(o.pulse)}</TableCell>
-                      <TableCell>{dash(o.temperature_c)}</TableCell>
-                      <TableCell>{dash(o.blood_sugar)}</TableCell>
-                      <TableCell>{dash(o.weight_kg)}</TableCell>
+                      <TableCell className="tabular-nums">{dash(o.pulse)}</TableCell>
+                      <TableCell className="tabular-nums">{dash(o.temperature_c)}</TableCell>
+                      <TableCell className="tabular-nums">{dash(o.blood_sugar)}</TableCell>
+                      <TableCell className="tabular-nums">{dash(o.weight_kg)}</TableCell>
                       <TableCell className="text-muted-foreground">{o.note ?? "—"}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </div>
-          )}
-        </section>
+          </Panel>
+        )}
 
         <FamilyAccessCard residentId={resident.id} />
       </div>

@@ -136,7 +136,12 @@ export function ResidentFormDialog({ resident }: { resident?: Resident }) {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="res-dob">Date of birth</Label>
-              <Input id="res-dob" type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
+              <Input
+                id="res-dob"
+                type="date"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="res-room">Room</Label>

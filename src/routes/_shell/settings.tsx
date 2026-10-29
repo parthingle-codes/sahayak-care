@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Settings as SettingsIcon } from "lucide-react";
+import { CalendarClock, Settings as SettingsIcon, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { PageHeader } from "@/components/common/PageHeader";
+import { Panel } from "@/components/common/Panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,30 +74,31 @@ function ObservationCycleCard() {
   };
 
   return (
-    <div className="surface-card mb-6 p-5">
-      <h2 className="font-display text-lg font-semibold">Medical observation cycle</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        How many days between routine medical observations. New appointment dates are suggested from
-        this value and can still be changed per resident.
-      </p>
-      <div className="mt-4 flex flex-wrap items-end gap-3">
-        <div className="grid gap-2">
-          <Label htmlFor="cycle-days">Days between observations</Label>
-          <Input
-            id="cycle-days"
-            type="number"
-            min={1}
-            max={365}
-            value={days}
-            onChange={(e) => setDays(e.target.value)}
-            className="w-32"
-          />
+    <Panel icon={CalendarClock} title="Medical observation cycle" className="mb-6">
+      <div className="p-5">
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          How many days between routine medical observations. New appointment dates are suggested
+          from this value and can still be changed per resident.
+        </p>
+        <div className="mt-4 flex flex-wrap items-end gap-3">
+          <div className="grid gap-2">
+            <Label htmlFor="cycle-days">Days between observations</Label>
+            <Input
+              id="cycle-days"
+              type="number"
+              min={1}
+              max={365}
+              value={days}
+              onChange={(e) => setDays(e.target.value)}
+              className="w-32"
+            />
+          </div>
+          <Button onClick={save} disabled={update.isPending}>
+            {update.isPending ? "Saving…" : "Save cycle"}
+          </Button>
         </div>
-        <Button onClick={save} disabled={update.isPending}>
-          {update.isPending ? "Saving…" : "Save cycle"}
-        </Button>
       </div>
-    </div>
+    </Panel>
   );
 }
 
@@ -137,52 +139,53 @@ function SettingsPage() {
       ) : isLoading ? (
         <Skeleton className="h-40 w-full" />
       ) : (
-        <div>
-          <h2 className="mb-2 font-display text-lg font-semibold">Staff access</h2>
-          <div className="surface-card overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead>Role</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {staff.map((s) => (
-                <TableRow key={s.user_id}>
-                  <TableCell className="font-medium">
-                    {s.full_name || "—"}
-                    {s.user_id === user?.id ? (
-                      <Badge variant="outline" className="ml-2">
-                        You
-                      </Badge>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{s.email}</TableCell>
-                  <TableCell>{new Date(s.created_at).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Select
-                      value={s.role ?? "caregiver"}
-                      onValueChange={(v) => void change(s.user_id, v as Role)}
-                      disabled={setRole.isPending || s.user_id === user?.id}
-                    >
-                      <SelectTrigger className="w-40">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="admin">Administrator</SelectItem>
-                        <SelectItem value="caregiver">Caregiver</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
+        <Panel icon={ShieldCheck} title="Staff access" count={staff.length}>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Joined</TableHead>
+                  <TableHead>Role</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {staff.map((s) => (
+                  <TableRow key={s.user_id}>
+                    <TableCell className="font-medium">
+                      {s.full_name || "—"}
+                      {s.user_id === user?.id ? (
+                        <Badge variant="outline" className="ml-2">
+                          You
+                        </Badge>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">{s.email}</TableCell>
+                    <TableCell className="whitespace-nowrap tabular-nums">
+                      {new Date(s.created_at).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      <Select
+                        value={s.role ?? "caregiver"}
+                        onValueChange={(v) => void change(s.user_id, v as Role)}
+                        disabled={setRole.isPending || s.user_id === user?.id}
+                      >
+                        <SelectTrigger className="w-40">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="admin">Administrator</SelectItem>
+                          <SelectItem value="caregiver">Caregiver</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
-        </div>
+        </Panel>
       )}
     </>
   );

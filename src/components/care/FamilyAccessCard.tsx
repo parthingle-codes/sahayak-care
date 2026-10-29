@@ -77,7 +77,10 @@ export function FamilyAccessCard({ residentId }: { residentId: string }) {
           </ul>
         )}
 
-        <form onSubmit={handleLink} className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+        <form
+          onSubmit={handleLink}
+          className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end"
+        >
           <div className="min-w-0 space-y-1">
             <Label htmlFor="family-email">Family member's sign-in email</Label>
             <Input

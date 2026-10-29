@@ -1,6 +1,15 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Activity, CalendarClock, HeartHandshake, HeartPulse, LogOut, Scale, Stethoscope, Thermometer } from "lucide-react";
+import {
+  Activity,
+  CalendarClock,
+  HeartHandshake,
+  HeartPulse,
+  LogOut,
+  Scale,
+  Stethoscope,
+  Thermometer,
+} from "lucide-react";
 
 import { EmptyState } from "@/components/common/EmptyState";
 import { Badge } from "@/components/ui/badge";
@@ -97,21 +106,33 @@ function FamilyPage() {
 
   if (!enabled) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-secondary/40 p-6">
+      <div className="flex min-h-screen items-center justify-center public-canvas p-6">
         <Skeleton className="h-64 w-full max-w-2xl" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-secondary/40">
-      <header className="sticky top-0 z-10 border-b border-border/70 bg-background/90 backdrop-blur">
+    <div className="min-h-screen public-canvas">
+      <header className="glass-bar sticky top-0 z-10 border-b">
         <div className="mx-auto grid max-w-3xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2 font-display font-semibold">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground"><HeartHandshake className="size-5" aria-hidden /></span>
-            <span className="min-w-0"><span className="block truncate">SAHAAYAK</span><span className="block text-xs font-normal text-muted-foreground">Family updates</span></span>
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[image:var(--gradient-soft)] text-primary ring-1 ring-inset ring-white/60">
+              <HeartHandshake className="size-5" aria-hidden />
+            </span>
+            <span className="min-w-0">
+              <span className="block truncate">SAHAAYAK</span>
+              <span className="block text-xs font-normal text-muted-foreground">
+                Family updates
+              </span>
+            </span>
           </div>
-          <Button variant="outline" size="sm" className="min-h-11" onClick={() => void handleSignOut()}>
+          <Button
+            variant="outline"
+            size="sm"
+            className="min-h-11"
+            onClick={() => void handleSignOut()}
+          >
             <LogOut className="size-4" />
             Sign out
           </Button>
@@ -121,9 +142,12 @@ function FamilyPage() {
       <main className="mx-auto max-w-3xl space-y-8 px-4 py-8 sm:py-10">
         <div className="border-b border-border pb-6">
           <p className="text-eyebrow">Shared by the care home</p>
-          <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">How your loved one is doing</h1>
+          <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+            How your loved one is doing
+          </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            A private, read-only summary of recent care records. For anything urgent, please call the home directly.
+            A private, read-only summary of recent care records. For anything urgent, please call
+            the home directly.
           </p>
         </div>
 
@@ -148,25 +172,39 @@ function FamilyPage() {
             return (
               <section key={resident.id} className="space-y-6">
                 <div className="surface-card p-5 sm:p-6">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h2 className="min-w-0 break-words font-display text-xl font-semibold sm:text-2xl">{resident.full_name}</h2>
-                  {age ? <Badge variant="secondary">{age}</Badge> : null}
-                  <Badge variant="outline" className="capitalize">
-                    {resident.mobility}
-                  </Badge>
-                </div>
-
-                <div className="mt-5 rounded-lg border border-border bg-secondary/50 p-4">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <CalendarClock className="size-4 text-primary" aria-hidden />
-                    Next medical observation
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span
+                      className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-soft)] font-display text-base font-bold text-primary ring-1 ring-inset ring-primary/15"
+                      aria-hidden
+                    >
+                      {resident.full_name
+                        .split(" ")
+                        .filter(Boolean)
+                        .slice(0, 2)
+                        .map((word) => word[0]?.toUpperCase() ?? "")
+                        .join("")}
+                    </span>
+                    <h2 className="min-w-0 break-words font-display text-xl font-semibold sm:text-2xl">
+                      {resident.full_name}
+                    </h2>
+                    {age ? <Badge variant="secondary">{age}</Badge> : null}
+                    <Badge variant="outline" className="capitalize">
+                      {resident.mobility}
+                    </Badge>
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {nextCheckup
-                      ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
-                      : "No checkup scheduled yet — the home will add one soon."}
-                  </p>
-                </div></div>
+
+                  <div className="mt-5 rounded-lg border border-border bg-secondary/50 p-4">
+                    <div className="flex items-center gap-2 text-sm font-medium">
+                      <CalendarClock className="size-4 text-primary" aria-hidden />
+                      Next medical observation
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {nextCheckup
+                        ? `${formatDate(nextCheckup.scheduled_on)}${nextCheckup.doctor_name ? ` · ${nextCheckup.doctor_name}` : ""}${nextCheckup.reason ? ` · ${nextCheckup.reason}` : ""}`
+                        : "No checkup scheduled yet — the home will add one soon."}
+                    </p>
+                  </div>
+                </div>
 
                 <div>
                   <div className="mb-3 flex items-center gap-2 font-display font-semibold">
@@ -174,30 +212,64 @@ function FamilyPage() {
                     Recent health updates
                   </div>
                   {residentObs.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                      No health updates recorded yet.
-                    </p>
+                    <p className="text-sm text-muted-foreground">No health updates recorded yet.</p>
                   ) : (
                     <ul className="space-y-3">
                       {residentObs.map((o) => (
-                        <li
-                          key={o.id}
-                          className="surface-card p-4 text-sm"
-                        >
+                        <li key={o.id} className="surface-card p-4 text-sm">
                           <p className="text-xs text-muted-foreground">
                             {new Date(o.recorded_at).toLocaleString()}
                           </p>
                           <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                            {o.bp_systolic && o.bp_diastolic ? <span className="rounded-lg bg-muted p-2"><Activity className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Blood pressure</span><strong>{o.bp_systolic}/{o.bp_diastolic}</strong></span> : null}
-                            {o.pulse ? <span className="rounded-lg bg-muted p-2"><HeartPulse className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Pulse</span><strong>{o.pulse}</strong></span> : null}
-                            {o.temperature_c ? <span className="rounded-lg bg-muted p-2"><Thermometer className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Temperature</span><strong>{o.temperature_c} °C</strong></span> : null}
-                            {o.weight_kg ? <span className="rounded-lg bg-muted p-2"><Scale className="mb-1 size-4 text-primary" aria-hidden /><span className="block text-xs text-muted-foreground">Weight</span><strong>{o.weight_kg} kg</strong></span> : null}
+                            {o.bp_systolic && o.bp_diastolic ? (
+                              <span className="rounded-lg bg-muted p-2">
+                                <Activity className="mb-1 size-4 text-primary" aria-hidden />
+                                <span className="block text-xs text-muted-foreground">
+                                  Blood pressure
+                                </span>
+                                <strong>
+                                  {o.bp_systolic}/{o.bp_diastolic}
+                                </strong>
+                              </span>
+                            ) : null}
+                            {o.pulse ? (
+                              <span className="rounded-lg bg-muted p-2">
+                                <HeartPulse className="mb-1 size-4 text-primary" aria-hidden />
+                                <span className="block text-xs text-muted-foreground">Pulse</span>
+                                <strong>{o.pulse}</strong>
+                              </span>
+                            ) : null}
+                            {o.temperature_c ? (
+                              <span className="rounded-lg bg-muted p-2">
+                                <Thermometer className="mb-1 size-4 text-primary" aria-hidden />
+                                <span className="block text-xs text-muted-foreground">
+                                  Temperature
+                                </span>
+                                <strong>{o.temperature_c} °C</strong>
+                              </span>
+                            ) : null}
+                            {o.weight_kg ? (
+                              <span className="rounded-lg bg-muted p-2">
+                                <Scale className="mb-1 size-4 text-primary" aria-hidden />
+                                <span className="block text-xs text-muted-foreground">Weight</span>
+                                <strong>{o.weight_kg} kg</strong>
+                              </span>
+                            ) : null}
                           </div>
-                          {!o.bp_systolic && !o.pulse && !o.temperature_c && !o.weight_kg && !o.blood_sugar ? <p className="mt-2">General checkup</p> : null}
-                          {o.blood_sugar ? <p className="mt-2 text-sm"><span className="text-muted-foreground">Blood sugar:</span> {o.blood_sugar}</p> : null}
-                          {o.note ? (
-                            <p className="mt-1 text-muted-foreground">{o.note}</p>
+                          {!o.bp_systolic &&
+                          !o.pulse &&
+                          !o.temperature_c &&
+                          !o.weight_kg &&
+                          !o.blood_sugar ? (
+                            <p className="mt-2">General checkup</p>
                           ) : null}
+                          {o.blood_sugar ? (
+                            <p className="mt-2 text-sm">
+                              <span className="text-muted-foreground">Blood sugar:</span>{" "}
+                              {o.blood_sugar}
+                            </p>
+                          ) : null}
+                          {o.note ? <p className="mt-1 text-muted-foreground">{o.note}</p> : null}
                         </li>
                       ))}
                     </ul>

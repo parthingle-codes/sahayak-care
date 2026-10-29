@@ -4,13 +4,7 @@ import { HeartHandshake, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -146,7 +140,7 @@ function AuthPage() {
           SAHAAYAK
         </Link>
 
-        <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+        <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
           <CardHeader className="text-center">
             <CardTitle>Sign in</CardTitle>
             <CardDescription>
