@@ -160,16 +160,23 @@ function FacilityCard({ facility: f }: { facility: Facility }) {
   const reviewLinks = parseReviewLinks(f.review_links);
   const location = facilityLocation(f);
   return (
-    <article className="surface-card flex flex-col gap-4 p-6 transition-shadow hover:shadow-[var(--shadow-lift)]">
+    <article className="surface-card animate-rise flex flex-col gap-4 p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-lift)]">
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h2 className="break-words font-display text-lg font-semibold leading-snug">{f.name}</h2>
-          {location ? (
-            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin className="size-3.5 shrink-0" aria-hidden />
-              {location}
-            </p>
-          ) : null}
+        <div className="flex min-w-0 items-start gap-3">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[image:var(--gradient-soft)] text-primary ring-1 ring-inset ring-primary/10">
+            <Building2 className="size-5" aria-hidden />
+          </span>
+          <div className="min-w-0">
+            <h2 className="break-words font-display text-lg font-semibold leading-snug">
+              {f.name}
+            </h2>
+            {location ? (
+              <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+                <MapPin className="size-3.5 shrink-0" aria-hidden />
+                {location}
+              </p>
+            ) : null}
+          </div>
         </div>
         <StatusBadge status="verified" tone="done" label="Verified" />
       </div>
@@ -219,10 +226,10 @@ function FacilityCard({ facility: f }: { facility: Facility }) {
 
 export function PublicBar() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
+    <header className="glass-bar sticky top-0 z-40 border-b">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 md:px-8">
         <Link to="/" className="flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <span className="flex size-9 items-center justify-center rounded-xl bg-[image:var(--gradient-soft)] text-primary shadow-sm ring-1 ring-inset ring-white/60">
             <HeartHandshake className="size-5" aria-hidden />
           </span>
           <span>

@@ -87,7 +87,7 @@ function FacilityProfilePage() {
         </Button>
 
         {/* Header */}
-        <div className="surface-card p-6 md:p-8">
+        <div className="surface-card animate-rise p-6 md:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
               <h1 className="break-words font-display text-3xl font-bold tracking-tight">
@@ -143,7 +143,7 @@ function FacilityProfilePage() {
           <div className="space-y-6">
             {/* About */}
             {f.description ? (
-              <section className="surface-card p-6 md:p-8">
+              <section className="surface-card animate-rise p-6 md:p-8">
                 <h2 className="font-display text-xl font-semibold">About this home</h2>
                 <p className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
                   {f.description}
@@ -152,7 +152,7 @@ function FacilityProfilePage() {
             ) : null}
 
             {/* Contact & location */}
-            <section className="surface-card p-6 md:p-8">
+            <section className="surface-card animate-rise p-6 md:p-8">
               <h2 className="font-display text-xl font-semibold">Contact &amp; location</h2>
               <dl className="mt-4 space-y-4">
                 {addressParts.length > 0 ? (
@@ -246,7 +246,7 @@ function FacilityProfilePage() {
 
           {/* Reviews + honesty note */}
           <div className="space-y-6">
-            <section id="reviews" className="surface-card p-6">
+            <section id="reviews" className="surface-card animate-rise p-6">
               <h2 className="font-display text-lg font-semibold">External reviews</h2>
               {reviewLinks.length > 0 ? (
                 <>

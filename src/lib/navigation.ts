@@ -7,6 +7,7 @@ import {
   ClipboardList,
   HandHeart,
   Building2,
+  House,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,7 +28,7 @@ export type NavGroup = {
 
 export const navGroups: NavGroup[] = [
   {
-    label: "Overview",
+    label: "Workspace",
     items: [
       {
         label: "Dashboard",
@@ -38,23 +39,11 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "People",
+    label: "Care management",
     items: [
       { label: "Residents", to: "/residents", icon: Users, roles: ["admin", "caregiver"] },
       {
-        label: "Registrations",
-        to: "/registrations",
-        icon: ClipboardList,
-        roles: ["admin", "caregiver"],
-      },
-      { label: "Donations", to: "/donations", icon: HandHeart, roles: ["admin", "caregiver"] },
-    ],
-  },
-  {
-    label: "Care & Health",
-    items: [
-      {
-        label: "Health Records",
+        label: "Health records",
         to: "/health-records",
         icon: HeartPulse,
         roles: ["admin", "caregiver"],
@@ -68,8 +57,21 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Directory",
+    label: "Community",
     items: [
+      {
+        label: "Registrations",
+        to: "/registrations",
+        icon: ClipboardList,
+        roles: ["admin", "caregiver"],
+      },
+      { label: "Donations", to: "/donations", icon: HandHeart, roles: ["admin", "caregiver"] },
+      {
+        label: "Home directory",
+        to: "/homes",
+        icon: House,
+        roles: ["admin", "caregiver"],
+      },
       {
         label: "Facility listings",
         to: "/facilities",

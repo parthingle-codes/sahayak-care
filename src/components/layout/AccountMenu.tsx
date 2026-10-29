@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { LogOut, Settings, UserRound } from "lucide-react";
+import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,26 +24,26 @@ export function AccountMenu() {
     .join("");
 
   return (
-    <div className="flex items-center gap-2">
-      <Badge
-        variant="secondary"
-        className="hidden rounded-full border border-primary/15 bg-primary-soft text-primary sm:inline-flex"
-      >
-        {role === "admin" ? "Administrator" : "Caregiver"}
-      </Badge>
+    <div className="flex items-center gap-3">
+      <span className="hidden items-center gap-1.5 rounded-full bg-done-soft px-3 py-1.5 text-xs font-semibold text-done-foreground ring-1 ring-inset ring-done/25 sm:inline-flex">
+        <span className="size-1.5 rounded-full bg-done" aria-hidden />
+        {role === "admin" ? "Administrator access" : "Caregiver access"}
+      </span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 rounded-full px-1.5 pr-3"
+            className="h-11 gap-2.5 rounded-full px-2 pr-2.5"
             aria-label="Account menu"
           >
-            <span className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground ring-2 ring-primary-soft">
+            <span className="flex size-9 items-center justify-center rounded-full bg-[image:var(--gradient-brand)] text-sm font-semibold text-primary-foreground ring-2 ring-white/70">
               {initials || <UserRound className="size-4" aria-hidden />}
             </span>
-            <span className="hidden max-w-[140px] truncate text-sm font-medium md:inline">
-              {name}
+            <span className="hidden text-left md:inline-flex md:flex-col md:leading-tight">
+              <span className="max-w-[140px] truncate text-sm font-semibold">{name}</span>
+              <span className="text-[11px] font-normal text-muted-foreground">Care team</span>
             </span>
+            <ChevronDown className="hidden size-4 text-muted-foreground md:block" aria-hidden />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">

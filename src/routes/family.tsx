@@ -106,18 +106,18 @@ function FamilyPage() {
 
   if (!enabled) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-secondary/40 p-6">
+      <div className="flex min-h-screen items-center justify-center public-canvas p-6">
         <Skeleton className="h-64 w-full max-w-2xl" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-secondary/40">
-      <header className="sticky top-0 z-10 border-b border-border/70 bg-background/90 backdrop-blur">
+    <div className="min-h-screen public-canvas">
+      <header className="glass-bar sticky top-0 z-10 border-b">
         <div className="mx-auto grid max-w-3xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2 font-display font-semibold">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[image:var(--gradient-soft)] text-primary ring-1 ring-inset ring-white/60">
               <HeartHandshake className="size-5" aria-hidden />
             </span>
             <span className="min-w-0">
@@ -173,6 +173,17 @@ function FamilyPage() {
               <section key={resident.id} className="space-y-6">
                 <div className="surface-card p-5 sm:p-6">
                   <div className="flex flex-wrap items-center gap-3">
+                    <span
+                      className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-soft)] font-display text-base font-bold text-primary ring-1 ring-inset ring-primary/15"
+                      aria-hidden
+                    >
+                      {resident.full_name
+                        .split(" ")
+                        .filter(Boolean)
+                        .slice(0, 2)
+                        .map((word) => word[0]?.toUpperCase() ?? "")
+                        .join("")}
+                    </span>
                     <h2 className="min-w-0 break-words font-display text-xl font-semibold sm:text-2xl">
                       {resident.full_name}
                     </h2>

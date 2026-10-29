@@ -95,7 +95,7 @@ function FamilySignInPage() {
           SAHAAYAK
         </Link>
 
-        <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+        <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
           <CardHeader className="text-center">
             <CardTitle>Family sign in</CardTitle>
             <CardDescription>

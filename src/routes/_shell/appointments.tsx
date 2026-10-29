@@ -110,25 +110,46 @@ function AppointmentTable({ rows }: { rows: AppointmentRow[] }) {
               <TableRow key={appointment.id}>
                 <TableCell className="font-medium">
                   {resident ? (
-                    <Link
-                      to="/residents/$id"
-                      params={{ id: resident.id }}
-                      className="underline-offset-4 hover:underline"
-                    >
-                      {resident.full_name}
-                    </Link>
+                    <span className="flex items-center gap-2.5">
+                      <span
+                        className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-soft)] text-[10px] font-bold text-primary ring-1 ring-inset ring-primary/15"
+                        aria-hidden
+                      >
+                        {resident.full_name
+                          .split(" ")
+                          .filter(Boolean)
+                          .slice(0, 2)
+                          .map((word) => word[0]?.toUpperCase() ?? "")
+                          .join("")}
+                      </span>
+                      <span className="min-w-0">
+                        <Link
+                          to="/residents/$id"
+                          params={{ id: resident.id }}
+                          className="underline-offset-4 hover:underline"
+                        >
+                          {resident.full_name}
+                        </Link>
+                        {resident.room_label ? (
+                          <span className="block text-sm text-muted-foreground">
+                            {resident.room_label}
+                          </span>
+                        ) : null}
+                      </span>
+                    </span>
                   ) : (
                     "Unknown resident"
                   )}
-                  {resident?.room_label ? (
-                    <span className="block text-sm text-muted-foreground">
-                      {resident.room_label}
-                    </span>
-                  ) : null}
                 </TableCell>
-                <TableCell>{formatDate(appointment.scheduled_on)}</TableCell>
+                <TableCell className="whitespace-nowrap font-medium tabular-nums">
+                  {formatDate(appointment.scheduled_on)}
+                </TableCell>
                 <TableCell
-                  className={bucket === "overdue" ? "font-medium text-alert-foreground" : undefined}
+                  className={
+                    bucket === "overdue"
+                      ? "whitespace-nowrap font-semibold tabular-nums text-alert-foreground"
+                      : "whitespace-nowrap tabular-nums"
+                  }
                 >
                   {appointment.status === "completed"
                     ? "—"

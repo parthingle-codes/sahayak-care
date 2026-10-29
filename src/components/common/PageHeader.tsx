@@ -3,11 +3,13 @@ import type { ReactNode } from "react";
 export function PageHeader({
   eyebrow,
   title,
+  badge,
   description,
   actions,
 }: {
   eyebrow?: string;
   title: string;
+  badge?: ReactNode;
   description?: string;
   actions?: ReactNode;
 }) {
@@ -20,7 +22,12 @@ export function PageHeader({
             {eyebrow}
           </p>
         ) : null}
-        <h1 className="break-words text-2xl font-semibold sm:text-3xl">{title}</h1>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h1 className="break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            {title}
+          </h1>
+          {badge}
+        </div>
         {description ? (
           <p className="mt-2 max-w-2xl leading-relaxed text-muted-foreground">{description}</p>
         ) : null}

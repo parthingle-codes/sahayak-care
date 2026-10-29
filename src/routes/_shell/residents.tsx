@@ -53,6 +53,15 @@ function age(dob: string | null) {
   return String(Math.floor(diff / (365.25 * 24 * 3600 * 1000)));
 }
 
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 function ResidentsPage() {
   const { isAdmin } = useRole();
   const { data: residents = [], isLoading } = useResidents();
@@ -111,15 +120,22 @@ function ResidentsPage() {
                 className="pl-9"
               />
             </div>
-            <div className="flex rounded-lg bg-muted p-1" aria-label="Filter residents by status">
+            <div
+              className="flex w-fit rounded-xl bg-muted p-1"
+              aria-label="Filter residents by status"
+            >
               {(["all", "active", "inactive"] as const).map((value) => (
                 <Button
                   key={value}
                   type="button"
                   size="sm"
-                  variant={status === value ? "outline" : "ghost"}
+                  variant="ghost"
                   onClick={() => setStatus(value)}
-                  className="capitalize"
+                  className={
+                    status === value
+                      ? "bg-card! font-semibold capitalize shadow-sm ring-1 ring-inset ring-border"
+                      : "capitalize"
+                  }
                 >
                   {value}
                 </Button>
@@ -179,18 +195,38 @@ function ResidentsPage() {
                     {visibleResidents.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell className="font-medium">
-                          <Link
-                            to="/residents/$id"
-                            params={{ id: r.id }}
-                            className="underline-offset-4 hover:underline"
-                          >
-                            {r.full_name}
-                          </Link>
+                          <span className="flex items-center gap-2.5">
+                            <span
+                              className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-soft)] text-[11px] font-bold text-primary ring-1 ring-inset ring-primary/15"
+                              aria-hidden
+                            >
+                              {initials(r.full_name)}
+                            </span>
+                            <Link
+                              to="/residents/$id"
+                              params={{ id: r.id }}
+                              className="underline-offset-4 hover:underline"
+                            >
+                              {r.full_name}
+                            </Link>
+                          </span>
                         </TableCell>
-                        <TableCell>{age(r.date_of_birth)}</TableCell>
-                        <TableCell>{r.room_label ?? "—"}</TableCell>
-                        <TableCell>{mobilityLabels[r.mobility] ?? r.mobility}</TableCell>
-                        <TableCell>{new Date(r.admission_date).toLocaleDateString()}</TableCell>
+                        <TableCell className="tabular-nums">{age(r.date_of_birth)}</TableCell>
+                        <TableCell>
+                          {r.room_label ? (
+                            <span className="inline-flex rounded-md bg-muted px-2 py-0.5 text-xs font-semibold text-secondary-foreground ring-1 ring-inset ring-border">
+                              {r.room_label}
+                            </span>
+                          ) : (
+                            "—"
+                          )}
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {mobilityLabels[r.mobility] ?? r.mobility}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap tabular-nums">
+                          {new Date(r.admission_date).toLocaleDateString()}
+                        </TableCell>
                         <TableCell>
                           <StatusBadge status={r.status} />
                         </TableCell>

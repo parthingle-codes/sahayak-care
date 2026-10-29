@@ -130,7 +130,7 @@ function DonatePage() {
         </Link>
 
         {reference ? (
-          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+          <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
             <CardHeader className="text-center">
               <CheckCircle2 className="mx-auto size-10 text-done" aria-hidden />
               <CardTitle className="mt-2">Thank you for your kindness</CardTitle>
@@ -147,7 +147,7 @@ function DonatePage() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="rounded-3xl border-primary/10 shadow-[var(--shadow-lift)]">
+          <Card className="surface-glass animate-rise rounded-3xl shadow-[var(--shadow-lift)]">
             <CardHeader>
               <CardTitle>Donate or volunteer</CardTitle>
               <CardDescription>
